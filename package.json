@@ -1,4 +1,11 @@
 {
+  "name": "content-hub-demo",
+  "version": "1.0.0",
+  "description": "内容力专区 Demo",
+  "scripts": {
+    "start": "npx serve -p 3000",
+    "dev": "npx serve -p 3000 -l"
+  },
   "dependencies": {
     "agent-browser": "^0.25.4"
   }
