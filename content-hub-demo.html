@@ -1003,6 +1003,208 @@ body.sidebar-open { padding-left: 280px; }
   font-size: 12px; color: var(--text-tertiary);
 }
 
+/* ===== Game & Culture Dashboard ===== */
+.dashboard-page { display: none; padding-bottom: var(--sp-8); }
+.dashboard-page.active { display: block; }
+
+.dashboard-hero {
+  padding: var(--sp-7) 0;
+  text-align: center;
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  color: white;
+  margin-bottom: var(--sp-6);
+  border-radius: 0 0 var(--radius-xl) var(--radius-xl);
+}
+.dashboard-hero h1 {
+  font-size: 36px; font-weight: 800; letter-spacing: -0.5px;
+  margin-bottom: var(--sp-3);
+}
+.dashboard-hero h1 .accent { color: #e94560; }
+.dashboard-hero p {
+  font-size: 16px; opacity: 0.85; max-width: 600px; margin: 0 auto;
+  line-height: 1.6;
+}
+
+.dashboard-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--sp-4);
+  margin-bottom: var(--sp-6);
+}
+.dashboard-stat-card {
+  background: var(--white);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: var(--sp-5);
+  text-align: center;
+  transition: all var(--duration) var(--ease);
+}
+.dashboard-stat-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+.dashboard-stat-card .stat-icon { font-size: 36px; margin-bottom: var(--sp-2); }
+.dashboard-stat-card .stat-num {
+  font-size: 32px; font-weight: 800; color: var(--near-black);
+  letter-spacing: -1px;
+}
+.dashboard-stat-card .stat-num.purple { color: #8b5cf6; }
+.dashboard-stat-card .stat-num.green { color: var(--success); }
+.dashboard-stat-card .stat-num.orange { color: #f59e0b; }
+.dashboard-stat-card .stat-label {
+  font-size: 12px; font-weight: 600; color: var(--text-tertiary);
+  text-transform: uppercase; letter-spacing: 0.3px; margin-top: var(--sp-1);
+}
+
+.dashboard-section-title {
+  font-size: 24px; font-weight: 700; letter-spacing: -0.02em;
+  margin-bottom: var(--sp-5);
+  display: flex; align-items: center; gap: var(--sp-3);
+}
+.dashboard-section-title::after {
+  content: ''; flex: 1; height: 1px; background: var(--border-light);
+}
+
+.dashboard-tabs {
+  display: flex; gap: var(--sp-2);
+  margin-bottom: var(--sp-5); border-bottom: 1px solid var(--border-light);
+  padding-bottom: var(--sp-3);
+}
+.dashboard-tab {
+  padding: var(--sp-2) var(--sp-4);
+  border-radius: var(--radius-pill);
+  font-size: 14px; font-weight: 600;
+  color: var(--text-secondary);
+  transition: all var(--duration);
+}
+.dashboard-tab:hover { color: var(--near-black); background: var(--surface); }
+.dashboard-tab.active { color: white; background: var(--near-black); }
+
+.dashboard-content-panel { display: none; }
+.dashboard-content-panel.active { display: block; }
+
+.case-studies-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--sp-5);
+  margin-bottom: var(--sp-6);
+}
+.case-study-card {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--border-light);
+  transition: all var(--duration) var(--ease);
+}
+.case-study-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+.case-study-img {
+  width: 100%; height: 160px;
+  object-fit: cover; background: var(--surface);
+}
+.case-study-body { padding: var(--sp-4); }
+.case-study-tag {
+  display: inline-block;
+  font-size: 10px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.3px;
+  padding: 3px 8px; border-radius: var(--radius-pill);
+  margin-bottom: var(--sp-2);
+}
+.case-study-tag.placeholder { background: rgba(139, 92, 246, 0.1); color: #8b5cf6; }
+.case-study-tag.game { background: rgba(245, 158, 11, 0.1); color: #f59e0b; }
+.case-study-tag.success { background: rgba(0, 138, 5, 0.1); color: var(--success); }
+.case-study-title {
+  font-size: 16px; font-weight: 700; color: var(--near-black);
+  margin-bottom: var(--sp-2);
+}
+.case-study-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+
+.resource-categories {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--sp-4);
+  margin-bottom: var(--sp-6);
+}
+.resource-cat-card {
+  background: var(--surface);
+  border-radius: var(--radius-md);
+  padding: var(--sp-5);
+  text-align: center;
+  cursor: pointer;
+  transition: all var(--duration) var(--ease);
+  border: 2px solid transparent;
+}
+.resource-cat-card:hover { background: var(--white); border-color: var(--near-black); transform: translateY(-2px); }
+.resource-cat-card .cat-icon { font-size: 40px; margin-bottom: var(--sp-3); }
+.resource-cat-card .cat-name { font-size: 16px; font-weight: 700; color: var(--near-black); margin-bottom: var(--sp-1); }
+.resource-cat-card .cat-count { font-size: 12px; color: var(--text-tertiary); }
+
+.opportunities-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--sp-5);
+  margin-bottom: var(--sp-6);
+}
+.opportunity-card {
+  background: var(--white);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  padding: var(--sp-5);
+  display: flex; gap: var(--sp-4);
+  transition: all var(--duration) var(--ease);
+}
+.opportunity-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.opportunity-icon {
+  width: 56px; height: 56px;
+  border-radius: var(--radius-md);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 28px; flex-shrink: 0;
+}
+.opportunity-icon.purple { background: rgba(139, 92, 246, 0.1); }
+.opportunity-icon.orange { background: rgba(245, 158, 11, 0.1); }
+.opportunity-icon.green { background: rgba(0, 138, 5, 0.1); }
+.opportunity-icon.pink { background: rgba(233, 69, 96, 0.1); }
+.opportunity-content { flex: 1; }
+.opportunity-title { font-size: 16px; font-weight: 700; color: var(--near-black); margin-bottom: var(--sp-2); }
+.opportunity-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.5; margin-bottom: var(--sp-2); }
+.opportunity-tags { display: flex; gap: var(--sp-2); flex-wrap: wrap; }
+.opportunity-tag {
+  font-size: 11px; font-weight: 600;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  color: var(--text-secondary);
+}
+
+.dashboard-cta {
+  background: linear-gradient(135deg, #e94560 0%, #ff6b6b 100%);
+  border-radius: var(--radius-lg);
+  padding: var(--sp-7);
+  text-align: center;
+  color: white;
+  margin-bottom: var(--sp-6);
+}
+.dashboard-cta h2 { font-size: 28px; font-weight: 800; margin-bottom: var(--sp-3); }
+.dashboard-cta p { font-size: 16px; opacity: 0.9; margin-bottom: var(--sp-5); max-width: 500px; margin-left: auto; margin-right: auto; }
+.dashboard-cta-btn {
+  display: inline-block;
+  padding: var(--sp-3) var(--sp-6);
+  background: white; color: #e94560;
+  border-radius: var(--radius-pill);
+  font-size: 14px; font-weight: 700;
+  transition: all var(--duration) var(--ease);
+}
+.dashboard-cta-btn:hover { transform: scale(1.05); box-shadow: var(--shadow-lg); }
+
+/* Dashboard responsive */
+@media (max-width: 1024px) {
+  .dashboard-stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .case-studies-grid { grid-template-columns: repeat(2, 1fr); }
+  .resource-categories { grid-template-columns: repeat(2, 1fr); }
+  .opportunities-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 768px) {
+  .dashboard-hero h1 { font-size: 28px; }
+  .dashboard-stats-grid { grid-template-columns: 1fr 1fr; }
+  .case-studies-grid { grid-template-columns: 1fr; }
+  .resource-categories { grid-template-columns: 1fr 1fr; }
+}
+
 /* ===== Responsive ===== */
 @media (max-width: 1024px) {
   .filter-sidebar { display: none; }
@@ -1155,6 +1357,7 @@ body.sidebar-open { padding-left: 280px; }
     <div class="nav-tabs">
       <button class="nav-tab active" data-source="all" onclick="switchSource('all', this)">全部</button>
       <button class="nav-tab" data-source="met" onclick="switchSource('met', this)">The Met</button>
+      <button class="nav-tab" data-source="dashboard" onclick="switchToDashboard(this)">🎮 文化×游戏仪表盘</button>
     </div>
   </div>
 </header>
@@ -1347,6 +1550,221 @@ body.sidebar-open { padding-left: 280px; }
     内容力专区 Demo · 数据来源：The Metropolitan Museum of Art Open Access (CC0) · 仅供内部评估使用
   </div>
 </footer>
+
+<!-- ===== Game & Culture Dashboard ===== -->
+<div class="dashboard-page" id="dashboardPage">
+  <div class="dashboard-hero">
+    <div class="container">
+      <h1>🎮 文化 × 游戏 <span class="accent">联动仪表盘</span></h1>
+      <p>探索博物馆藏品与游戏 IP 的融合之道，发现内容赋能游戏的无限可能</p>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- Stats Grid -->
+    <div class="dashboard-stats-grid">
+      <div class="dashboard-stat-card">
+        <div class="stat-icon">🏛️</div>
+        <div class="stat-num">47万+</div>
+        <div class="stat-label">博物馆可商用藏品</div>
+      </div>
+      <div class="dashboard-stat-card">
+        <div class="stat-icon">🎯</div>
+        <div class="stat-num purple">128</div>
+        <div class="stat-label">已落地联动案例</div>
+      </div>
+      <div class="dashboard-stat-card">
+        <div class="stat-icon">📈</div>
+        <div class="stat-num green">340%</div>
+        <div class="stat-label">平均内容参与度提升</div>
+      </div>
+      <div class="dashboard-stat-card">
+        <div class="stat-icon">⭐</div>
+        <div class="stat-num orange">86</div>
+        <div class="stat-label">推荐文物类型</div>
+      </div>
+    </div>
+
+    <!-- Dashboard Tabs -->
+    <div class="dashboard-tabs">
+      <button class="dashboard-tab active" onclick="switchDashboardTab('cases', this)">🎨 联动案例</button>
+      <button class="dashboard-tab" onclick="switchDashboardTab('resources', this)">📚 资源推荐</button>
+      <button class="dashboard-tab" onclick="switchDashboardTab('opportunities', this)">💡 联动机会</button>
+    </div>
+
+    <!-- Case Studies Panel -->
+    <div class="dashboard-content-panel active" id="dashboardCasesPanel">
+      <h2 class="dashboard-section-title">精选联动案例</h2>
+      <div class="case-studies-grid">
+        <div class="case-study-card">
+          <div class="case-study-img" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center; font-size: 48px; color: white;">🗿</div>
+          <div class="case-study-body">
+            <span class="case-study-tag placeholder">游戏参考</span>
+            <div class="case-study-title">刺客信条：奥德赛</div>
+            <div class="case-study-desc">通过实地扫描古希腊建筑，复刻帕特农神庙等历史遗迹，为玩家打造沉浸式历史探索体验。</div>
+          </div>
+        </div>
+        <div class="case-study-card">
+          <div class="case-study-img" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); display: flex; align-items: center; justify-content: center; font-size: 48px; color: white;">🏺</div>
+          <div class="case-study-body">
+            <span class="case-study-tag game">游戏联动</span>
+            <div class="case-study-title">阴阳师 × 故宫</div>
+            <div class="case-study-desc">与故宫合作推出"宫廷限定"皮肤，将传统纹样与现代角色设计融合，上线即引爆话题。</div>
+          </div>
+        </div>
+        <div class="case-study-card">
+          <div class="case-study-img" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); display: flex; align-items: center; justify-content: center; font-size: 48px; color: white;">⚔️</div>
+          <div class="case-study-body">
+            <span class="case-study-tag success">成功案例</span>
+            <div class="case-study-title">原神 × 三星堆</div>
+            <div class="case-study-desc">以三星堆文物为灵感设计角色"钟离"，将青铜器美学融入角色造型，获得全球玩家好评。</div>
+          </div>
+        </div>
+        <div class="case-study-card">
+          <div class="case-study-img" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); display: flex; align-items: center; justify-content: center; font-size: 48px; color: white;">🖼️</div>
+          <div class="case-study-body">
+            <span class="case-study-tag placeholder">游戏参考</span>
+            <div class="case-study-title">对马岛之魂</div>
+            <div class="case-study-desc">严格考据日本镰仓时代文物，从盔甲到建筑全面还原，实现电影级历史还原度。</div>
+          </div>
+        </div>
+        <div class="case-study-card">
+          <div class="case-study-img" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); display: flex; align-items: center; justify-content: center; font-size: 48px; color: white;">🐉</div>
+          <div class="case-study-body">
+            <span class="case-study-tag game">游戏联动</span>
+            <div class="case-study-title">王者荣耀 × 敦煌研究院</div>
+            <div class="case-study-desc">联名皮肤融合敦煌壁画色彩与飞天意象，让传统文化以数字形式走进年轻用户。</div>
+          </div>
+        </div>
+        <div class="case-study-card">
+          <div class="case-study-img" style="background: linear-gradient(135deg, #d299c2 0%, #fef9d7 100%); display: flex; align-items: center; justify-content: center; font-size: 48px; color: white;">🎭</div>
+          <div class="case-study-body">
+            <span class="case-study-tag success">成功案例</span>
+            <div class="case-study-title">赛博朋克2077 × 波兰国家博物馆</div>
+            <div class="case-study-desc">授权使用馆藏艺术品作为游戏内装饰与海报，实现商业与文化传播双赢。</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Resources Panel -->
+    <div class="dashboard-content-panel" id="dashboardResourcesPanel">
+      <h2 class="dashboard-section-title">推荐文物资源</h2>
+      <div class="resource-categories">
+        <div class="resource-cat-card" onclick="goToCollection('armor')">
+          <div class="cat-icon">⚔️</div>
+          <div class="cat-name">盔甲武器</div>
+          <div class="cat-count">12,400+ 件</div>
+        </div>
+        <div class="resource-cat-card" onclick="goToCollection('costume')">
+          <div class="cat-icon">👘</div>
+          <div class="cat-name">服饰织品</div>
+          <div class="cat-count">8,200+ 件</div>
+        </div>
+        <div class="resource-cat-card" onclick="goToCollection('architecture')">
+          <div class="cat-icon">🏛️</div>
+          <div class="cat-name">建筑装饰</div>
+          <div class="cat-count">5,600+ 件</div>
+        </div>
+        <div class="resource-cat-card" onclick="goToCollection('artifact')">
+          <div class="cat-icon">🏺</div>
+          <div class="cat-name">器具摆件</div>
+          <div class="cat-count">18,900+ 件</div>
+        </div>
+        <div class="resource-cat-card" onclick="goToCollection('painting')">
+          <div class="cat-icon">🖼️</div>
+          <div class="cat-name">绘画书法</div>
+          <div class="cat-count">9,800+ 件</div>
+        </div>
+        <div class="resource-cat-card" onclick="goToCollection('mythology')">
+          <div class="cat-icon">🐉</div>
+          <div class="cat-name">神话意象</div>
+          <div class="cat-count">6,300+ 件</div>
+        </div>
+        <div class="resource-cat-card" onclick="goToCollection('pattern')">
+          <div class="cat-icon">✨</div>
+          <div class="cat-name">纹样图案</div>
+          <div class="cat-count">15,700+ 件</div>
+        </div>
+        <div class="resource-cat-card" onclick="goToCollection('furniture')">
+          <div class="cat-icon">🪑</div>
+          <div class="cat-name">家具陈设</div>
+          <div class="cat-count">4,500+ 件</div>
+        </div>
+      </div>
+      <div style="background: var(--surface); border-radius: var(--radius-lg); padding: var(--sp-5); text-align: center;">
+        <p style="color: var(--text-secondary); margin-bottom: var(--sp-3);">点击分类卡片可直接跳转至对应藏品搜索</p>
+        <button class="btn-primary" onclick="switchDashboardTab('cases', document.querySelector('.dashboard-tab'))" style="display: inline-flex; align-items: center; gap: 8px;">
+          <span>🔍</span> 浏览全量 47万+ CC0 藏品
+        </button>
+      </div>
+    </div>
+
+    <!-- Opportunities Panel -->
+    <div class="dashboard-content-panel" id="dashboardOpportunitiesPanel">
+      <h2 class="dashboard-section-title">推荐联动方向</h2>
+      <div class="opportunities-grid">
+        <div class="opportunity-card">
+          <div class="opportunity-icon purple">🎨</div>
+          <div class="opportunity-content">
+            <div class="opportunity-title">角色设计灵感库</div>
+            <div class="opportunity-desc">从博物馆藏品中提取服饰、妆容、配饰元素，为游戏角色提供独特文化符号。</div>
+            <div class="opportunity-tags">
+              <span class="opportunity-tag">角色设计</span>
+              <span class="opportunity-tag">文化符号</span>
+              <span class="opportunity-tag">原创性</span>
+            </div>
+          </div>
+        </div>
+        <div class="opportunity-card">
+          <div class="opportunity-icon orange">🏰</div>
+          <div class="opportunity-content">
+            <div class="opportunity-title">场景建筑参考</div>
+            <div class="opportunity-desc">利用历史建筑图纸与文物，复刻真实历史场景，增强游戏世界观可信度。</div>
+            <div class="opportunity-tags">
+              <span class="opportunity-tag">场景设计</span>
+              <span class="opportunity-tag">历史还原</span>
+              <span class="opportunity-tag">沉浸感</span>
+            </div>
+          </div>
+        </div>
+        <div class="opportunity-card">
+          <div class="opportunity-icon green">📜</div>
+          <div class="opportunity-content">
+            <div class="opportunity-title">剧情叙事素材</div>
+            <div class="opportunity-desc">文物背后的历史故事与传奇，为游戏剧情提供深度文化内涵与叙事素材。</div>
+            <div class="opportunity-tags">
+              <span class="opportunity-tag">剧情设计</span>
+              <span class="opportunity-tag">叙事深度</span>
+              <span class="opportunity-tag">教育价值</span>
+            </div>
+          </div>
+        </div>
+        <div class="opportunity-card">
+          <div class="opportunity-icon pink">🎁</div>
+          <div class="opportunity-content">
+            <div class="opportunity-title">限定联动道具</div>
+            <div class="opportunity-desc">与博物馆联名推出数字藏品或限定皮肤，实现文化传播与商业价值双赢。</div>
+            <div class="opportunity-tags">
+              <span class="opportunity-tag">商业变现</span>
+              <span class="opportunity-tag">品牌联动</span>
+              <span class="opportunity-tag">用户增长</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="dashboard-cta">
+      <h2>准备好开始你的文化×游戏之旅了吗？</h2>
+      <p>从 47 万+ CC0 博物馆藏品中，发现属于你的游戏灵感</p>
+      <button class="dashboard-cta-btn" onclick="closeDashboard(); quickSearch('Chinese ceramics');">
+        🚀 立即探索藏品
+      </button>
+    </div>
+  </div>
+</div>
 
 <!-- ===== JavaScript (unchanged logic, same API code) ===== -->
 <script>
@@ -2281,6 +2699,64 @@ async function init() {
   renderSidebarContent();
 }
 init();
+
+// ===== Dashboard Functions =====
+function switchToDashboard(btn) {
+  // Update nav tabs
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+
+  // Hide other views
+  document.getElementById('heroSection').style.display = 'none';
+  document.getElementById('collectionDetailView').classList.remove('active');
+  document.getElementById('toolbar').style.display = 'none';
+  document.getElementById('contentLayout').style.display = 'none';
+  document.getElementById('projectPage')?.classList.remove('active');
+
+  // Show dashboard
+  document.getElementById('dashboardPage').classList.add('active');
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function closeDashboard() {
+  document.getElementById('dashboardPage').classList.remove('active');
+  goHome();
+}
+
+function switchDashboardTab(tab, btn) {
+  // Update tabs
+  document.querySelectorAll('.dashboard-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+
+  // Update panels
+  document.querySelectorAll('.dashboard-content-panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('dashboard' + tab.charAt(0).toUpperCase() + tab.slice(1) + 'Panel').classList.add('active');
+}
+
+function goToCollection(category) {
+  const queries = {
+    armor: 'armor knight medieval European plate sword helmet',
+    costume: 'Chinese costume silk robe embroidery garment',
+    architecture: 'architectural model Greek temple Chinese pavilion',
+    artifact: 'Chinese jade bronze vessel ceramic porcelain',
+    painting: 'Chinese painting landscape scroll calligraphy',
+    mythology: 'dragon phoenix mythology deity deity sculpture',
+    pattern: 'Islamic tile geometric pattern textile ornament',
+    furniture: 'Chinese furniture Ming dynasty chair table'
+  };
+  const q = queries[category] || category;
+  closeDashboard();
+  document.getElementById('searchInput').value = q;
+  performSearch(true);
+}
+
+// Override goHome to close dashboard
+const _origGoHomeDashboard = goHome;
+goHome = function() {
+  document.getElementById('dashboardPage').classList.remove('active');
+  _origGoHomeDashboard();
+};
 </script>
 </body>
 </html>
