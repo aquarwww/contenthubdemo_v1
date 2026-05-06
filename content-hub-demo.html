@@ -1,0 +1,2290 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>内容力专区 · Cultural Hub</title>
+<style>
+/* ===== Airbnb-inspired Design Tokens ===== */
+:root {
+  /* Brand */
+  --rausch: #ff385c;
+  --rausch-deep: #e00b41;
+  --rausch-glow: rgba(255,56,92,0.12);
+
+  /* Text & Neutral */
+  --near-black: #222222;
+  --text-secondary: #6a6a6a;
+  --text-tertiary: #929292;
+  --border: #dddddd;
+  --border-light: #ebebeb;
+  --surface: #f7f7f7;
+  --white: #ffffff;
+
+  /* Semantic */
+  --success: #008a05;
+  --legal-blue: #428bff;
+  --error: #c13515;
+
+  /* Radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 50%;
+  --radius-pill: 999px;
+
+  /* Spacing scale: 4, 8, 12, 16, 24, 32, 48, 64 */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 24px;
+  --sp-6: 32px;
+  --sp-7: 48px;
+  --sp-8: 64px;
+
+  /* Shadow */
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.08);
+  --shadow-md: 0 2px 8px rgba(0,0,0,0.12);
+  --shadow-lg: 0 6px 20px rgba(0,0,0,0.16);
+  --shadow-xl: 0 12px 40px rgba(0,0,0,0.2);
+
+  /* Transition */
+  --ease: cubic-bezier(0.2, 0, 0, 1);
+  --duration: 0.2s;
+}
+
+/* ===== Reset ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+body {
+  font-family: "Circular", -apple-system, BlinkMacSystemFont, "PingFang SC", "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  color: var(--near-black);
+  background: var(--white);
+  line-height: 1.43;
+  min-height: 100vh;
+}
+a { color: inherit; text-decoration: none; }
+button { cursor: pointer; border: none; background: none; font-family: inherit; }
+input, select, textarea { font-family: inherit; }
+img { display: block; }
+
+/* ===== Typography Scale ===== */
+.t-section { font-size: 28px; font-weight: 700; line-height: 1.43; letter-spacing: -0.02em; }
+.t-card { font-size: 22px; font-weight: 600; line-height: 1.18; letter-spacing: -0.44px; }
+.t-feature { font-size: 20px; font-weight: 600; line-height: 1.2; letter-spacing: -0.18px; }
+.t-ui { font-size: 16px; font-weight: 500; line-height: 1.25; }
+.t-body { font-size: 14px; font-weight: 400; line-height: 1.43; }
+.t-tag { font-size: 12px; font-weight: 700; line-height: 1.33; }
+.t-micro { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.32px; }
+
+/* ===== Layout ===== */
+.container { max-width: 1280px; margin: 0 auto; padding: 0 var(--sp-5); }
+
+/* ===== Header ===== */
+.header {
+  position: sticky; top: 0; z-index: 100;
+  background: var(--white);
+  border-bottom: 1px solid var(--border-light);
+}
+.header-inner {
+  display: flex; align-items: center;
+  height: 80px;
+  max-width: 1280px; margin: 0 auto;
+  padding: 0 var(--sp-5); gap: var(--sp-5);
+}
+.logo {
+  display: flex; align-items: center; gap: var(--sp-2);
+  font-size: 20px; font-weight: 700; white-space: nowrap;
+  color: var(--rausch);
+}
+.logo-icon { font-size: 28px; }
+
+/* ===== Search Capsule (Airbnb Split Bar style) ===== */
+.search-capsule {
+  flex: 1; max-width: 560px;
+  display: flex; align-items: center;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  padding: var(--sp-1) var(--sp-1) var(--sp-1) var(--sp-5);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow var(--duration) var(--ease), border-color var(--duration) var(--ease);
+}
+.search-capsule:hover { box-shadow: var(--shadow-md); }
+.search-capsule:focus-within {
+  box-shadow: var(--shadow-md);
+  border-color: var(--near-black);
+}
+.search-capsule input {
+  flex: 1; border: none; outline: none;
+  font-size: 14px; font-weight: 500;
+  color: var(--near-black);
+  background: transparent;
+  padding: var(--sp-2) 0;
+}
+.search-capsule input::placeholder { color: var(--text-tertiary); }
+.search-capsule .search-icon-btn {
+  width: 40px; height: 40px;
+  border-radius: var(--radius-full);
+  background: var(--rausch);
+  color: white;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; flex-shrink: 0;
+  transition: background var(--duration) var(--ease), transform var(--duration) var(--ease);
+}
+.search-capsule .search-icon-btn:hover {
+  background: var(--rausch-deep);
+  transform: scale(1.04);
+}
+
+/* ===== Nav Tabs ===== */
+.nav-tabs {
+  display: flex; gap: var(--sp-2);
+  margin-left: auto;
+}
+.nav-tab {
+  padding: var(--sp-2) var(--sp-4);
+  border-radius: var(--radius-pill);
+  font-size: 14px; font-weight: 500;
+  color: var(--text-secondary);
+  border: 1px solid transparent;
+  transition: all var(--duration) var(--ease);
+}
+.nav-tab:hover { color: var(--near-black); }
+.nav-tab.active {
+  color: var(--near-black);
+  border-color: var(--near-black);
+}
+
+/* ===== Hero ===== */
+.hero {
+  padding: var(--sp-8) 0 var(--sp-7);
+  text-align: center;
+}
+.hero h1 {
+  font-size: 48px; font-weight: 800;
+  letter-spacing: -1px;
+  color: var(--near-black);
+  margin-bottom: var(--sp-3);
+}
+.hero h1 .accent { color: var(--rausch); }
+.hero-sub {
+  font-size: 18px; color: var(--text-secondary);
+  max-width: 520px; margin: 0 auto var(--sp-7);
+  font-weight: 400; line-height: 1.5;
+}
+
+/* ===== Category Pills ===== */
+.category-bar {
+  display: flex; justify-content: center;
+  flex-wrap: wrap; gap: var(--sp-2);
+  margin-bottom: var(--sp-6);
+}
+.category-pill {
+  display: flex; flex-direction: column;
+  align-items: center; gap: var(--sp-1);
+  padding: var(--sp-3) var(--sp-5);
+  border-radius: var(--radius-lg);
+  background: var(--white);
+  border: 1px solid var(--border-light);
+  font-size: 13px; font-weight: 500;
+  color: var(--text-secondary);
+  transition: all var(--duration) var(--ease);
+  min-width: 90px;
+}
+.category-pill:hover {
+  border-color: var(--near-black);
+  color: var(--near-black);
+  box-shadow: var(--shadow-sm);
+}
+.category-pill.active {
+  border-color: var(--near-black);
+  color: var(--near-black);
+  background: var(--surface);
+}
+.category-pill .pill-icon { font-size: 24px; }
+.category-pill .pill-text { font-size: 12px; font-weight: 600; }
+
+/* ===== Stats ===== */
+.stats-row {
+  display: flex; justify-content: center;
+  gap: var(--sp-7); padding: var(--sp-5) 0; margin-bottom: var(--sp-4);
+}
+.stat { text-align: center; }
+.stat-number { font-size: 32px; font-weight: 800; color: var(--near-black); }
+.stat-label { font-size: 12px; font-weight: 600; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.3px; margin-top: 2px; }
+
+/* ===== Toolbar ===== */
+.toolbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: var(--sp-4) 0; margin-bottom: var(--sp-4);
+}
+.toolbar-left { font-size: 16px; font-weight: 500; color: var(--text-secondary); }
+.toolbar-left strong { color: var(--near-black); font-weight: 700; }
+.toolbar-right { display: flex; align-items: center; gap: var(--sp-3); }
+.view-toggle {
+  display: flex; gap: 2px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+.view-btn {
+  padding: var(--sp-2) var(--sp-3);
+  font-size: 16px; color: var(--text-tertiary);
+  transition: all var(--duration) var(--ease);
+}
+.view-btn.active { background: var(--surface); color: var(--near-black); }
+.view-btn:hover { color: var(--near-black); }
+
+/* ===== Content Layout ===== */
+.content-layout { display: flex; gap: var(--sp-6); padding-bottom: var(--sp-8); }
+
+/* ===== Filter Sidebar ===== */
+.filter-sidebar {
+  width: 280px; flex-shrink: 0;
+  position: sticky; top: 100px;
+  align-self: flex-start;
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
+}
+.filter-sidebar::-webkit-scrollbar { width: 3px; }
+.filter-sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+.filter-group {
+  padding: var(--sp-5) 0;
+  border-bottom: 1px solid var(--border-light);
+}
+.filter-group:first-child { padding-top: 0; }
+.filter-group h3 {
+  font-size: 12px; font-weight: 700;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: var(--sp-3);
+}
+.filter-option {
+  display: flex; align-items: center; gap: var(--sp-2);
+  padding: var(--sp-2) 0;
+  cursor: pointer; font-size: 14px;
+  color: var(--near-black);
+  transition: color var(--duration);
+}
+.filter-option:hover { color: var(--rausch); }
+.filter-option input[type="checkbox"],
+.filter-option input[type="radio"] {
+  accent-color: var(--near-black);
+  width: 18px; height: 18px;
+  border-radius: 4px;
+}
+.date-range-row {
+  display: flex; gap: var(--sp-2); align-items: center;
+}
+.date-input {
+  flex: 1; padding: var(--sp-3) var(--sp-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 14px; color: var(--near-black);
+  outline: none; width: 80px;
+  transition: border-color var(--duration);
+}
+.date-input:focus { border-color: var(--near-black); }
+.date-range-row span { font-size: 14px; color: var(--text-tertiary); }
+.filter-clear {
+  font-size: 13px; font-weight: 600;
+  color: var(--near-black);
+  text-decoration: underline;
+  margin-top: var(--sp-3);
+  display: inline-block;
+}
+
+/* ===== Main Content ===== */
+.main-content { flex: 1; min-width: 0; }
+
+/* ===== Masonry / Grid ===== */
+.results-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--sp-5);
+}
+
+/* ===== Card (Airbnb-style) ===== */
+.card {
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  cursor: pointer;
+  position: relative;
+  transition: transform var(--duration) var(--ease);
+}
+.card:hover { transform: translateY(-2px); }
+.card-img-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--surface);
+}
+.card-img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s var(--ease);
+}
+.card:hover .card-img { transform: scale(1.03); }
+.card-img-placeholder {
+  width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text-tertiary); font-size: 48px;
+  background: var(--surface);
+}
+
+/* Badge: source */
+.badge-source {
+  position: absolute; top: var(--sp-3); left: var(--sp-3);
+  background: var(--white);
+  box-shadow: var(--shadow-sm);
+  padding: 3px var(--sp-2);
+  border-radius: var(--radius-sm);
+  font-size: 10px; font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  color: var(--text-secondary);
+}
+/* Badge: license */
+.badge-license {
+  position: absolute; top: var(--sp-3); right: var(--sp-3);
+  background: var(--near-black);
+  color: var(--white);
+  padding: 3px var(--sp-2);
+  border-radius: var(--radius-sm);
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 0.3px;
+}
+/* Fav heart */
+.card-heart {
+  position: absolute; top: var(--sp-3); right: var(--sp-3);
+  width: 32px; height: 32px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.3));
+  color: white;
+  transition: transform var(--duration) var(--ease);
+  z-index: 2;
+}
+.card-heart:hover { transform: scale(1.15); }
+.card-heart.active { color: var(--rausch); }
+.badge-license ~ .card-heart { right: auto; left: auto; top: auto; bottom: var(--sp-3); right: var(--sp-3); }
+
+/* Card info */
+.card-info { padding: var(--sp-3) 0 var(--sp-2); }
+.card-info-top {
+  display: flex; justify-content: space-between;
+  align-items: flex-start; margin-bottom: 2px;
+}
+.card-title-text {
+  font-size: 15px; font-weight: 600;
+  color: var(--near-black);
+  display: -webkit-box; -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical; overflow: hidden;
+  flex: 1;
+}
+.card-culture {
+  font-size: 14px; color: var(--text-secondary);
+  font-weight: 400; margin-bottom: 2px;
+}
+.card-date {
+  font-size: 14px; color: var(--text-tertiary);
+  font-weight: 400;
+}
+.card-tag-row { display: flex; gap: var(--sp-1); margin-top: var(--sp-2); flex-wrap: wrap; }
+.mini-tag {
+  font-size: 11px; font-weight: 600;
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  color: var(--text-secondary);
+}
+.mini-tag.cc0 { background: rgba(0,138,5,0.1); color: var(--success); }
+
+/* ===== Detail Modal ===== */
+.modal-overlay {
+  display: none;
+  position: fixed; inset: 0; z-index: 200;
+  background: rgba(0,0,0,0.5);
+  justify-content: center; align-items: flex-start;
+  padding: var(--sp-7) var(--sp-5);
+  overflow-y: auto;
+}
+.modal-overlay.active { display: flex; }
+.modal-box {
+  background: var(--white);
+  border-radius: var(--radius-md);
+  max-width: 1060px; width: 100%;
+  overflow: hidden;
+  box-shadow: var(--shadow-xl);
+  animation: fadeUp 0.25s var(--ease);
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.modal-top {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: var(--sp-5) var(--sp-5);
+  border-bottom: 1px solid var(--border-light);
+}
+.modal-top h2 {
+  font-size: 18px; font-weight: 700;
+  max-width: 85%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.modal-close-btn {
+  width: 36px; height: 36px;
+  border-radius: var(--radius-full);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; color: var(--near-black);
+  border: 1px solid var(--border);
+  transition: all var(--duration);
+}
+.modal-close-btn:hover { background: var(--surface); }
+.modal-grid {
+  display: grid; grid-template-columns: 1fr 380px;
+}
+.modal-photo {
+  background: var(--surface);
+  display: flex; align-items: center; justify-content: center;
+  min-height: 460px; padding: var(--sp-5);
+}
+.modal-photo img {
+  max-width: 100%; max-height: 68vh;
+  object-fit: contain; border-radius: var(--radius-sm);
+  cursor: zoom-in;
+}
+.modal-details {
+  padding: var(--sp-5);
+  overflow-y: auto; max-height: 72vh;
+  border-left: 1px solid var(--border-light);
+}
+.detail-section { margin-bottom: var(--sp-5); }
+.detail-section h4 {
+  font-size: 10px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.5px;
+  color: var(--text-tertiary);
+  margin-bottom: var(--sp-3);
+}
+.detail-row {
+  display: flex; justify-content: space-between;
+  padding: var(--sp-2) 0;
+  font-size: 14px;
+  border-bottom: 1px solid var(--border-light);
+}
+.detail-row .dl { color: var(--text-secondary); }
+.detail-row .dv { color: var(--near-black); font-weight: 500; text-align: right; max-width: 60%; }
+
+.license-card {
+  border: 1px solid rgba(0,138,5,0.3);
+  background: rgba(0,138,5,0.04);
+  border-radius: var(--radius-sm);
+  padding: var(--sp-4);
+}
+.license-type { font-size: 18px; font-weight: 800; color: var(--success); margin-bottom: 4px; }
+.license-note { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+
+.detail-tags { display: flex; flex-wrap: wrap; gap: var(--sp-1); }
+
+.detail-thumbs {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: var(--sp-2);
+}
+.detail-thumbs img {
+  width: 100%; aspect-ratio: 1; object-fit: cover;
+  border-radius: var(--radius-sm); cursor: pointer;
+  transition: opacity var(--duration);
+}
+.detail-thumbs img:hover { opacity: 0.85; }
+
+.action-row { display: flex; gap: var(--sp-3); margin-top: var(--sp-5); }
+.btn-primary {
+  flex: 1; padding: var(--sp-3) var(--sp-5);
+  border-radius: var(--radius-sm);
+  background: var(--near-black); color: var(--white);
+  font-size: 14px; font-weight: 600;
+  text-align: center;
+  transition: background var(--duration) var(--ease), transform var(--duration) var(--ease);
+}
+.btn-primary:hover { background: #000; transform: scale(1.01); }
+.btn-outline {
+  flex: 1; padding: var(--sp-3) var(--sp-5);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--near-black);
+  color: var(--near-black);
+  font-size: 14px; font-weight: 600;
+  text-align: center;
+  transition: all var(--duration) var(--ease);
+}
+.btn-outline:hover { background: var(--surface); }
+.btn-link {
+  display: block; text-align: center;
+  margin-top: var(--sp-3);
+  font-size: 13px; font-weight: 600;
+  color: var(--near-black);
+  text-decoration: underline;
+}
+
+/* ===== Loading ===== */
+.loading-area {
+  display: flex; flex-direction: column;
+  align-items: center; padding: var(--sp-8) 0; gap: var(--sp-4);
+}
+.loader {
+  width: 36px; height: 36px;
+  border: 3px solid var(--border-light);
+  border-top-color: var(--rausch);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.loading-text { font-size: 14px; color: var(--text-secondary); }
+
+/* ===== Empty ===== */
+.empty-state {
+  text-align: center; padding: var(--sp-8) var(--sp-5);
+  color: var(--text-secondary);
+}
+.empty-state .empty-icon { font-size: 56px; margin-bottom: var(--sp-4); }
+.empty-state h3 { font-size: 20px; font-weight: 600; color: var(--near-black); margin-bottom: var(--sp-2); }
+.empty-state p { font-size: 14px; }
+
+/* ===== Pagination ===== */
+.pagination {
+  display: flex; justify-content: center; align-items: center;
+  gap: var(--sp-2); padding: var(--sp-7) 0 var(--sp-5);
+}
+.pg-btn {
+  padding: var(--sp-2) var(--sp-4);
+  border-radius: var(--radius-sm);
+  font-size: 14px; font-weight: 600;
+  color: var(--near-black);
+  border: 1px solid var(--border);
+  transition: all var(--duration) var(--ease);
+}
+.pg-btn:hover { border-color: var(--near-black); }
+.pg-btn.active { background: var(--near-black); color: var(--white); border-color: var(--near-black); }
+.pg-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+/* ===== Curated Section (精品展示区) ===== */
+.curated-section {
+  padding: var(--sp-7) 0 var(--sp-6);
+  border-top: 1px solid var(--border-light);
+}
+.curated-header {
+  display: flex; justify-content: space-between; align-items: baseline;
+  margin-bottom: var(--sp-5);
+}
+.curated-header h2 {
+  font-size: 28px; font-weight: 700; letter-spacing: -0.02em;
+}
+.curated-header .see-all {
+  font-size: 14px; font-weight: 600;
+  color: var(--near-black); text-decoration: underline;
+  cursor: pointer;
+}
+
+/* Curated Search Bar */
+.curated-search-bar {
+  display: flex; align-items: center;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  padding: var(--sp-1) var(--sp-1) var(--sp-1) var(--sp-5);
+  margin-bottom: var(--sp-5);
+  transition: box-shadow var(--duration) var(--ease), border-color var(--duration) var(--ease);
+}
+.curated-search-bar:hover { box-shadow: var(--shadow-md); }
+.curated-search-bar:focus-within { box-shadow: var(--shadow-md); border-color: var(--near-black); }
+.curated-search-bar input {
+  flex: 1; border: none; outline: none;
+  font-size: 14px; font-weight: 400;
+  color: var(--near-black);
+  background: transparent;
+  padding: var(--sp-3) 0;
+}
+.curated-search-bar input::placeholder { color: var(--text-tertiary); }
+.curated-search-btn {
+  flex-shrink: 0;
+  padding: var(--sp-3) var(--sp-5);
+  border-radius: var(--radius-pill);
+  background: var(--near-black);
+  color: var(--white);
+  font-size: 14px; font-weight: 600;
+  transition: background var(--duration) var(--ease), transform var(--duration) var(--ease);
+}
+.curated-search-btn:hover { background: #000; transform: scale(1.02); }
+
+/* Collection Cards Grid */
+.collections-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--sp-5);
+}
+
+/* Collection Card - Large Cover */
+.collection-card {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  cursor: pointer;
+  aspect-ratio: 3 / 4;
+  background: var(--surface);
+  transition: transform var(--duration) var(--ease), box-shadow var(--duration) var(--ease);
+}
+.collection-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+.collection-card .cover-img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s var(--ease);
+}
+.collection-card:hover .cover-img { transform: scale(1.04); }
+
+/* Gradient overlay */
+.collection-card .cover-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.15) 45%, transparent 70%);
+  pointer-events: none;
+}
+
+/* Card text */
+.collection-card .cover-content {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  padding: var(--sp-5);
+  color: var(--white);
+  z-index: 1;
+}
+.collection-card .cover-tag {
+  display: inline-block;
+  font-size: 10px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.4px;
+  background: rgba(255,255,255,0.2);
+  backdrop-filter: blur(4px);
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  margin-bottom: var(--sp-2);
+}
+.collection-card .cover-title {
+  font-size: 22px; font-weight: 700;
+  line-height: 1.2; letter-spacing: -0.3px;
+  margin-bottom: var(--sp-1);
+}
+.collection-card .cover-sub {
+  font-size: 13px; font-weight: 400;
+  opacity: 0.85; line-height: 1.4;
+  display: -webkit-box; -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical; overflow: hidden;
+}
+.collection-card .cover-count {
+  margin-top: var(--sp-2);
+  font-size: 12px; font-weight: 600;
+  opacity: 0.7;
+}
+
+/* Preview thumbnails strip */
+.collection-card .preview-strip {
+  position: absolute; top: var(--sp-3); right: var(--sp-3);
+  display: flex; gap: 3px; z-index: 1;
+}
+.collection-card .preview-dot {
+  width: 28px; height: 28px;
+  border-radius: var(--radius-sm);
+  object-fit: cover;
+  border: 2px solid rgba(255,255,255,0.6);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+
+/* ===== Collection Detail View (合集内页) ===== */
+.collection-detail-view {
+  display: none;
+  padding-bottom: var(--sp-8);
+}
+.collection-detail-view.active { display: block; }
+
+.collection-banner {
+  position: relative;
+  height: 320px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-bottom: var(--sp-6);
+}
+.collection-banner img {
+  width: 100%; height: 100%; object-fit: cover;
+}
+.collection-banner .banner-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.2) 50%, transparent 80%);
+}
+.collection-banner .banner-content {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  padding: var(--sp-6);
+  color: var(--white);
+}
+.collection-banner .banner-back {
+  display: inline-flex; align-items: center; gap: var(--sp-2);
+  font-size: 14px; font-weight: 600;
+  color: var(--white); opacity: 0.85;
+  margin-bottom: var(--sp-3);
+  cursor: pointer;
+  transition: opacity var(--duration);
+}
+.collection-banner .banner-back:hover { opacity: 1; }
+.collection-banner .banner-title {
+  font-size: 36px; font-weight: 800;
+  letter-spacing: -0.5px;
+  margin-bottom: var(--sp-2);
+}
+.collection-banner .banner-desc {
+  font-size: 16px; font-weight: 400;
+  opacity: 0.9; max-width: 600px; line-height: 1.5;
+}
+.collection-banner .banner-meta {
+  margin-top: var(--sp-3);
+  display: flex; gap: var(--sp-5);
+  font-size: 13px; font-weight: 600; opacity: 0.75;
+}
+
+/* ===== My Projects Sidebar ===== */
+.sidebar-rail {
+  position: fixed; left: 0; top: 80px;
+  width: 52px; height: calc(100vh - 80px);
+  background: var(--white);
+  border-right: 1px solid var(--border-light);
+  display: flex; flex-direction: column;
+  align-items: center; padding: var(--sp-4) 0;
+  gap: var(--sp-3); z-index: 90;
+  transition: width 0.3s var(--ease);
+}
+.sidebar-rail.expanded { width: 280px; align-items: stretch; padding: var(--sp-4) var(--sp-4); }
+.rail-icon-btn {
+  width: 36px; height: 36px;
+  border-radius: var(--radius-sm);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; color: var(--text-secondary);
+  transition: all var(--duration);
+  position: relative;
+}
+.rail-icon-btn:hover { background: var(--surface); color: var(--near-black); }
+.rail-icon-btn.active { color: var(--rausch); background: var(--rausch-glow); }
+.rail-icon-btn .rail-badge {
+  position: absolute; top: 2px; right: 2px;
+  width: 8px; height: 8px;
+  background: var(--rausch); border-radius: 50%;
+}
+.rail-icon-btn .rail-label { display: none; }
+.sidebar-rail.expanded .rail-icon-btn {
+  width: auto; justify-content: flex-start;
+  gap: var(--sp-3); padding: var(--sp-2) var(--sp-3);
+}
+.sidebar-rail.expanded .rail-icon-btn .rail-label {
+  display: inline; font-size: 14px; font-weight: 500;
+}
+
+/* Sidebar expanded content */
+.sidebar-expanded-content { display: none; flex: 1; overflow-y: auto; margin-top: var(--sp-3); }
+.sidebar-rail.expanded .sidebar-expanded-content { display: block; }
+.sidebar-expanded-content::-webkit-scrollbar { width: 3px; }
+.sidebar-expanded-content::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+.sidebar-section-title {
+  font-size: 10px; font-weight: 700;
+  color: var(--text-tertiary);
+  text-transform: uppercase; letter-spacing: 0.5px;
+  margin: var(--sp-4) 0 var(--sp-2);
+}
+.sidebar-section-title:first-child { margin-top: 0; }
+
+/* Project list items in sidebar */
+.sidebar-project-item {
+  display: flex; align-items: center; gap: var(--sp-3);
+  padding: var(--sp-2) var(--sp-2);
+  border-radius: var(--radius-sm);
+  cursor: pointer; transition: background var(--duration);
+  font-size: 13px; font-weight: 500; color: var(--near-black);
+}
+.sidebar-project-item:hover { background: var(--surface); }
+.sidebar-project-item .proj-emoji { font-size: 18px; flex-shrink: 0; }
+.sidebar-project-item .proj-name { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sidebar-project-item .proj-count { font-size: 11px; color: var(--text-tertiary); flex-shrink: 0; }
+
+.sidebar-add-btn {
+  display: flex; align-items: center; gap: var(--sp-2);
+  padding: var(--sp-2) var(--sp-2);
+  border-radius: var(--radius-sm);
+  font-size: 13px; font-weight: 600; color: var(--text-secondary);
+  border: 1px dashed var(--border); margin-top: var(--sp-2);
+  transition: all var(--duration);
+}
+.sidebar-add-btn:hover { border-color: var(--near-black); color: var(--near-black); }
+
+/* Fav mini thumbnails row in sidebar */
+.sidebar-favs-strip {
+  display: flex; gap: 4px; flex-wrap: wrap; margin-top: var(--sp-2);
+}
+.sidebar-fav-thumb {
+  width: 40px; height: 40px;
+  border-radius: 6px; object-fit: cover;
+  cursor: pointer; transition: opacity var(--duration);
+}
+.sidebar-fav-thumb:hover { opacity: 0.75; }
+
+/* Body offset when sidebar exists */
+body { padding-left: 52px; }
+body.sidebar-open { padding-left: 280px; }
+
+/* ===== Project Detail Page ===== */
+.project-page { display: none; padding-bottom: var(--sp-8); }
+.project-page.active { display: block; }
+.project-page-header {
+  display: flex; align-items: center; gap: var(--sp-4);
+  padding: var(--sp-6) 0 var(--sp-5);
+  border-bottom: 1px solid var(--border-light);
+  margin-bottom: var(--sp-5);
+}
+.project-page-header .proj-back {
+  width: 36px; height: 36px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; transition: all var(--duration);
+}
+.project-page-header .proj-back:hover { background: var(--surface); }
+.project-page-header .proj-info { flex: 1; }
+.project-page-header .proj-info h2 { font-size: 24px; font-weight: 700; }
+.project-page-header .proj-info p { font-size: 14px; color: var(--text-secondary); margin-top: 2px; }
+
+/* Tab switcher: Collected / Generated */
+.project-tabs {
+  display: flex; gap: var(--sp-1);
+  border-bottom: 1px solid var(--border-light);
+  margin-bottom: var(--sp-5);
+}
+.project-tab {
+  padding: var(--sp-3) var(--sp-5);
+  font-size: 14px; font-weight: 600;
+  color: var(--text-secondary);
+  border-bottom: 2px solid transparent;
+  transition: all var(--duration);
+}
+.project-tab:hover { color: var(--near-black); }
+.project-tab.active {
+  color: var(--near-black);
+  border-bottom-color: var(--near-black);
+}
+.project-tab-panel { display: none; }
+.project-tab-panel.active { display: block; }
+
+/* Generated items grid */
+.gen-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: var(--sp-5);
+}
+.gen-card {
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-light);
+  overflow: hidden; cursor: pointer;
+  transition: all var(--duration) var(--ease);
+}
+.gen-card:hover { border-color: var(--border); box-shadow: var(--shadow-sm); transform: translateY(-2px); }
+.gen-card-img {
+  width: 100%; aspect-ratio: 1;
+  object-fit: cover; background: var(--surface);
+}
+.gen-card-body { padding: var(--sp-3); }
+.gen-card-prompt {
+  font-size: 13px; color: var(--near-black);
+  display: -webkit-box; -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical; overflow: hidden;
+  margin-bottom: var(--sp-1);
+}
+.gen-card-meta { font-size: 11px; color: var(--text-tertiary); }
+.gen-card-base {
+  display: flex; align-items: center; gap: var(--sp-2);
+  margin-top: var(--sp-2); padding-top: var(--sp-2);
+  border-top: 1px solid var(--border-light);
+  font-size: 11px; color: var(--text-secondary);
+}
+.gen-card-base img { width: 24px; height: 24px; border-radius: 4px; object-fit: cover; }
+
+/* ===== AI Generate Modal ===== */
+.gen-modal-overlay {
+  display: none; position: fixed; inset: 0; z-index: 300;
+  background: rgba(0,0,0,0.5);
+  justify-content: center; align-items: center;
+  padding: var(--sp-5);
+}
+.gen-modal-overlay.active { display: flex; }
+.gen-modal {
+  background: var(--white); border-radius: var(--radius-lg);
+  max-width: 640px; width: 100%;
+  box-shadow: var(--shadow-xl);
+  animation: fadeUp 0.25s var(--ease);
+  max-height: 90vh; overflow-y: auto;
+}
+.gen-modal-header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: var(--sp-5); border-bottom: 1px solid var(--border-light);
+}
+.gen-modal-header h3 { font-size: 18px; font-weight: 700; }
+.gen-modal-body { padding: var(--sp-5); }
+.gen-ref-card {
+  display: flex; gap: var(--sp-4); padding: var(--sp-4);
+  background: var(--surface); border-radius: var(--radius-md);
+  margin-bottom: var(--sp-5);
+}
+.gen-ref-card img {
+  width: 80px; height: 80px;
+  border-radius: var(--radius-sm); object-fit: cover; flex-shrink: 0;
+}
+.gen-ref-card .ref-info { flex: 1; }
+.gen-ref-card .ref-info h4 { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+.gen-ref-card .ref-info p { font-size: 12px; color: var(--text-secondary); }
+
+.gen-prompt-label {
+  font-size: 12px; font-weight: 700; color: var(--text-tertiary);
+  text-transform: uppercase; letter-spacing: 0.5px;
+  margin-bottom: var(--sp-2);
+}
+.gen-prompt-input {
+  width: 100%; padding: var(--sp-3);
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  font-size: 14px; color: var(--near-black);
+  outline: none; resize: vertical; min-height: 80px;
+  transition: border-color var(--duration);
+}
+.gen-prompt-input:focus { border-color: var(--near-black); }
+
+.gen-style-row {
+  display: flex; gap: var(--sp-2); margin: var(--sp-4) 0;
+  flex-wrap: wrap;
+}
+.gen-style-chip {
+  padding: var(--sp-2) var(--sp-4);
+  border: 1px solid var(--border); border-radius: var(--radius-pill);
+  font-size: 13px; font-weight: 500; color: var(--text-secondary);
+  transition: all var(--duration);
+}
+.gen-style-chip:hover { border-color: var(--near-black); color: var(--near-black); }
+.gen-style-chip.active { background: var(--near-black); color: var(--white); border-color: var(--near-black); }
+
+.gen-submit-btn {
+  width: 100%; padding: var(--sp-4);
+  background: var(--near-black); color: var(--white);
+  border-radius: var(--radius-sm);
+  font-size: 15px; font-weight: 600;
+  transition: all var(--duration) var(--ease);
+}
+.gen-submit-btn:hover { background: #000; }
+.gen-submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* Generation result */
+.gen-result { margin-top: var(--sp-5); display: none; }
+.gen-result.active { display: block; }
+.gen-result-img {
+  width: 100%; border-radius: var(--radius-md);
+  margin-bottom: var(--sp-3);
+}
+.gen-result-actions { display: flex; gap: var(--sp-3); }
+
+/* ===== Footer ===== */
+.footer {
+  border-top: 1px solid var(--border-light);
+  padding: var(--sp-5) 0;
+  text-align: center;
+  font-size: 12px; color: var(--text-tertiary);
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 1024px) {
+  .filter-sidebar { display: none; }
+  .modal-grid { grid-template-columns: 1fr; }
+  .modal-details { max-height: none; border-left: none; border-top: 1px solid var(--border-light); }
+  .collections-grid { grid-template-columns: repeat(2, 1fr); }
+  .sidebar-rail { display: none; }
+  body, body.sidebar-open { padding-left: 0; }
+}
+@media (max-width: 768px) {
+  .header-inner { flex-wrap: wrap; height: auto; padding: var(--sp-3) var(--sp-4); gap: var(--sp-3); }
+  .nav-tabs { margin-left: 0; order: 3; width: 100%; justify-content: center; }
+  .hero h1 { font-size: 32px; }
+  .results-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: var(--sp-4); }
+  .stats-row { gap: var(--sp-5); }
+  .category-bar { gap: var(--sp-2); }
+  .category-pill { min-width: 72px; padding: var(--sp-2) var(--sp-3); }
+  .collections-grid { grid-template-columns: 1fr 1fr; gap: var(--sp-3); }
+  .collection-card .cover-title { font-size: 18px; }
+  .collection-banner { height: 220px; }
+  .collection-banner .banner-title { font-size: 26px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ===== My Projects Sidebar ===== -->
+<aside class="sidebar-rail" id="sidebarRail">
+  <button class="rail-icon-btn" onclick="toggleSidebar()" title="我的项目">
+    📁<span class="rail-label">我的项目</span>
+  </button>
+  <button class="rail-icon-btn" onclick="toggleSidebar(); showSidebarTab('favs')" title="收藏素材">
+    ♡<span class="rail-label">收藏素材</span>
+    <span class="rail-badge" id="favBadge" style="display:none;"></span>
+  </button>
+  <button class="rail-icon-btn" onclick="toggleSidebar(); showSidebarTab('gens')" title="AI 生成">
+    ✨<span class="rail-label">AI 生成</span>
+  </button>
+
+  <div class="sidebar-expanded-content" id="sidebarContent">
+    <!-- Projects list -->
+    <div class="sidebar-section-title">项目</div>
+    <div id="sidebarProjectsList"></div>
+    <button class="sidebar-add-btn" onclick="createNewProject()">
+      <span>＋</span> 新建项目
+    </button>
+
+    <!-- Recent favs -->
+    <div class="sidebar-section-title" id="sidebarFavsTitle">最近收藏</div>
+    <div class="sidebar-favs-strip" id="sidebarFavsStrip">
+      <div style="font-size:13px;color:var(--text-tertiary);">暂无收藏</div>
+    </div>
+
+    <!-- Recent generations -->
+    <div class="sidebar-section-title" id="sidebarGensTitle">最近生成</div>
+    <div class="sidebar-favs-strip" id="sidebarGensStrip">
+      <div style="font-size:13px;color:var(--text-tertiary);">暂无生成记录</div>
+    </div>
+  </div>
+</aside>
+
+<!-- ===== Project Detail Page ===== -->
+<div class="container">
+  <div class="project-page" id="projectPage">
+    <div class="project-page-header">
+      <button class="proj-back" onclick="closeProjectPage()">←</button>
+      <div class="proj-info">
+        <h2 id="projPageTitle">项目名称</h2>
+        <p id="projPageMeta">0 件素材 · 0 个生成</p>
+      </div>
+      <button class="btn-outline" style="flex:none;padding:8px 16px;" onclick="openAIGenerate(null)">✨ AI 生成</button>
+    </div>
+    <div class="project-tabs">
+      <button class="project-tab active" onclick="switchProjTab('collected',this)">📦 收藏素材</button>
+      <button class="project-tab" onclick="switchProjTab('generated',this)">✨ AI 生成</button>
+    </div>
+    <div class="project-tab-panel active" id="projTabCollected">
+      <div class="results-grid" id="projFavsGrid"></div>
+      <div class="empty-state" id="projFavsEmpty" style="display:none;">
+        <div class="empty-icon">📦</div>
+        <h3>还没有收藏素材</h3>
+        <p>浏览文物并点击 ♡ 收藏到项目中</p>
+      </div>
+    </div>
+    <div class="project-tab-panel" id="projTabGenerated">
+      <div class="gen-grid" id="projGensGrid"></div>
+      <div class="empty-state" id="projGensEmpty" style="display:none;">
+        <div class="empty-icon">✨</div>
+        <h3>还没有生成记录</h3>
+        <p>选择一件素材作为参考，用 AI 生成新内容</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== AI Generate Modal ===== -->
+<div class="gen-modal-overlay" id="genModal">
+  <div class="gen-modal">
+    <div class="gen-modal-header">
+      <h3>✨ AI 创意生成</h3>
+      <button class="modal-close-btn" onclick="closeGenModal()">✕</button>
+    </div>
+    <div class="gen-modal-body">
+      <div class="gen-ref-card" id="genRefCard" style="display:none;">
+        <img id="genRefImg" src="" alt="">
+        <div class="ref-info">
+          <h4 id="genRefTitle">参考素材</h4>
+          <p id="genRefMeta">—</p>
+        </div>
+      </div>
+
+      <div class="gen-prompt-label">描述你想生成的内容</div>
+      <textarea class="gen-prompt-input" id="genPromptInput" placeholder="例如：将这件宋代瓷器转化为赛博朋克风格的 3D 道具，发光效果，暗色背景"></textarea>
+
+      <div class="gen-prompt-label" style="margin-top:var(--sp-4);">选择风格</div>
+      <div class="gen-style-row">
+        <button class="gen-style-chip" onclick="toggleGenStyle(this)" data-style="3D渲染">🎮 3D 渲染</button>
+        <button class="gen-style-chip" onclick="toggleGenStyle(this)" data-style="概念原画">🎨 概念原画</button>
+        <button class="gen-style-chip" onclick="toggleGenStyle(this)" data-style="像素风">👾 像素风</button>
+        <button class="gen-style-chip" onclick="toggleGenStyle(this)" data-style="水墨国风">🖌️ 水墨国风</button>
+        <button class="gen-style-chip" onclick="toggleGenStyle(this)" data-style="赛博朋克">⚡ 赛博朋克</button>
+        <button class="gen-style-chip" onclick="toggleGenStyle(this)" data-style="写实照片">📷 写实照片</button>
+      </div>
+
+      <button class="gen-submit-btn" id="genSubmitBtn" onclick="simulateGenerate()">🚀 开始生成</button>
+
+      <div class="gen-result" id="genResult">
+        <img class="gen-result-img" id="genResultImg" src="">
+        <div style="font-size:13px;color:var(--text-secondary);margin-bottom:var(--sp-3);" id="genResultPrompt"></div>
+        <div class="gen-result-actions">
+          <button class="btn-primary" onclick="saveGeneration()">💾 保存到项目</button>
+          <button class="btn-outline" onclick="simulateGenerate()">🔄 重新生成</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== Header ===== -->
+<header class="header">
+  <div class="header-inner">
+    <div class="logo" onclick="goHome()" style="cursor:pointer;">
+      <span class="logo-icon">🏛️</span>
+      <span>内容力专区</span>
+    </div>
+    <div class="search-capsule">
+      <input type="text" id="searchInput" placeholder="搜索文物、艺术品、纹样… 支持中英文" />
+      <button class="search-icon-btn" onclick="performSearch()">🔍</button>
+    </div>
+    <div class="nav-tabs">
+      <button class="nav-tab active" data-source="all" onclick="switchSource('all', this)">全部</button>
+      <button class="nav-tab" data-source="met" onclick="switchSource('met', this)">The Met</button>
+      <button class="nav-tab" onclick="window.open('inspiration-page/index.html', '_blank')">🌐 灵感探索</button>
+    </div>
+  </div>
+</header>
+
+<!-- ===== Hero ===== -->
+<section class="hero" id="heroSection">
+  <div class="container">
+    <h1>探索全球博物馆的<span class="accent">宝藏素材</span></h1>
+    <p class="hero-sub">从大都会艺术博物馆 49 万+ CC0 高清图像中，为你的游戏项目找到灵感与参考</p>
+
+    <!-- Category Pills -->
+    <div class="category-bar">
+      <button class="category-pill" onclick="quickSearch('Chinese ceramics')">
+        <span class="pill-icon">🏺</span>
+        <span class="pill-text">中国陶瓷</span>
+      </button>
+      <button class="category-pill" onclick="quickSearch('Japanese armor samurai')">
+        <span class="pill-icon">⚔️</span>
+        <span class="pill-text">日本甲胄</span>
+      </button>
+      <button class="category-pill" onclick="quickSearch('medieval European tapestry')">
+        <span class="pill-icon">🧵</span>
+        <span class="pill-text">中世纪挂毯</span>
+      </button>
+      <button class="category-pill" onclick="quickSearch('Egyptian sculpture')">
+        <span class="pill-icon">🗿</span>
+        <span class="pill-text">埃及雕塑</span>
+      </button>
+      <button class="category-pill" onclick="quickSearch('Song dynasty painting')">
+        <span class="pill-icon">🎨</span>
+        <span class="pill-text">宋代绘画</span>
+      </button>
+      <button class="category-pill" onclick="quickSearch('Greek vase')">
+        <span class="pill-icon">🏛️</span>
+        <span class="pill-text">希腊花瓶</span>
+      </button>
+      <button class="category-pill" onclick="quickSearch('Islamic pattern tile')">
+        <span class="pill-icon">✨</span>
+        <span class="pill-text">伊斯兰纹样</span>
+      </button>
+      <button class="category-pill" onclick="quickSearch('Renaissance portrait')">
+        <span class="pill-icon">🖼️</span>
+        <span class="pill-text">文艺复兴</span>
+      </button>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-row">
+      <div class="stat">
+        <div class="stat-number">470,000+</div>
+        <div class="stat-label">可访问藏品</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">492,000+</div>
+        <div class="stat-label">CC0 图像</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">5,000+</div>
+        <div class="stat-label">年跨度</div>
+      </div>
+    </div>
+
+    <!-- ===== 精品展示区 ===== -->
+    <div class="curated-section" id="curatedSection">
+      <div class="curated-header">
+        <h2>精品合集</h2>
+      </div>
+      <div class="curated-search-bar">
+        <input type="text" id="curatedSearchInput" placeholder="输入脑海中的灵感关键词，生成属于你的精品合集" />
+        <button class="curated-search-btn" onclick="createCustomCollection()">生成合集</button>
+      </div>
+      <div class="collections-grid" id="collectionsGrid">
+        <!-- Rendered by JS -->
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===== Collection Detail View (合集内页) ===== -->
+<div class="container">
+  <div class="collection-detail-view" id="collectionDetailView">
+    <div class="collection-banner" id="collectionBanner"></div>
+    <div class="toolbar" id="collToolbar">
+      <div class="toolbar-left" id="collResultCount"></div>
+      <div class="toolbar-right">
+        <div class="view-toggle">
+          <button class="view-btn active" onclick="setView('grid',this)" title="网格">▦</button>
+          <button class="view-btn" onclick="setView('large',this)" title="大图">▣</button>
+        </div>
+      </div>
+    </div>
+    <div class="results-grid" id="collResultsGrid"></div>
+    <div class="loading-area" id="collLoading" style="display:none;">
+      <div class="loader"></div>
+      <div class="loading-text">正在加载合集内容…</div>
+    </div>
+    <div class="empty-state" id="collEmpty" style="display:none;">
+      <div class="empty-icon">🔍</div>
+      <h3>暂无内容</h3>
+      <p>该合集正在持续更新中</p>
+    </div>
+    <div class="pagination" id="collPagination"></div>
+  </div>
+</div>
+
+<!-- ===== Main (Search) ===== -->
+<div class="container">
+  <div class="toolbar" id="toolbar" style="display:none;">
+    <div class="toolbar-left" id="resultCount"></div>
+    <div class="toolbar-right">
+      <div class="view-toggle">
+        <button class="view-btn active" onclick="setView('grid',this)" title="网格">▦</button>
+        <button class="view-btn" onclick="setView('large',this)" title="大图">▣</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-layout" id="contentLayout" style="display:none;">
+    <!-- Sidebar -->
+    <aside class="filter-sidebar" id="filterSidebar">
+      <div class="filter-group">
+        <h3>部门</h3>
+        <div id="departmentFilters"></div>
+      </div>
+      <div class="filter-group">
+        <h3>文化地域</h3>
+        <div class="filter-option"><input type="checkbox" onchange="applyFilters()" data-filter="geo" value="China"> 中国</div>
+        <div class="filter-option"><input type="checkbox" onchange="applyFilters()" data-filter="geo" value="Japan"> 日本</div>
+        <div class="filter-option"><input type="checkbox" onchange="applyFilters()" data-filter="geo" value="Egypt"> 埃及</div>
+        <div class="filter-option"><input type="checkbox" onchange="applyFilters()" data-filter="geo" value="France"> 法国</div>
+        <div class="filter-option"><input type="checkbox" onchange="applyFilters()" data-filter="geo" value="Italy"> 意大利</div>
+        <div class="filter-option"><input type="checkbox" onchange="applyFilters()" data-filter="geo" value="Greece"> 希腊</div>
+        <div class="filter-option"><input type="checkbox" onchange="applyFilters()" data-filter="geo" value="Iran"> 伊朗</div>
+        <div class="filter-option"><input type="checkbox" onchange="applyFilters()" data-filter="geo" value="India"> 印度</div>
+      </div>
+      <div class="filter-group">
+        <h3>年代范围</h3>
+        <div class="date-range-row">
+          <input type="number" class="date-input" id="dateBegin" placeholder="起始" value="-3000">
+          <span>—</span>
+          <input type="number" class="date-input" id="dateEnd" placeholder="结束" value="2000">
+        </div>
+      </div>
+      <div class="filter-group">
+        <h3>授权</h3>
+        <div class="filter-option"><input type="checkbox" id="publicDomainOnly" checked onchange="applyFilters()"> 仅公共领域（CC0）</div>
+        <div class="filter-option"><input type="checkbox" id="hasImagesOnly" checked onchange="applyFilters()"> 仅含图片</div>
+      </div>
+    </aside>
+
+    <!-- Results -->
+    <main class="main-content">
+      <div class="results-grid" id="resultsGrid"></div>
+      <div class="loading-area" id="loadingSpinner" style="display:none;">
+        <div class="loader"></div>
+        <div class="loading-text">正在从博物馆获取藏品数据…</div>
+      </div>
+      <div class="empty-state" id="emptyState" style="display:none;">
+        <div class="empty-icon">🔍</div>
+        <h3>未找到相关藏品</h3>
+        <p>换个关键词试试，或调整筛选条件</p>
+      </div>
+      <div class="pagination" id="pagination"></div>
+    </main>
+  </div>
+</div>
+
+<!-- ===== Detail Modal ===== -->
+<div class="modal-overlay" id="detailModal">
+  <div class="modal-box">
+    <div class="modal-top">
+      <h2 id="modalTitle">加载中…</h2>
+      <button class="modal-close-btn" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-grid">
+      <div class="modal-photo" id="modalImageArea">
+        <div class="loading-area"><div class="loader"></div></div>
+      </div>
+      <div class="modal-details" id="modalInfo">
+        <div class="loading-area"><div class="loader"></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== Footer ===== -->
+<footer class="footer">
+  <div class="container">
+    内容力专区 Demo · 数据来源：The Metropolitan Museum of Art Open Access (CC0) · 仅供内部评估使用
+  </div>
+</footer>
+
+<!-- ===== Inspiration Explorer (Subpage via link) ===== -->
+<!-- 直接链接到 inspiration-page，由 inspiration-page 自己处理返回按钮 -->
+
+<!-- ===== JavaScript (unchanged logic, same API code) ===== -->
+<script>
+const state = {
+  query: '', source: 'all', currentPage: 1, pageSize: 40,
+  totalResults: 0, objectIDs: [], loadedItems: [], departments: [],
+  favorites: JSON.parse(localStorage.getItem('contentHub_favorites') || '[]'),
+  view: 'grid',
+  filters: { publicDomainOnly: true, hasImagesOnly: true, geoLocations: [], departmentId: null, dateBegin: -3000, dateEnd: 2000 }
+};
+
+const MET = 'https://collectionapi.metmuseum.org/public/collection/v1';
+
+// ===== Met API =====
+async function metSearch(q, f = {}) {
+  const p = new URLSearchParams(); p.set('q', q);
+  if (f.hasImagesOnly) p.set('hasImages', 'true');
+  if (f.publicDomainOnly) p.set('isPublicDomain', 'true');
+  if (f.departmentId) p.set('departmentId', f.departmentId);
+  if (f.geoLocations?.length) p.set('geoLocation', f.geoLocations.join('|'));
+  if (f.dateBegin != null && f.dateEnd != null) { p.set('dateBegin', f.dateBegin); p.set('dateEnd', f.dateEnd); }
+  const r = await fetch(`${MET}/search?${p}`); return r.json();
+}
+async function metObj(id) { return (await fetch(`${MET}/objects/${id}`)).json(); }
+async function metDepts() { try { const d = await (await fetch(`${MET}/departments`)).json(); return d.departments || []; } catch { return []; } }
+
+// ===== Met normalizer =====
+function norm(o) {
+  return {
+    id: `met:${o.objectID}`, source: 'met', sourceUrl: o.objectURL || '',
+    title: o.title || 'Untitled', desc: [o.objectName, o.medium].filter(Boolean).join(' · '),
+    img: { thumb: o.primaryImageSmall || '', full: o.primaryImage || '', extra: o.additionalImages || [] },
+    culture: o.culture || '', period: o.period || '', dateDisplay: o.objectDate || '',
+    dateRange: { begin: o.objectBeginDate || 0, end: o.objectEndDate || 0 },
+    medium: o.medium || '', classification: o.classification || '', department: o.department || '',
+    geo: { country: o.country || '', region: o.region || '', city: o.city || '' },
+    artist: { name: o.artistDisplayName || '', bio: o.artistDisplayBio || '' },
+    license: { type: o.isPublicDomain ? 'CC0' : 'Restricted', pd: o.isPublicDomain || false, com: o.isPublicDomain || false },
+    tags: (o.tags || []).map(t => t.term), dimensions: o.dimensions || '', raw: o
+  };
+}
+
+// ===== Search (Met only) =====
+async function performSearch(reset = true) {
+  const q = document.getElementById('searchInput').value.trim();
+  if (!q) return;
+  if (reset) state.currentPage = 1;
+  state.query = q;
+  document.getElementById('heroSection').style.display = 'none';
+  document.getElementById('collectionDetailView').classList.remove('active');
+  document.getElementById('projectPage')?.classList.remove('active');
+  document.getElementById('toolbar').style.display = 'flex';
+  document.getElementById('contentLayout').style.display = 'flex';
+  showLoad(true); clearGrid();
+  try {
+    const f = { ...state.filters, dateBegin: parseInt(document.getElementById('dateBegin').value) || -3000, dateEnd: parseInt(document.getElementById('dateEnd').value) || 2000 };
+    const res = await metSearch(q, f);
+    state.objectIDs = res.objectIDs || []; state.totalResults = res.total || 0;
+    document.getElementById('resultCount').innerHTML = `找到 <strong>${state.totalResults.toLocaleString()}</strong> 件藏品`;
+    if (!state.objectIDs.length) { showEmpty(true); showLoad(false); return; }
+    await loadPage();
+  } catch (e) { console.error(e); showLoad(false); showEmpty(true); }
+}
+
+async function loadPage() {
+  showLoad(true);
+  const s = (state.currentPage - 1) * state.pageSize;
+  const ids = state.objectIDs.slice(s, s + state.pageSize);
+  const items = [];
+  for (let i = 0; i < ids.length; i += 10) {
+    const batch = ids.slice(i, i + 10);
+    const results = await Promise.allSettled(batch.map(id => metObj(id)));
+    results.forEach(r => { if (r.status === 'fulfilled' && r.value) { const n = norm(r.value); if (n.img.thumb || n.img.full) items.push(n); } });
+    renderCards(items);
+  }
+  state.loadedItems = items;
+  showLoad(false);
+  if (!items.length) showEmpty(true);
+  renderPagination();
+}
+
+function renderCards(items) {
+  const g = document.getElementById('resultsGrid'); g.innerHTML = '';
+  items.forEach(item => {
+    const fav = state.favorites.includes(item.id);
+    const c = document.createElement('div'); c.className = 'card';
+    c.onclick = () => openDetail(item);
+    c.innerHTML = `
+      <div class="card-img-wrap">
+        ${item.img.thumb
+          ? `<img class="card-img" src="${item.img.thumb}" alt="${esc(item.title)}" loading="lazy" onerror="this.onerror=null;this.parentElement.innerHTML='<div class=\\'card-img-placeholder\\'>🖼️</div>'">`
+          : '<div class="card-img-placeholder">🖼️</div>'}
+        ${item.license.pd ? '<div class="badge-license">CC0</div>' : ''}
+        <button class="card-heart ${fav ? 'active' : ''}" onclick="event.stopPropagation(); toggleFav('${item.id}',this)">
+          ${fav ? '❤️' : '♡'}
+        </button>
+      </div>
+      <div class="card-info">
+        <div class="card-info-top"><div class="card-title-text">${esc(item.title)}</div></div>
+        ${item.culture ? `<div class="card-culture">${esc(item.culture)}</div>` : ''}
+        ${item.dateDisplay ? `<div class="card-date">${esc(item.dateDisplay)}</div>` : ''}
+        <div class="card-tag-row">
+          ${item.license.pd ? '<span class="mini-tag cc0">可商用</span>' : ''}
+          ${item.period ? `<span class="mini-tag">${esc(item.period)}</span>` : ''}
+        </div>
+      </div>`;
+    g.appendChild(c);
+  });
+}
+
+function renderPagination() {
+  const pg = document.getElementById('pagination');
+  const tp = Math.ceil(state.objectIDs.length / state.pageSize);
+  if (tp <= 1) { pg.innerHTML = ''; return; }
+  let h = `<button class="pg-btn" onclick="goPage(${state.currentPage-1})" ${state.currentPage<=1?'disabled':''}>‹</button>`;
+  let s = Math.max(1, state.currentPage - 3), e = Math.min(tp, s + 6);
+  if (e - s < 6) s = Math.max(1, e - 6);
+  if (s > 1) { h += `<button class="pg-btn" onclick="goPage(1)">1</button>`; if (s > 2) h += '<span style="color:var(--text-tertiary);padding:0 4px">…</span>'; }
+  for (let i = s; i <= e; i++) h += `<button class="pg-btn ${i===state.currentPage?'active':''}" onclick="goPage(${i})">${i}</button>`;
+  if (e < tp) { if (e < tp - 1) h += '<span style="color:var(--text-tertiary);padding:0 4px">…</span>'; h += `<button class="pg-btn" onclick="goPage(${tp})">${tp}</button>`; }
+  h += `<button class="pg-btn" onclick="goPage(${state.currentPage+1})" ${state.currentPage>=tp?'disabled':''}>›</button>`;
+  pg.innerHTML = h;
+}
+
+function goPage(p) {
+  const tp = Math.ceil(state.objectIDs.length / state.pageSize);
+  if (p < 1 || p > tp) return;
+  state.currentPage = p; clearGrid(); loadPage();
+  window.scrollTo({ top: 120, behavior: 'smooth' });
+}
+
+var lastDetailItem = null;
+async function openDetail(item) {
+  lastDetailItem = item;
+  const m = document.getElementById('detailModal');
+  m.classList.add('active'); document.body.style.overflow = 'hidden';
+  document.getElementById('modalTitle').textContent = item.title;
+  const ia = document.getElementById('modalImageArea');
+  const src = item.img.full || item.img.thumb;
+  ia.innerHTML = src ? `<img src="${src}" alt="${esc(item.title)}" onclick="window.open('${src}','_blank')">` : '<div class="card-img-placeholder" style="font-size:72px">🖼️</div>';
+  const info = document.getElementById('modalInfo');
+  const fav = state.favorites.includes(item.id);
+  info.innerHTML = `
+    <div class="detail-section">
+      <h4>版权信息</h4>
+      <div class="license-card">
+        <div class="license-type">${item.license.type}</div>
+        <div class="license-note">${item.license.pd ? '✅ 公共领域 · 可自由用于商业和非商业用途' : '⚠️ 受限使用 · 商用前请确认授权'}</div>
+      </div>
+    </div>
+    <div class="detail-section"><h4>基本信息</h4>
+      ${dr('标题', item.title)}${dr('年代', item.dateDisplay)}${dr('文化', item.culture)}
+      ${dr('时期', item.period)}${dr('分类', item.classification)}${dr('材质', item.medium)}
+      ${dr('部门', item.department)}${item.dimensions ? dr('尺寸', item.dimensions) : ''}
+    </div>
+    ${item.artist.name ? `<div class="detail-section"><h4>艺术家</h4>${dr('姓名', item.artist.name)}${dr('简介', item.artist.bio)}</div>` : ''}
+    ${item.geo.country ? `<div class="detail-section"><h4>地理信息</h4>${dr('国家', item.geo.country)}${item.geo.region ? dr('地区', item.geo.region) : ''}${item.geo.city ? dr('城市', item.geo.city) : ''}</div>` : ''}
+    ${item.tags.length ? `<div class="detail-section"><h4>标签</h4><div class="detail-tags">${item.tags.map(t=>`<span class="mini-tag">${esc(t)}</span>`).join('')}</div></div>` : ''}
+    ${item.img.extra.length ? `<div class="detail-section"><h4>更多图片 (${item.img.extra.length})</h4><div class="detail-thumbs">${item.img.extra.slice(0,6).map(u=>`<img src="${u}" onclick="document.querySelector('.modal-photo img').src='${u}'">`).join('')}</div></div>` : ''}
+    <div class="action-row">
+      <a class="btn-primary" href="${src}" target="_blank" onclick="event.stopPropagation()">⬇ 下载原图</a>
+      <button class="btn-outline" onclick="toggleFav('${item.id}');this.textContent=state.favorites.includes('${item.id}')?'❤️ 已收藏':'♡ 收藏'">
+        ${fav ? '❤️ 已收藏' : '♡ 收藏'}
+      </button>
+    </div>
+    <button class="btn-primary" style="width:100%;margin-top:var(--sp-3);background:linear-gradient(135deg,#6c5ce7,#a29bfe);" onclick="closeModal();openAIGenerate(lastDetailItem)">✨ 以此为参考 · AI 生成</button>
+    <a class="btn-link" href="${item.sourceUrl}" target="_blank">在 The Met 官网查看 →</a>
+  `;
+}
+function closeModal() { document.getElementById('detailModal').classList.remove('active'); document.body.style.overflow = ''; }
+document.getElementById('detailModal').addEventListener('click', function(e) { if (e.target === this) closeModal(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+function toggleFav(id, btn) {
+  const i = state.favorites.indexOf(id);
+  i >= 0 ? state.favorites.splice(i, 1) : state.favorites.push(id);
+  localStorage.setItem('contentHub_favorites', JSON.stringify(state.favorites));
+  if (btn) { const f = state.favorites.includes(id); btn.className = `card-heart ${f?'active':''}`; btn.textContent = f ? '❤️' : '♡'; }
+}
+function applyFilters() {
+  state.filters.geoLocations = Array.from(document.querySelectorAll('[data-filter="geo"]:checked')).map(c => c.value);
+  state.filters.publicDomainOnly = document.getElementById('publicDomainOnly').checked;
+  state.filters.hasImagesOnly = document.getElementById('hasImagesOnly').checked;
+  if (state.query) performSearch(true);
+}
+function switchSource(s, btn) { state.source = s; document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active')); btn.classList.add('active'); if (state.query) performSearch(true); }
+function quickSearch(q) { document.getElementById('searchInput').value = q; performSearch(true); }
+function setView(v, btn) {
+  state.view = v; document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active');
+  document.getElementById('resultsGrid').style.gridTemplateColumns = v === 'large' ? 'repeat(auto-fill, minmax(380px, 1fr))' : 'repeat(auto-fill, minmax(280px, 1fr))';
+}
+
+function showLoad(s) { document.getElementById('loadingSpinner').style.display = s ? 'flex' : 'none'; }
+function showEmpty(s) { document.getElementById('emptyState').style.display = s ? 'block' : 'none'; }
+function clearGrid() { document.getElementById('resultsGrid').innerHTML = ''; document.getElementById('pagination').innerHTML = ''; document.getElementById('emptyState').style.display = 'none'; }
+function esc(s) { const d = document.createElement('div'); d.textContent = s || ''; return d.innerHTML; }
+function dr(l, v) { return v ? `<div class="detail-row"><span class="dl">${l}</span><span class="dv">${esc(v)}</span></div>` : ''; }
+
+// ===================================================================
+// =================== 精品合集 (Curated Collections) =================
+// ===================================================================
+
+const COLLECTIONS = [
+  {
+    id: 'lingnan',
+    title: '岭南烟火',
+    subtitle: '广东 · 广西 · 海南',
+    description: '岭南文化跨越千年，从青铜器到广彩瓷、从石湾陶到广绣，汇聚中国南方沿海地区独特的艺术风情。',
+    coverObjectId: 202228,
+    searchQueries: ['Canton enamel', 'Chinese export', 'Guangdong', 'Canton porcelain', 'Chinese ivory fan', 'Cantonese'],
+    geoHint: 'China',
+    tags: ['岭南文化', '广东', '外销瓷', '广彩'],
+    color: '#d35400'
+  },
+  {
+    id: 'silk-road',
+    title: '丝路遗珍',
+    subtitle: '长安 → 撒马尔罕 → 君士坦丁堡',
+    description: '丝绸之路上的文明交汇——从唐三彩到波斯细密画、从中亚织锦到拜占庭金器，东西方审美在此碰撞融合。',
+    coverObjectId: 39918,
+    searchQueries: ['Tang dynasty', 'silk road', 'Persian miniature', 'Sogdian', 'Central Asian', 'Sassanian'],
+    geoHint: '',
+    tags: ['丝绸之路', '唐代', '波斯', '中亚'],
+    color: '#8e44ad'
+  },
+  {
+    id: 'edo-ukiyo',
+    title: '浮世绘卷',
+    subtitle: '江户 · 明治时代',
+    description: '从葛饰北斋的《富岳三十六景》到歌川广重的雨中风景，浮世绘以极致的线条与色彩诠释日本美学。',
+    coverObjectId: 45434,
+    searchQueries: ['ukiyo-e', 'Hokusai', 'Hiroshige', 'Japanese woodblock print', 'Japanese print Edo', 'Kuniyoshi'],
+    geoHint: 'Japan',
+    tags: ['浮世绘', '江户时代', '版画', '日本'],
+    color: '#c0392b'
+  },
+  {
+    id: 'medieval-armor',
+    title: '铁甲铮鸣',
+    subtitle: '欧洲 · 中世纪至文艺复兴',
+    description: '从十字军锁子甲到马克西米利安全身板甲，中世纪欧洲的武器与盔甲是力量与工艺的极致结合。',
+    coverObjectId: 23936,
+    searchQueries: ['armor plate', 'medieval sword', 'helmet knight', 'arms armor', 'jousting', 'shield heraldic'],
+    geoHint: '',
+    tags: ['中世纪', '盔甲', '骑士', '冷兵器'],
+    color: '#2c3e50'
+  },
+  {
+    id: 'egypt-afterlife',
+    title: '尼罗永生',
+    subtitle: '古埃及 · 法老时代',
+    description: '从图坦卡蒙的黄金面具到亡灵书的神秘符文，古埃及人以惊人的工艺追求永恒。',
+    coverObjectId: 544,
+    searchQueries: ['Egyptian coffin', 'Egyptian gold', 'scarab amulet', 'Egyptian sculpture', 'mummy', 'pharaoh'],
+    geoHint: '',
+    tags: ['古埃及', '法老', '木乃伊', '象形文字'],
+    color: '#d4a017'
+  },
+  {
+    id: 'song-aesthetics',
+    title: '宋韵清雅',
+    subtitle: '两宋 · 960–1279',
+    description: '宋代是中国审美的巅峰——汝窑天青、龙泉青瓷、山水长卷，极简中见无穷意境。',
+    coverObjectId: 39918,
+    searchQueries: ['Song dynasty', 'celadon', 'Chinese painting landscape', 'Jun ware', 'Ding ware', 'Longquan'],
+    geoHint: '',
+    tags: ['宋代', '瓷器', '山水画', '极简美学'],
+    color: '#27ae60'
+  },
+  {
+    id: 'islamic-geometry',
+    title: '天方几何',
+    subtitle: '伊斯兰世界 · 8–16世纪',
+    description: '从阿尔罕布拉宫的几何拼贴到伊朗清真寺的穹顶，伊斯兰艺术以数学之美创造了无尽的纹样宇宙。',
+    coverObjectId: 449533,
+    searchQueries: ['Islamic tile', 'mosque lamp', 'Iznik', 'Islamic calligraphy', 'arabesque', 'Persian carpet'],
+    geoHint: '',
+    tags: ['伊斯兰', '几何纹样', '瓷砖', '书法'],
+    color: '#16a085'
+  },
+  {
+    id: 'renaissance-masters',
+    title: '文艺复兴光影',
+    subtitle: '意大利 · 15–16世纪',
+    description: '从波提切利的线条到拉斐尔的构图，文艺复兴大师们重新定义了人类对美的理解。',
+    coverObjectId: 435848,
+    searchQueries: ['Renaissance painting', 'Italian sculpture', 'Raphael', 'Botticelli', 'Venetian painting', 'Florentine'],
+    geoHint: '',
+    tags: ['文艺复兴', '油画', '雕塑', '意大利'],
+    color: '#6c3483'
+  }
+];
+
+// Collection state
+const collState = {
+  current: null,
+  objectIDs: [],
+  loadedItems: [],
+  currentPage: 1,
+  pageSize: 24
+};
+
+// Dynamically load cover image from Met API for each collection
+async function loadCollectionCovers() {
+  for (const col of COLLECTIONS) {
+    if (col.coverObjectId && !col.cover) {
+      try {
+        const obj = await metObj(col.coverObjectId);
+        col.cover = obj.primaryImageSmall || obj.primaryImage || '';
+      } catch(e) { col.cover = ''; }
+    }
+  }
+  renderCollections();
+}
+
+// Render collection cards on homepage
+function renderCollections() {
+  const grid = document.getElementById('collectionsGrid');
+  grid.innerHTML = COLLECTIONS.map(col => `
+    <div class="collection-card" onclick="openCollection('${col.id}')" style="${!col.cover ? 'background:linear-gradient(135deg,'+col.color+','+col.color+'88);' : ''}">
+      ${col.cover ? `<img class="cover-img" src="${col.cover}" alt="${esc(col.title)}" loading="lazy" onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg,${col.color},${col.color}88)';">` : ''}
+      <div class="cover-overlay"></div>
+      <div class="cover-content">
+        <div class="cover-tag">${esc(col.subtitle)}</div>
+        <div class="cover-title">${esc(col.title)}</div>
+        <div class="cover-sub">${esc(col.description)}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// Open a collection → search all 3 sources → show detail view
+async function openCollection(id) {
+  const col = COLLECTIONS.find(c => c.id === id);
+  if (!col) return;
+  collState.current = col;
+  collState.currentPage = 1;
+  collState.objectIDs = [];
+  collState.loadedItems = [];
+
+  // Hide homepage, show collection detail view
+  document.getElementById('heroSection').style.display = 'none';
+  document.getElementById('toolbar').style.display = 'none';
+  document.getElementById('contentLayout').style.display = 'none';
+  document.getElementById('projectPage')?.classList.remove('active');
+  const detailView = document.getElementById('collectionDetailView');
+  detailView.classList.add('active');
+
+  // Render banner (use cover or gradient)
+  const bannerBg = col.cover
+    ? `<img src="${col.cover}" alt="${esc(col.title)}" onerror="this.style.display='none'">`
+    : '';
+  document.getElementById('collectionBanner').innerHTML = `
+    ${bannerBg}
+    <div class="banner-overlay" style="${!col.cover ? 'background:linear-gradient(135deg,'+col.color+','+col.color+'88);' : ''}"></div>
+    <div class="banner-content">
+      <div class="banner-back" onclick="closeCollection()">← 返回精品合集</div>
+      <div class="banner-title">${esc(col.title)}</div>
+      <div class="banner-desc">${esc(col.description)}</div>
+      <div class="banner-meta">
+        ${col.tags.map(t => `<span>${esc(t)}</span>`).join(' · ')}
+      </div>
+    </div>
+  `;
+
+  document.getElementById('collLoading').style.display = 'flex';
+  document.getElementById('collResultsGrid').innerHTML = '';
+  document.getElementById('collPagination').innerHTML = '';
+  document.getElementById('collEmpty').style.display = 'none';
+
+  try {
+    // Search Met API with all queries, merge results
+    const allIDs = new Set();
+    const searchPromises = col.searchQueries.map(q => {
+      const params = new URLSearchParams();
+      params.set('q', q); params.set('hasImages', 'true'); params.set('isPublicDomain', 'true');
+      if (col.geoHint) params.set('geoLocation', col.geoHint);
+      return fetch(`${MET}/search?${params}`).then(r => r.json());
+    });
+    const results = await Promise.allSettled(searchPromises);
+    results.forEach(r => {
+      if (r.status === 'fulfilled' && r.value && r.value.objectIDs) {
+        r.value.objectIDs.forEach(id => allIDs.add(id));
+      }
+    });
+
+    collState.objectIDs = shuffleArray([...allIDs]);
+    const total = collState.objectIDs.length;
+
+    document.getElementById('collResultCount').innerHTML =
+      `<strong>${esc(col.title)}</strong> · 共 <strong>${total.toLocaleString()}</strong> 件藏品`;
+
+    if (total === 0) {
+      document.getElementById('collLoading').style.display = 'none';
+      document.getElementById('collEmpty').style.display = 'block';
+      return;
+    }
+    await loadCollectionPage();
+  } catch(e) {
+    console.error('Collection load failed:', e);
+    document.getElementById('collLoading').style.display = 'none';
+    document.getElementById('collEmpty').style.display = 'block';
+  }
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+async function loadCollectionPage() {
+  document.getElementById('collLoading').style.display = 'flex';
+  const s = (collState.currentPage - 1) * collState.pageSize;
+  const ids = collState.objectIDs.slice(s, s + collState.pageSize);
+  const items = [];
+  for (let i = 0; i < ids.length; i += 8) {
+    const batch = ids.slice(i, i + 8);
+    const results = await Promise.allSettled(batch.map(id => metObj(id)));
+    results.forEach(r => {
+      if (r.status === 'fulfilled' && r.value) {
+        const n = norm(r.value);
+        if (n.img.thumb || n.img.full) items.push(n);
+      }
+    });
+    renderCollectionCards(items);
+  }
+  collState.loadedItems = items;
+  document.getElementById('collLoading').style.display = 'none';
+  if (!items.length) document.getElementById('collEmpty').style.display = 'block';
+  renderCollectionPagination();
+}
+
+function renderCollectionCards(items) {
+  const g = document.getElementById('collResultsGrid'); g.innerHTML = '';
+  items.forEach(item => {
+    const fav = state.favorites.includes(item.id);
+    const c = document.createElement('div'); c.className = 'card';
+    c.onclick = () => openDetail(item);
+    c.innerHTML = `
+      <div class="card-img-wrap">
+        ${item.img.thumb
+          ? `<img class="card-img" src="${item.img.thumb}" alt="${esc(item.title)}" loading="lazy" onerror="this.onerror=null;this.parentElement.innerHTML='<div class=\\'card-img-placeholder\\'>🖼️</div>'">`
+          : '<div class="card-img-placeholder">🖼️</div>'}
+        ${item.license.pd ? '<div class="badge-license">CC0</div>' : ''}
+        <button class="card-heart ${fav ? 'active' : ''}" onclick="event.stopPropagation(); toggleFav('${item.id}',this)">
+          ${fav ? '❤️' : '♡'}
+        </button>
+      </div>
+      <div class="card-info">
+        <div class="card-info-top"><div class="card-title-text">${esc(item.title)}</div></div>
+        ${item.culture ? `<div class="card-culture">${esc(item.culture)}</div>` : ''}
+        ${item.dateDisplay ? `<div class="card-date">${esc(item.dateDisplay)}</div>` : ''}
+        <div class="card-tag-row">
+          ${item.license.pd ? '<span class="mini-tag cc0">可商用</span>' : ''}
+          ${item.period ? `<span class="mini-tag">${esc(item.period)}</span>` : ''}
+        </div>
+      </div>`;
+    g.appendChild(c);
+  });
+}
+
+function renderCollectionPagination() {
+  const pg = document.getElementById('collPagination');
+  const tp = Math.ceil(collState.objectIDs.length / collState.pageSize);
+  if (tp <= 1) { pg.innerHTML = ''; return; }
+  let h = `<button class="pg-btn" onclick="goCollPage(${collState.currentPage-1})" ${collState.currentPage<=1?'disabled':''}>‹</button>`;
+  let s = Math.max(1, collState.currentPage - 3), e = Math.min(tp, s + 6);
+  if (e - s < 6) s = Math.max(1, e - 6);
+  if (s > 1) { h += `<button class="pg-btn" onclick="goCollPage(1)">1</button>`; if (s > 2) h += '<span style="color:var(--text-tertiary);padding:0 4px">…</span>'; }
+  for (let i = s; i <= e; i++) h += `<button class="pg-btn ${i===collState.currentPage?'active':''}" onclick="goCollPage(${i})">${i}</button>`;
+  if (e < tp) { if (e < tp - 1) h += '<span style="color:var(--text-tertiary);padding:0 4px">…</span>'; h += `<button class="pg-btn" onclick="goCollPage(${tp})">${tp}</button>`; }
+  h += `<button class="pg-btn" onclick="goCollPage(${collState.currentPage+1})" ${collState.currentPage>=tp?'disabled':''}>›</button>`;
+  pg.innerHTML = h;
+}
+
+function goCollPage(p) {
+  const tp = Math.ceil(collState.objectIDs.length / collState.pageSize);
+  if (p < 1 || p > tp) return;
+  collState.currentPage = p;
+  document.getElementById('collResultsGrid').innerHTML = '';
+  document.getElementById('collPagination').innerHTML = '';
+  loadCollectionPage();
+  window.scrollTo({ top: 340, behavior: 'smooth' });
+}
+
+function closeCollection() {
+  document.getElementById('collectionDetailView').classList.remove('active');
+  document.getElementById('heroSection').style.display = '';
+  collState.current = null;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function shuffleArray(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+// Create custom collection from user's keyword
+async function createCustomCollection() {
+  const input = document.getElementById('curatedSearchInput');
+  const keyword = input.value.trim();
+  if (!keyword) { input.focus(); return; }
+
+  // Create a temporary collection object
+  const colors = ['#e74c3c','#8e44ad','#2980b9','#27ae60','#d35400','#16a085','#c0392b','#2c3e50'];
+  const tempCol = {
+    id: 'custom_' + Date.now(),
+    title: keyword,
+    subtitle: '自定义合集',
+    description: `基于关键词「${keyword}」从 The Met 藏品中生成的精品合集`,
+    cover: '',
+    coverObjectId: null,
+    searchQueries: [keyword],
+    geoHint: '',
+    tags: [keyword],
+    color: colors[Math.floor(Math.random() * colors.length)]
+  };
+
+  // Temporarily add to COLLECTIONS and open it
+  collState.current = tempCol;
+  collState.currentPage = 1;
+  collState.objectIDs = [];
+  collState.loadedItems = [];
+
+  document.getElementById('heroSection').style.display = 'none';
+  document.getElementById('toolbar').style.display = 'none';
+  document.getElementById('contentLayout').style.display = 'none';
+  document.getElementById('projectPage')?.classList.remove('active');
+  const detailView = document.getElementById('collectionDetailView');
+  detailView.classList.add('active');
+
+  document.getElementById('collectionBanner').innerHTML = `
+    <div class="banner-overlay" style="background:linear-gradient(135deg,${tempCol.color},${tempCol.color}88);"></div>
+    <div class="banner-content">
+      <div class="banner-back" onclick="closeCollection()">← 返回精品合集</div>
+      <div class="banner-title">${esc(tempCol.title)}</div>
+      <div class="banner-desc">${esc(tempCol.description)}</div>
+    </div>
+  `;
+
+  document.getElementById('collLoading').style.display = 'flex';
+  document.getElementById('collResultsGrid').innerHTML = '';
+  document.getElementById('collPagination').innerHTML = '';
+  document.getElementById('collEmpty').style.display = 'none';
+
+  try {
+    const params = new URLSearchParams();
+    params.set('q', keyword); params.set('hasImages', 'true'); params.set('isPublicDomain', 'true');
+    const res = await fetch(`${MET}/search?${params}`).then(r => r.json());
+    collState.objectIDs = shuffleArray(res.objectIDs || []);
+    const total = collState.objectIDs.length;
+
+    document.getElementById('collResultCount').innerHTML =
+      `<strong>${esc(keyword)}</strong> · 共 <strong>${total.toLocaleString()}</strong> 件藏品`;
+
+    if (total === 0) {
+      document.getElementById('collLoading').style.display = 'none';
+      document.getElementById('collEmpty').style.display = 'block';
+      return;
+    }
+    await loadCollectionPage();
+  } catch(e) {
+    console.error(e);
+    document.getElementById('collLoading').style.display = 'none';
+    document.getElementById('collEmpty').style.display = 'block';
+  }
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function goHome() {
+  document.getElementById('heroSection').style.display = '';
+  document.getElementById('collectionDetailView').classList.remove('active');
+  document.getElementById('toolbar').style.display = 'none';
+  document.getElementById('contentLayout').style.display = 'none';
+  document.getElementById('searchInput').value = '';
+  state.query = '';
+  collState.current = null;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ===================================================================
+
+// ===================================================================
+// =================== 我的项目 (My Projects) ========================
+// ===================================================================
+
+// Project data structure (persisted in localStorage)
+const projectStore = {
+  projects: JSON.parse(localStorage.getItem('contentHub_projects') || 'null') || [
+    { id: 'default', name: '默认项目', emoji: '📂', favIds: [], generations: [] }
+  ],
+  activeProjectId: 'default',
+  save() {
+    localStorage.setItem('contentHub_projects', JSON.stringify(this.projects));
+  },
+  getActive() { return this.projects.find(p => p.id === this.activeProjectId) || this.projects[0]; },
+  getFavItems() {
+    // Return cached fav item data
+    return JSON.parse(localStorage.getItem('contentHub_favItemsCache') || '[]');
+  },
+  cacheFavItem(item) {
+    const cache = this.getFavItems();
+    if (!cache.find(c => c.id === item.id)) {
+      cache.push({ id: item.id, title: item.title, img: item.img.thumb || item.img.full, culture: item.culture, dateDisplay: item.dateDisplay });
+      localStorage.setItem('contentHub_favItemsCache', JSON.stringify(cache));
+    }
+  }
+};
+
+// Migrate old favorites into default project
+(function migrateFavs() {
+  const oldFavs = state.favorites;
+  const proj = projectStore.getActive();
+  if (oldFavs.length && !proj.favIds.length) {
+    proj.favIds = [...oldFavs];
+    projectStore.save();
+  }
+})();
+
+// Sidebar toggle
+function toggleSidebar() {
+  const rail = document.getElementById('sidebarRail');
+  rail.classList.toggle('expanded');
+  document.body.classList.toggle('sidebar-open', rail.classList.contains('expanded'));
+  if (rail.classList.contains('expanded')) renderSidebarContent();
+}
+
+function showSidebarTab(tab) {
+  // Just ensure sidebar is open and scroll to section
+  const rail = document.getElementById('sidebarRail');
+  if (!rail.classList.contains('expanded')) toggleSidebar();
+}
+
+function renderSidebarContent() {
+  // Render projects list
+  const listEl = document.getElementById('sidebarProjectsList');
+  listEl.innerHTML = projectStore.projects.map(p => `
+    <div class="sidebar-project-item" onclick="openProjectPage('${p.id}')">
+      <span class="proj-emoji">${p.emoji}</span>
+      <span class="proj-name">${esc(p.name)}</span>
+      <span class="proj-count">${p.favIds.length + p.generations.length}</span>
+    </div>
+  `).join('');
+
+  // Render fav thumbnails
+  const favsStrip = document.getElementById('sidebarFavsStrip');
+  const proj = projectStore.getActive();
+  const favCache = projectStore.getFavItems();
+  const recentFavs = proj.favIds.slice(-8).reverse();
+  if (recentFavs.length) {
+    favsStrip.innerHTML = recentFavs.map(fid => {
+      const cached = favCache.find(c => c.id === fid);
+      if (cached && cached.img) {
+        return `<img class="sidebar-fav-thumb" src="${cached.img}" title="${esc(cached.title)}" onclick="event.stopPropagation();">`;
+      }
+      return '';
+    }).join('') || '<div style="font-size:13px;color:var(--text-tertiary);">暂无收藏</div>';
+  } else {
+    favsStrip.innerHTML = '<div style="font-size:13px;color:var(--text-tertiary);">暂无收藏</div>';
+  }
+
+  // Render gen thumbnails
+  const gensStrip = document.getElementById('sidebarGensStrip');
+  const recentGens = proj.generations.slice(-8).reverse();
+  if (recentGens.length) {
+    gensStrip.innerHTML = recentGens.map(g =>
+      `<img class="sidebar-fav-thumb" src="${g.resultImg}" title="${esc(g.prompt)}" onclick="event.stopPropagation();">`
+    ).join('');
+  } else {
+    gensStrip.innerHTML = '<div style="font-size:13px;color:var(--text-tertiary);">暂无生成记录</div>';
+  }
+
+  // Update fav badge
+  document.getElementById('favBadge').style.display = proj.favIds.length > 0 ? 'block' : 'none';
+}
+
+function createNewProject() {
+  const name = prompt('项目名称：', '新项目 ' + (projectStore.projects.length + 1));
+  if (!name) return;
+  const emojis = ['🎮', '🎨', '⚔️', '🏰', '🐉', '🌸', '🔮', '🗡️'];
+  const p = {
+    id: 'proj_' + Date.now(),
+    name: name,
+    emoji: emojis[Math.floor(Math.random() * emojis.length)],
+    favIds: [],
+    generations: []
+  };
+  projectStore.projects.push(p);
+  projectStore.save();
+  renderSidebarContent();
+}
+
+// Override toggleFav to also update project + cache item
+const _origToggleFav = toggleFav;
+toggleFav = function(id, btn) {
+  _origToggleFav(id, btn);
+  // Sync to active project
+  const proj = projectStore.getActive();
+  const idx = proj.favIds.indexOf(id);
+  if (state.favorites.includes(id) && idx < 0) {
+    proj.favIds.push(id);
+  } else if (!state.favorites.includes(id) && idx >= 0) {
+    proj.favIds.splice(idx, 1);
+  }
+  projectStore.save();
+
+  // Cache the item data if we have it
+  const allItems = [...state.loadedItems, ...collState.loadedItems];
+  const item = allItems.find(i => i.id === id);
+  if (item) projectStore.cacheFavItem(item);
+
+  // Update sidebar if open
+  if (document.getElementById('sidebarRail').classList.contains('expanded')) renderSidebarContent();
+};
+
+// ===== Project Detail Page =====
+function openProjectPage(projId) {
+  projectStore.activeProjectId = projId;
+  const proj = projectStore.getActive();
+
+  // Hide other views
+  document.getElementById('heroSection').style.display = 'none';
+  document.getElementById('collectionDetailView').classList.remove('active');
+  document.getElementById('toolbar').style.display = 'none';
+  document.getElementById('contentLayout').style.display = 'none';
+
+  // Show project page
+  const page = document.getElementById('projectPage');
+  page.classList.add('active');
+
+  document.getElementById('projPageTitle').textContent = proj.emoji + ' ' + proj.name;
+  document.getElementById('projPageMeta').textContent = `${proj.favIds.length} 件素材 · ${proj.generations.length} 个生成`;
+
+  // Render collected tab
+  renderProjFavs(proj);
+  renderProjGens(proj);
+  switchProjTab('collected', document.querySelector('.project-tab'));
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function closeProjectPage() {
+  document.getElementById('projectPage').classList.remove('active');
+  document.getElementById('heroSection').style.display = '';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function switchProjTab(tab, btn) {
+  document.querySelectorAll('.project-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('projTabCollected').classList.toggle('active', tab === 'collected');
+  document.getElementById('projTabGenerated').classList.toggle('active', tab === 'generated');
+}
+
+function renderProjFavs(proj) {
+  const grid = document.getElementById('projFavsGrid');
+  const cache = projectStore.getFavItems();
+  const items = proj.favIds.map(fid => cache.find(c => c.id === fid)).filter(Boolean);
+
+  if (!items.length) {
+    grid.innerHTML = '';
+    document.getElementById('projFavsEmpty').style.display = 'block';
+    return;
+  }
+  document.getElementById('projFavsEmpty').style.display = 'none';
+  grid.innerHTML = items.map(item => `
+    <div class="card" onclick="alert('素材详情功能：点击可跳转回搜索该素材')">
+      <div class="card-img-wrap">
+        ${item.img ? `<img class="card-img" src="${item.img}" alt="${esc(item.title)}" loading="lazy">` : '<div class="card-img-placeholder">🖼️</div>'}
+      </div>
+      <div class="card-info">
+        <div class="card-info-top"><div class="card-title-text">${esc(item.title)}</div></div>
+        ${item.culture ? `<div class="card-culture">${esc(item.culture)}</div>` : ''}
+        ${item.dateDisplay ? `<div class="card-date">${esc(item.dateDisplay)}</div>` : ''}
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderProjGens(proj) {
+  const grid = document.getElementById('projGensGrid');
+  if (!proj.generations.length) {
+    grid.innerHTML = '';
+    document.getElementById('projGensEmpty').style.display = 'block';
+    return;
+  }
+  document.getElementById('projGensEmpty').style.display = 'none';
+  grid.innerHTML = proj.generations.map(g => `
+    <div class="gen-card">
+      <img class="gen-card-img" src="${g.resultImg}" alt="Generated">
+      <div class="gen-card-body">
+        <div class="gen-card-prompt">${esc(g.prompt)}</div>
+        <div class="gen-card-meta">${g.style} · ${g.timestamp}</div>
+        ${g.refImg ? `<div class="gen-card-base"><img src="${g.refImg}"><span>参考自 ${esc(g.refTitle || '')}</span></div>` : ''}
+      </div>
+    </div>
+  `).join('');
+}
+
+// ===== AI Generate Modal =====
+var genRefItem = null;
+var genSelectedStyles = [];
+
+function openAIGenerate(item) {
+  genRefItem = item;
+  genSelectedStyles = [];
+  document.getElementById('genPromptInput').value = '';
+  document.getElementById('genResult').classList.remove('active');
+  document.getElementById('genSubmitBtn').disabled = false;
+  document.getElementById('genSubmitBtn').textContent = '🚀 开始生成';
+
+  // Style chips reset
+  document.querySelectorAll('.gen-style-chip').forEach(c => c.classList.remove('active'));
+
+  // Reference card
+  const refCard = document.getElementById('genRefCard');
+  if (item) {
+    refCard.style.display = 'flex';
+    document.getElementById('genRefImg').src = item.img.thumb || item.img.full;
+    document.getElementById('genRefTitle').textContent = item.title;
+    document.getElementById('genRefMeta').textContent = [item.culture, item.dateDisplay, item.medium].filter(Boolean).join(' · ');
+  } else {
+    refCard.style.display = 'none';
+  }
+
+  document.getElementById('genModal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeGenModal() {
+  document.getElementById('genModal').classList.remove('active');
+  document.body.style.overflow = '';
+}
+document.getElementById('genModal').addEventListener('click', function(e) { if (e.target === this) closeGenModal(); });
+
+function toggleGenStyle(btn) {
+  btn.classList.toggle('active');
+  const style = btn.dataset.style;
+  const idx = genSelectedStyles.indexOf(style);
+  idx >= 0 ? genSelectedStyles.splice(idx, 1) : genSelectedStyles.push(style);
+}
+
+// Simulated generation with placeholder images
+const MOCK_GEN_IMAGES = [
+  'https://images.metmuseum.org/CRDImages/as/original/DP251139.jpg',
+  'https://images.metmuseum.org/CRDImages/ep/original/DT1567.jpg',
+  'https://images.metmuseum.org/CRDImages/aa/original/DP-12881-025.jpg',
+  'https://images.metmuseum.org/CRDImages/is/original/DP231343.jpg',
+  'https://images.metmuseum.org/CRDImages/eg/original/DT531.jpg',
+  'https://images.metmuseum.org/CRDImages/as/original/DP141102.jpg',
+];
+
+async function simulateGenerate() {
+  const prompt = document.getElementById('genPromptInput').value.trim();
+  if (!prompt) { document.getElementById('genPromptInput').focus(); return; }
+
+  const btn = document.getElementById('genSubmitBtn');
+  btn.disabled = true;
+  btn.textContent = '⏳ 生成中…';
+  document.getElementById('genResult').classList.remove('active');
+
+  // Simulate 2-3 seconds delay
+  await new Promise(r => setTimeout(r, 2000 + Math.random() * 1000));
+
+  // Pick a random mock image
+  const mockImg = MOCK_GEN_IMAGES[Math.floor(Math.random() * MOCK_GEN_IMAGES.length)];
+
+  document.getElementById('genResultImg').src = mockImg;
+  document.getElementById('genResultPrompt').textContent =
+    `Prompt: "${prompt}" · 风格: ${genSelectedStyles.join(', ') || '默认'} · (模拟生成结果)`;
+  document.getElementById('genResult').classList.add('active');
+
+  btn.disabled = false;
+  btn.textContent = '🚀 开始生成';
+
+  // Store temp generation data
+  window._lastGen = {
+    prompt,
+    style: genSelectedStyles.join(', ') || '默认',
+    resultImg: mockImg,
+    refImg: genRefItem ? (genRefItem.img.thumb || genRefItem.img.full) : null,
+    refTitle: genRefItem ? genRefItem.title : null,
+    timestamp: new Date().toLocaleString('zh-CN', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })
+  };
+}
+
+function saveGeneration() {
+  if (!window._lastGen) return;
+  const proj = projectStore.getActive();
+  proj.generations.push(window._lastGen);
+  projectStore.save();
+  window._lastGen = null;
+
+  closeGenModal();
+  alert('✅ 已保存到项目「' + proj.name + '」');
+
+  // Refresh sidebar
+  if (document.getElementById('sidebarRail').classList.contains('expanded')) renderSidebarContent();
+
+  // Refresh project page if open
+  if (document.getElementById('projectPage').classList.contains('active')) {
+    renderProjGens(proj);
+    document.getElementById('projPageMeta').textContent = `${proj.favIds.length} 件素材 · ${proj.generations.length} 个生成`;
+  }
+}
+
+// Also update goHome to close project page
+const _origGoHome = goHome;
+goHome = function() {
+  document.getElementById('projectPage').classList.remove('active');
+  _origGoHome();
+};
+
+// ===================================================================
+
+async function init() {
+  try {
+    const ds = await metDepts(); state.departments = ds;
+    const c = document.getElementById('departmentFilters');
+    c.innerHTML = `<div class="filter-option"><input type="radio" name="dept" value="" checked onchange="state.filters.departmentId=null;if(state.query)performSearch(true)"> 全部</div>`
+      + ds.map(d => `<div class="filter-option"><input type="radio" name="dept" value="${d.departmentId}" onchange="state.filters.departmentId=${d.departmentId};if(state.query)performSearch(true)"> ${esc(d.displayName)}</div>`).join('');
+  } catch(e) { console.error(e); }
+  document.getElementById('searchInput').addEventListener('keydown', e => { if (e.key === 'Enter') performSearch(true); });
+  document.getElementById('curatedSearchInput').addEventListener('keydown', e => { if (e.key === 'Enter') createCustomCollection(); });
+
+  // Render curated collections on homepage (with gradient fallback first)
+  renderCollections();
+  // Then async load covers from Met API
+  loadCollectionCovers();
+
+  // Init sidebar fav badge
+  renderSidebarContent();
+}
+init();
+</script>
+</body>
+</html>
