@@ -176,6 +176,148 @@ img { display: block; }
   font-weight: 400; line-height: 1.5;
 }
 
+/* ===== Hero Search Bar (Large) ===== */
+.hero-search {
+  display: flex; align-items: center;
+  max-width: 720px; margin: 0 auto var(--sp-6);
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  padding: var(--sp-2) var(--sp-2) var(--sp-2) var(--sp-5);
+  box-shadow: var(--shadow-md);
+  transition: box-shadow var(--duration) var(--ease), border-color var(--duration) var(--ease);
+}
+.hero-search:hover { box-shadow: var(--shadow-lg); }
+.hero-search:focus-within {
+  box-shadow: var(--shadow-lg);
+  border-color: var(--near-black);
+}
+.hero-search input {
+  flex: 1; border: none; outline: none;
+  font-size: 16px; font-weight: 500;
+  color: var(--near-black);
+  background: transparent;
+  padding: var(--sp-3) 0;
+}
+.hero-search input::placeholder { color: var(--text-tertiary); }
+.hero-search-btn {
+  flex-shrink: 0;
+  padding: var(--sp-3) var(--sp-5);
+  border-radius: var(--radius-pill);
+  background: var(--rausch);
+  color: var(--white);
+  font-size: 15px; font-weight: 600;
+  transition: background var(--duration) var(--ease), transform var(--duration) var(--ease);
+}
+.hero-search-btn:hover {
+  background: var(--rausch-deep);
+  transform: scale(1.02);
+}
+
+/* ===== "猜你想搜" 快捷搜索词（Hero 搜索框下方）===== */
+.hero-suggest {
+  max-width: 720px;
+  margin: -16px auto var(--sp-6);
+  padding: 0 var(--sp-3);
+  font-size: 13px;
+  color: var(--text-tertiary);
+  display: flex; align-items: center; flex-wrap: nowrap;  /* 强制单行 */
+  gap: 14px;
+  line-height: 1.6;
+  overflow: hidden;  /* 兜底：超出隐藏避免破坏布局 */
+  white-space: nowrap;
+}
+.hero-suggest .hs-label {
+  color: var(--text-tertiary);
+  flex-shrink: 0;
+}
+.hero-suggest .hs-link {
+  color: var(--text-secondary);
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  padding: 0;
+  font-size: 13px;
+  font-family: inherit;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: color var(--duration) var(--ease);
+}
+.hero-suggest .hs-link:hover {
+  color: var(--rausch);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+/* 关键词容器：横向单行，与 label / shuffle 同行 */
+.hero-suggest .hs-words {
+  display: inline-flex; align-items: center; flex-wrap: nowrap;
+  gap: 14px;
+  flex: 1; min-width: 0;
+  overflow: hidden;
+}
+/* "换一批"按钮 — 与关键词同色系，加换行图标作区分 */
+.hero-suggest .hs-shuffle {
+  display: inline-flex; align-items: center; gap: 3px;
+  margin-left: auto;
+  padding: 2px 8px;
+  font-size: 12px; font-family: inherit;
+  color: var(--text-tertiary);
+  background: transparent;
+  border: 1px dashed rgba(0,0,0,0.15);
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: color var(--duration) var(--ease), border-color var(--duration) var(--ease);
+}
+.hero-suggest .hs-shuffle:hover {
+  color: var(--rausch);
+  border-color: var(--rausch);
+}
+.hero-suggest .hs-shuffle .hs-shuffle-icon {
+  font-size: 11px;
+  display: inline-block;
+  transition: transform var(--duration) var(--ease);
+}
+.hero-suggest .hs-shuffle:hover .hs-shuffle-icon {
+  transform: rotate(180deg);
+}
+
+/* ===== Results Page Search Bar ===== */
+.results-search-bar {
+  display: flex; align-items: center;
+  margin: var(--sp-5) 0 var(--sp-3);
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  padding: var(--sp-1) var(--sp-1) var(--sp-1) var(--sp-5);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow var(--duration) var(--ease), border-color var(--duration) var(--ease);
+}
+.results-search-bar:hover { box-shadow: var(--shadow-md); }
+.results-search-bar:focus-within {
+  box-shadow: var(--shadow-md);
+  border-color: var(--near-black);
+}
+.results-search-bar input {
+  flex: 1; border: none; outline: none;
+  font-size: 14px; font-weight: 500;
+  color: var(--near-black);
+  background: transparent;
+  padding: var(--sp-2) 0;
+}
+.results-search-bar input::placeholder { color: var(--text-tertiary); }
+.results-search-btn {
+  flex-shrink: 0;
+  padding: var(--sp-2) var(--sp-4);
+  border-radius: var(--radius-pill);
+  background: var(--rausch);
+  color: var(--white);
+  font-size: 13px; font-weight: 600;
+  transition: background var(--duration) var(--ease);
+}
+.results-search-btn:hover { background: var(--rausch-deep); }
+
 /* ===== Category Pills ===== */
 .category-bar {
   display: flex; justify-content: center;
@@ -263,6 +405,16 @@ img { display: block; }
   letter-spacing: 0.5px;
   margin-bottom: var(--sp-3);
 }
+/* 分组标题旁的小字说明（如"一件可挂多个"） */
+.filter-group h3 .filter-hint {
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--text-tertiary);
+  text-transform: none;
+  letter-spacing: 0;
+  margin-left: var(--sp-2);
+  opacity: 0.7;
+}
 .filter-option {
   display: flex; align-items: center; gap: var(--sp-2);
   padding: var(--sp-2) 0;
@@ -276,6 +428,37 @@ img { display: block; }
   accent-color: var(--near-black);
   width: 18px; height: 18px;
   border-radius: 4px;
+}
+/* 三态授权复选框旁的色点（与卡片徽章颜色对应） */
+.filter-option .lic-dot {
+  display: inline-block;
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.filter-option .lic-hint {
+  margin-left: auto;
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+/* 每个筛选项行尾的命中数（B 方案：联动命中数，实时反映当前筛选后的分布） */
+.filter-option .filter-count {
+  margin-left: auto;
+  font-size: 11px;
+  color: var(--text-tertiary);
+  font-variant-numeric: tabular-nums;
+  min-width: 22px;
+  text-align: right;
+}
+/* 命中为 0 时整行灰化（可见但不醒目，作为"当前筛选下无供给"的信号） */
+.filter-option.is-zero {
+  opacity: 0.45;
+}
+.filter-option.is-zero:hover { opacity: 0.75; }
+/* lic-hint 与 filter-count 同时存在时，让 count 紧挨最右，hint 排在其左 */
+.filter-option .lic-hint + .filter-count,
+.filter-option .filter-count + .lic-hint {
+  margin-left: var(--sp-2);
 }
 .date-range-row {
   display: flex; gap: var(--sp-2); align-items: center;
@@ -350,16 +533,44 @@ img { display: block; }
   letter-spacing: 0.3px;
   color: var(--text-secondary);
 }
-/* Badge: license */
-.badge-license {
-  position: absolute; top: var(--sp-3); right: var(--sp-3);
-  background: var(--near-black);
-  color: var(--white);
+/* Badge: license — 三态配色 */
+/*  com        → 绿色：可商用（CC0、CC BY 4.0）                            */
+/*  copyright  → 黄色：受版权保护（作品仍在版权期，需联系版权方）             */
+/*  restricted → 灰色：来源馆限制（作品多为公共领域但馆方要求非商用，可付费授权）*/
+.badge-license, .badge-license-com, .badge-license-copyright, .badge-license-restricted {
+  /* 内联式徽章：放在卡片信息区 .card-tag-row 中（与 period 等 mini-tag 同行） */
+  display: inline-block;
   padding: 3px var(--sp-2);
   border-radius: var(--radius-sm);
   font-size: 10px; font-weight: 700;
   letter-spacing: 0.3px;
+  vertical-align: middle;
 }
+.badge-license { background: var(--near-black); color: var(--white); }
+/* 三态徽章配色 */
+.badge-license-com        { background: var(--success);  color: var(--white); } /* 绿色：可商用 */
+.badge-license-copyright  { background: #d97706;         color: var(--white); } /* 琥珀黄：受版权保护 */
+.badge-license-restricted { background: #9aa0a6;         color: var(--white); } /* 灰色：来源馆限制 */
+/* License card variants（详情弹窗版权信息卡片） */
+.license-card.com        { border-color: rgba(0,138,5,0.3);    background: rgba(0,138,5,0.04); }
+.license-card.copyright  { border-color: rgba(217,119,6,0.35); background: rgba(217,119,6,0.05); }
+.license-card.restricted { border-color: rgba(154,160,166,0.4); background: rgba(154,160,166,0.06); }
+/* 详情弹窗版权卡片底部「灵感参考使用建议」（弱化提示，与官方说明用分隔线区分） */
+.license-card .usage-tip {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px dashed rgba(0,0,0,0.08);
+  font-size: 12px;
+  color: var(--text-tertiary);
+  line-height: 1.5;
+  display: flex;
+  gap: 6px;
+  align-items: flex-start;
+}
+.license-card .usage-tip .ut-icon { flex-shrink: 0; font-size: 13px; }
+/* Nav tabs scrollable on small screens */
+.nav-tabs { overflow-x: auto; white-space: nowrap; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+.nav-tabs::-webkit-scrollbar { display: none; }
 /* Fav heart */
 .card-heart {
   position: absolute; top: var(--sp-3); right: var(--sp-3);
@@ -1148,10 +1359,6 @@ body.sidebar-open { padding-left: 280px; }
       <span class="logo-icon">🏛️</span>
       <span>内容力专区</span>
     </div>
-    <div class="search-capsule">
-      <input type="text" id="searchInput" placeholder="搜索文物、艺术品、纹样… 支持中英文" />
-      <button class="search-icon-btn" onclick="performSearch()">🔍</button>
-    </div>
     <div class="nav-tabs">
       <button class="nav-tab active" data-source="all" onclick="switchSource('all', this)">全部</button>
       <button class="nav-tab" data-source="met" onclick="switchSource('met', this)">The Met</button>
@@ -1164,59 +1371,43 @@ body.sidebar-open { padding-left: 280px; }
 <section class="hero" id="heroSection">
   <div class="container">
     <h1>探索全球博物馆的<span class="accent">宝藏素材</span></h1>
-    <p class="hero-sub">从大都会艺术博物馆 49 万+ CC0 高清图像中，为你的游戏项目找到灵感与参考</p>
+    <p class="hero-sub">聚合 7 大博物馆 CC0/开放授权高清图像，为你的游戏项目找到灵感与参考</p>
 
-    <!-- Category Pills -->
-    <div class="category-bar">
-      <button class="category-pill" onclick="quickSearch('Chinese ceramics')">
-        <span class="pill-icon">🏺</span>
-        <span class="pill-text">中国陶瓷</span>
-      </button>
-      <button class="category-pill" onclick="quickSearch('Japanese armor samurai')">
-        <span class="pill-icon">⚔️</span>
-        <span class="pill-text">日本甲胄</span>
-      </button>
-      <button class="category-pill" onclick="quickSearch('medieval European tapestry')">
-        <span class="pill-icon">🧵</span>
-        <span class="pill-text">中世纪挂毯</span>
-      </button>
-      <button class="category-pill" onclick="quickSearch('Egyptian sculpture')">
-        <span class="pill-icon">🗿</span>
-        <span class="pill-text">埃及雕塑</span>
-      </button>
-      <button class="category-pill" onclick="quickSearch('Song dynasty painting')">
-        <span class="pill-icon">🎨</span>
-        <span class="pill-text">宋代绘画</span>
-      </button>
-      <button class="category-pill" onclick="quickSearch('Greek vase')">
-        <span class="pill-icon">🏛️</span>
-        <span class="pill-text">希腊花瓶</span>
-      </button>
-      <button class="category-pill" onclick="quickSearch('Islamic pattern tile')">
-        <span class="pill-icon">✨</span>
-        <span class="pill-text">伊斯兰纹样</span>
-      </button>
-      <button class="category-pill" onclick="quickSearch('Renaissance portrait')">
-        <span class="pill-icon">🖼️</span>
-        <span class="pill-text">文艺复兴</span>
-      </button>
-    </div>
-
-    <!-- Stats -->
+    <!-- Stats（移到搜索框上方，强化"我们有多大"的认知）-->
     <div class="stats-row">
       <div class="stat">
-        <div class="stat-number">470,000+</div>
-        <div class="stat-label">可访问藏品</div>
+        <div class="stat-number">7</div>
+        <div class="stat-label">博物馆数据源</div>
       </div>
       <div class="stat">
-        <div class="stat-number">492,000+</div>
-        <div class="stat-label">CC0 图像</div>
+        <div class="stat-number">800,000+</div>
+        <div class="stat-label">CC0 / 开放授权图像</div>
       </div>
       <div class="stat">
         <div class="stat-number">5,000+</div>
         <div class="stat-label">年跨度</div>
       </div>
     </div>
+
+    <!-- Hero Search Bar -->
+    <div class="hero-search">
+      <input type="text" id="searchInput" placeholder="搜索文物、艺术品、纹样… 支持中英文" />
+      <button class="hero-search-btn" onclick="performSearch()">🔍 搜索</button>
+    </div>
+
+    <!-- "猜你想搜" 快捷搜索词（关键词由 SUGGEST_POOL 池随机抽取，可点"换一批"刷新）-->
+    <div class="hero-suggest">
+      <span class="hs-label">猜你想搜：</span>
+      <span class="hs-words" id="heroSuggestWords"><!-- JS 动态填充 --></span>
+      <button class="hs-shuffle" onclick="shuffleSuggest()" title="换一批">
+        <span class="hs-shuffle-icon">🔄</span>
+        <span>换一批</span>
+      </button>
+    </div>
+
+
+    <!-- Category Pills 已下线（2026-05-13）：与 Hero 搜索框下的「猜你想搜」一行功能重复，简化首页。
+         CSS .category-bar / .category-pill 仍保留备用。 -->
 
     <!-- ===== 精品展示区 ===== -->
     <div class="curated-section" id="curatedSection">
@@ -1264,6 +1455,10 @@ body.sidebar-open { padding-left: 280px; }
 
 <!-- ===== Main (Search) ===== -->
 <div class="container">
+  <div class="results-search-bar" id="resultsSearchBar" style="display:none;">
+    <input type="text" id="searchInputResults" placeholder="搜索文物、艺术品、纹样… 支持中英文" />
+    <button class="results-search-btn" onclick="performSearchFromResults()">🔍 搜索</button>
+  </div>
   <div class="toolbar" id="toolbar" style="display:none;">
     <div class="toolbar-left" id="resultCount"></div>
     <div class="toolbar-right">
@@ -1278,8 +1473,44 @@ body.sidebar-open { padding-left: 280px; }
     <!-- Sidebar -->
     <aside class="filter-sidebar" id="filterSidebar">
       <div class="filter-group">
-        <h3>部门</h3>
-        <div id="departmentFilters"></div>
+        <h3>数据来源</h3>
+        <div class="filter-option"><input type="checkbox" checked data-filter="source" value="met" onchange="applyFilters()"> 🇺🇸 The Met</div>
+        <div class="filter-option"><input type="checkbox" checked data-filter="source" value="aic" onchange="applyFilters()"> 🇺🇸 AIC Chicago</div>
+        <div class="filter-option"><input type="checkbox" checked data-filter="source" value="cma" onchange="applyFilters()"> 🇺🇸 Cleveland</div>
+        <div class="filter-option"><input type="checkbox" checked data-filter="source" value="mia" onchange="applyFilters()"> 🇺🇸 MIA Minneapolis</div>
+        <div class="filter-option"><input type="checkbox" checked data-filter="source" value="vam" onchange="applyFilters()"> 🇬🇧 V&A Museum</div>
+        <div class="filter-option"><input type="checkbox" checked data-filter="source" value="bm" onchange="applyFilters()"> 🇬🇧 大英博物馆</div>
+        <div class="filter-option"><input type="checkbox" checked data-filter="source" value="npm" onchange="applyFilters()"> 🇹🇼 台北故宫</div>
+      </div>
+      <div class="filter-group">
+        <h3>资产形式 <span class="filter-hint">多种形态</span></h3>
+        <!-- 资产形式（多选）：现阶段只有 image 有数据；其他标记为"即将上线"，让用户看到产品形态规划
+             详见 ../文化资产库_产品信息架构设计.md 第二章 -->
+        <div class="filter-option"><input type="checkbox" data-filter="assetType" value="image" onchange="applyFilters()"> 🖼️ 图片</div>
+        <div class="filter-option"><input type="checkbox" data-filter="assetType" value="3d_model" onchange="applyFilters()"> 🧊 3D 模型</div>
+        <div class="filter-option"><input type="checkbox" data-filter="assetType" value="text" onchange="applyFilters()"> 📄 文本</div>
+        <div class="filter-option"><input type="checkbox" data-filter="assetType" value="audio_video" onchange="applyFilters()"> ▶️ 音视频</div>
+        <div class="filter-option"><input type="checkbox" data-filter="assetType" value="dataset" onchange="applyFilters()"> 📊 数据集</div>
+      </div>
+      <div class="filter-group">
+        <h3>时期</h3>
+        <!-- value 格式：「起始年,结束年」（BCE 用负号）。匹配逻辑：区间重叠即命中。
+             详见 设计规则说明.md「时期匹配规则」章节 -->
+        <div class="filter-option"><input type="checkbox" onchange="applyFilters()" data-filter="period" value="-10000,-3000"> 新石器时代</div>
+        <div class="filter-option"><input type="checkbox" onchange="applyFilters()" data-filter="period" value="-3000,-500"> 上古 (前3000–前500)</div>
+        <div class="filter-option"><input type="checkbox" onchange="applyFilters()" data-filter="period" value="-500,500"> 古典 (前500–500)</div>
+        <div class="filter-option"><input type="checkbox" onchange="applyFilters()" data-filter="period" value="500,1400"> 中世纪 (500–1400)</div>
+        <div class="filter-option"><input type="checkbox" onchange="applyFilters()" data-filter="period" value="1400,1600"> 文艺复兴 (1400–1600)</div>
+        <div class="filter-option"><input type="checkbox" onchange="applyFilters()" data-filter="period" value="1600,1800"> 近世 (1600–1800)</div>
+        <div class="filter-option"><input type="checkbox" onchange="applyFilters()" data-filter="period" value="1800,2100"> 近现代 (1800–今)</div>
+        <div style="margin-top:8px;font-size:11px;color:var(--text-tertiary);">中国朝代</div>
+        <div class="filter-option"><input type="checkbox" onchange="applyFilters()" data-filter="period" value="-1600,-256"> 商周</div>
+        <div class="filter-option"><input type="checkbox" onchange="applyFilters()" data-filter="period" value="-206,220"> 汉代</div>
+        <div class="filter-option"><input type="checkbox" onchange="applyFilters()" data-filter="period" value="618,907"> 唐代</div>
+        <div class="filter-option"><input type="checkbox" onchange="applyFilters()" data-filter="period" value="960,1279"> 宋代</div>
+        <div class="filter-option"><input type="checkbox" onchange="applyFilters()" data-filter="period" value="1271,1368"> 元代</div>
+        <div class="filter-option"><input type="checkbox" onchange="applyFilters()" data-filter="period" value="1368,1644"> 明代</div>
+        <div class="filter-option"><input type="checkbox" onchange="applyFilters()" data-filter="period" value="1644,1912"> 清代</div>
       </div>
       <div class="filter-group">
         <h3>文化地域</h3>
@@ -1301,9 +1532,43 @@ body.sidebar-open { padding-left: 280px; }
         </div>
       </div>
       <div class="filter-group">
+        <h3>文化主题 <span class="filter-hint">一件可挂多个</span></h3>
+        <!-- 文化主题（多选）：默认不勾选 = 不过滤；勾选即收窄 -->
+        <!-- 标签与定义详见 ../文化资产库_产品信息架构设计.md 第二章 -->
+        <div class="filter-option"><input type="checkbox" data-filter="theme" value="landmark" onchange="applyFilters()"> 地标建筑</div>
+        <div class="filter-option"><input type="checkbox" data-filter="theme" value="landscape" onchange="applyFilters()"> 风景地貌</div>
+        <div class="filter-option"><input type="checkbox" data-filter="theme" value="mythology_religion" onchange="applyFilters()"> 神话与信仰</div>
+        <div class="filter-option"><input type="checkbox" data-filter="theme" value="historical_figure" onchange="applyFilters()"> 历史/文学人物</div>
+        <div class="filter-option"><input type="checkbox" data-filter="theme" value="folk_custom" onchange="applyFilters()"> 民俗节庆</div>
+        <div class="filter-option"><input type="checkbox" data-filter="theme" value="regional_culture" onchange="applyFilters()"> 文化圈</div>
+        <div class="filter-option"><input type="checkbox" data-filter="theme" value="craft_heritage" onchange="applyFilters()"> 工艺与非遗</div>
+        <div class="filter-option"><input type="checkbox" data-filter="theme" value="expert_resource" onchange="applyFilters()"> 专家与口述</div>
+        <div class="filter-option" style="border-top:1px dashed var(--border);margin-top:var(--sp-2);padding-top:var(--sp-2);">
+          <input type="checkbox" data-filter="theme" value="others" onchange="applyFilters()"> 其他
+          <span class="lic-hint">未特化</span>
+        </div>
+      </div>
+      <div class="filter-group">
         <h3>授权</h3>
-        <div class="filter-option"><input type="checkbox" id="publicDomainOnly" checked onchange="applyFilters()"> 仅公共领域（CC0）</div>
-        <div class="filter-option"><input type="checkbox" id="hasImagesOnly" checked onchange="applyFilters()"> 仅含图片</div>
+        <!-- 三态授权筛选（与卡片右下角徽章颜色一一对应） -->
+        <div class="filter-option">
+          <input type="checkbox" data-filter="license" value="com" checked onchange="applyFilters()">
+          <span class="lic-dot" style="background:var(--success)"></span>
+          可商用 <span class="lic-hint">CC0 / CC BY</span>
+        </div>
+        <div class="filter-option">
+          <input type="checkbox" data-filter="license" value="copyright" checked onchange="applyFilters()">
+          <span class="lic-dot" style="background:#d97706"></span>
+          受版权保护
+        </div>
+        <div class="filter-option">
+          <input type="checkbox" data-filter="license" value="restricted" checked onchange="applyFilters()">
+          <span class="lic-dot" style="background:#9aa0a6"></span>
+          来源馆限制
+        </div>
+        <div class="filter-option" style="margin-top:var(--sp-2);border-top:1px solid var(--border);padding-top:var(--sp-2);">
+          <input type="checkbox" id="hasImagesOnly" checked onchange="applyFilters()"> 仅含图片
+        </div>
       </div>
     </aside>
 
@@ -1345,30 +1610,586 @@ body.sidebar-open { padding-left: 280px; }
 <!-- ===== Footer ===== -->
 <footer class="footer">
   <div class="container">
-    内容力专区 Demo · 数据来源：The Metropolitan Museum of Art Open Access (CC0) · 仅供内部评估使用
+    内容力专区 Demo · 数据来源：The Met · AIC · Cleveland · MIA · V&A · British Museum · 台北故宫 · 仅供内部评估使用
   </div>
 </footer>
 
 <!-- ===== Inspiration Explorer (Subpage via link) ===== -->
 <!-- 直接链接到 inspiration-page，由 inspiration-page 自己处理返回按钮 -->
 
-<!-- ===== JavaScript (unchanged logic, same API code) ===== -->
+<!-- ===== JavaScript: Multi-Source Adapter Architecture ===== -->
 <script>
 const state = {
   query: '', source: 'all', currentPage: 1, pageSize: 40,
   totalResults: 0, objectIDs: [], loadedItems: [], departments: [],
   favorites: JSON.parse(localStorage.getItem('contentHub_favorites') || '[]'),
   view: 'grid',
-  filters: { publicDomainOnly: true, hasImagesOnly: true, geoLocations: [], departmentId: null, dateBegin: -3000, dateEnd: 2000 }
+  filters: {
+    licenseStatuses: ['com','copyright','restricted'],
+    hasImagesOnly: true,
+    geoLocations: [],
+    periods: [],
+    sources: ['met','aic','cma','mia','vam','bm','npm'], // 左侧栏数据来源筛选（默认全选）
+    themes: [],                                            // 文化主题筛选（空数组 = 不过滤）
+    assetTypes: [],                                        // 资产形式筛选（空数组 = 不过滤）
+    departmentId: null,
+    dateBegin: -3000,
+    dateEnd: 2000
+  },
+  // Multi-source state
+  allSourceItems: [], // Merged results from all sources
+  sourceFilter: 'all' // Current source filter: 'all','met','aic','cma','vam','bm','npm'
 };
 
+// ===== Source Registry =====
+// license 字段是该数据源的"主要授权类型"，用于顶部展示与 footer 概览。
+// 三家美国馆（Met/AIC/CMA）实际是混合授权：
+//   - 公共领域作品 → CC0（卡片绿色徽章）
+//   - 仍在版权期作品 → Reference 仅供参考（卡片紫色徽章）
+// 卡片维度的精确许可证由 normXxx 中根据 isPublicDomain / share_license_status 字段动态判断。
+const SOURCES = {
+  met:  { name: 'The Met',         flag: '🇺🇸', license: 'CC0 + 版权混合', color: '#e44c32', active: true },
+  aic:  { name: 'AIC Chicago',     flag: '🇺🇸', license: 'CC0 + 版权混合', color: '#0075c9', active: true },
+  bm:   { name: 'British Museum',  flag: '🇬🇧', license: 'CC-BY-NC-SA',    color: '#002147', active: true },
+  npm:  { name: '台北故宫',         flag: '🇹🇼', license: 'CC BY 4.0',      color: '#8b0000', active: true },
+  vam:  { name: 'V&A Museum',      flag: '🇬🇧', license: '非商用',          color: '#2d5f2d', active: true },
+  cma:  { name: 'Cleveland',       flag: '🇺🇸', license: 'CC0 + 版权混合', color: '#1a1a1a', active: true },
+  mia:  { name: 'MIA Minneapolis', flag: '🇺🇸', license: 'CC0 + 版权混合', color: '#a52a2a', active: true }
+};
+
+// License badge helpers
+//
+// 三态分类（先看版权，再看商用）：
+//   'com'        → 绿色 · 可商用（作品已进入公共领域 或 来源馆 CC BY 授权）
+//                  包含：CC0、CC BY 4.0
+//   'copyright'  → 黄色 · 受版权保护（作品本身仍在版权期，无法绕过；商用必须联系版权方）
+//                  包含：Met/AIC/CMA 的 Reference、MIA 的 Copyright/In Copyright
+//   'restricted' → 灰色 · 来源馆限制（作品多为公共领域但博物馆主张机构权利或状态未明，
+//                                     商用可联系来源馆付费授权）
+//                  包含：V&A Non-Commercial、BM CC-BY-NC-SA、MIA Public Domain (Not Evaluated)、
+//                        MIA Rights Not Evaluated 等
+//
+// 设计原则：
+//   - 外显（卡片徽章）三态，便于用户区分"未来路径"
+//   - 内部（license.type）保留 9 种细粒度值，详情弹窗精确说明
+//   - 灵感参考浏览：三类全可用；商用决策时按颜色判断
+//
+// 判定规则（统一函数）：
+function licenseStatusOf(license, source) {
+  if (!license) return 'restricted';
+  // 1) com=true 一律绿色
+  if (license.com === true) return 'com';
+  const t = license.type;
+  // 2) Met/AIC/CMA/MIA 中"作品本身受版权保护"的类型 → 黄色
+  if (t === 'Reference' || t === 'Copyright' || t === 'In Copyright') return 'copyright';
+  // 3) 其余非商用情况 → 灰色（V&A NC、BM NC-SA、MIA Not Evaluated 系列）
+  return 'restricted';
+}
+
+function licenseBadgeLabel(type) {
+  if (type === 'CC0') return 'CC0 可商用';
+  if (type === 'CC BY 4.0') return '署名可商用';
+  // 受版权保护一类（黄色）：作品本身在版权期 → 都标"受版权保护"
+  if (type === 'Reference' || type === 'Copyright' || type === 'In Copyright') return '受版权保护';
+  // 其余非商用情况（灰色）：统一标"来源馆限制"，原始 type 仍放在徽章 hover tooltip 里
+  return '来源馆限制';
+}
+
+// 详情弹窗版权卡片标题用：按原始 type 给出更精确的中文标签
+function licenseDetailLabel(type) {
+  if (type === 'CC0') return 'CC0 可商用';
+  if (type === 'CC BY 4.0') return '署名可商用';
+  if (type === 'Reference') return '受版权保护';
+  if (type === 'Copyright' || type === 'In Copyright') return '受版权保护';
+  if (type === 'Non-Commercial') return 'V&A 网站使用条款';
+  if (type === 'CC-BY-NC-SA') return 'CC-BY-NC-SA 4.0';
+  if (type === 'Public Domain (Not Evaluated)') return '未评估的公共领域';
+  if (type === 'Rights Not Evaluated') return '版权未评估';
+  return type;
+}
+
+// =====================================================================
+// =================== 文化主题词典 + 打标器（v2） ======================
+// =====================================================================
+// 设计原则：开放集合 + 词典驱动 + 兜底 + 观测
+// - 未命中任何特殊 theme 的资产挂 others 兜底（不报错、不丢数据）
+// - 词典与代码分离（数据结构集中在 THEME_DICT，增改 theme 只动数据）
+// - gaps 字段显式承认"当前未覆盖"，未来维护者看到可主动补充
+// - 详细规则见 设计规则说明.md 第三·A章
+//
+// 命中 theme 的方式：对 item 多字段拼接小写后，逐个 keyword 包含匹配
+//
+// 2026-05-13 下午 9 扩词典：基于本地 NPM 340 件扫描（青铜器/漆器/珐琅器/玉石器 为主）
+// + 全球文化常识细分，系统性扩充每个 theme 的中英文关键词。预期命中率 33% → 85%+
+const THEME_DICT = {
+  landmark: {
+    label: '地标建筑',
+    keywords: {
+      en: [
+        // 通用建筑
+        'architecture', 'building', 'monument', 'ruin', 'citadel', 'fortress',
+        'castle', 'tower', 'gate', 'bridge', 'wall',
+        // 宗教/纪念建筑
+        'temple', 'pagoda', 'shrine', 'stupa', 'monastery', 'cathedral',
+        'church', 'chapel', 'basilica', 'mosque', 'synagogue',
+        // 墓葬/纪念
+        'tomb', 'mausoleum', 'pyramid', 'obelisk', 'sarcophagus',
+        // 宫殿/居所
+        'palace', 'villa', 'manor', 'pavilion',
+        // 遗址/洞窟
+        'grotto', 'cave temple', 'rock-cut', 'archaeological site'
+      ],
+      zh: [
+        // 中国
+        '石窟', '寺', '塔', '宫殿', '陵', '墓', '遗址', '神庙', '祠', '庙',
+        '樓', '楼', '閣', '阁', '亭', '橋', '桥', '牌坊', '城墻', '城墙',
+        '宫', '殿', '府邸', '園林', '园林',
+        // 日本
+        '神社', '鳥居', '鸟居',
+        // 南亚
+        '佛塔', '窣堵坡'
+      ]
+    },
+    gaps: ['伊斯兰细分（伊玛目陵/萨法维）', '玛雅金字塔细分', '非洲土堡', '东南亚高棉建筑']
+  },
+
+  landscape: {
+    label: '风景地貌',
+    keywords: {
+      en: [
+        // 山水/风景绘画术语
+        'landscape', 'scenery', 'seascape', 'riverscape', 'vista', 'panorama',
+        // 地貌
+        'mountain', 'river', 'lake', 'waterfall', 'valley', 'forest',
+        'garden scene', 'countryside',
+        // 地图
+        'map', 'topographic', 'cartograph'
+      ],
+      zh: [
+        // 中国山水画术语
+        '山水', '江山', '溪山', '山图', '山居', '山景', '雲山', '云山',
+        '煙江', '烟江', '江景', '溪景', '湖景', '水景',
+        '風景', '风景', '地圖', '地图', '輿圖', '舆图',
+        // 日本
+        '富嶽', '富岳', '名所', '景色',
+        // 具体名山
+        '富士山', '泰山', '黃山', '黄山', '廬山', '庐山'
+      ]
+    },
+    gaps: ['花鸟图与山水的边界', '星图/天象图', '海洋生物主题海图']
+  },
+
+  mythology_religion: {
+    label: '神话与信仰',
+    keywords: {
+      en: [
+        // 佛教
+        'buddha', 'bodhisattva', 'buddhist', 'buddhism', 'guanyin', 'avalokiteshvara',
+        'amitabha', 'maitreya', 'arhat', 'lohan', 'sutra', 'mandala',
+        'thangka', 'pagoda', 'dharma', 'tara',
+        // 印度教
+        'hindu', 'hinduism', 'vishnu', 'shiva', 'krishna', 'ganesha',
+        'brahma', 'devi', 'nataraja', 'avatar',
+        // 基督教
+        'christ', 'christian', 'christianity', 'jesus', 'virgin mary', 'madonna',
+        'saint', 'angel', 'apostle', 'crucifix', 'cross ', 'passion',
+        'annunciation', 'nativity', 'resurrection', 'icon',
+        // 伊斯兰
+        'islamic', 'islam', 'muslim', 'quran', 'koran', 'calligraphy arabic',
+        // 犹太
+        'jewish', 'judaic', 'menorah', 'torah',
+        // 希腊罗马神话
+        'zeus', 'athena', 'apollo', 'venus', 'aphrodite', 'hera', 'hercules',
+        'dionysus', 'bacchus', 'mars', 'mercury', 'jupiter', 'medusa',
+        'centaur', 'satyr', 'nymph', 'muse',
+        // 埃及神话
+        'osiris', 'isis', 'horus', 'anubis', 'ra-horakhty', 'sphinx', 'scarab', 'ankh',
+        // 北欧/凯尔特神话
+        'thor', 'odin', 'valkyrie', 'rune', 'druid',
+        // 通用
+        'deity', 'god ', 'goddess', 'myth', 'mythology', 'sacred', 'ritual',
+        'ceremonial', 'votive', 'religious', 'devotional', 'prayer',
+        // 神兽（东西方通用符号）
+        'dragon', 'phoenix', 'qilin', 'kirin', 'griffin', 'chimera', 'unicorn'
+      ],
+      zh: [
+        // 佛教
+        '釋迦', '释迦', '觀音', '观音', '菩薩', '菩萨', '羅漢', '罗汉',
+        '佛', '佛像', '佛陀', '如來', '如来', '彌勒', '弥勒', '文殊', '普賢', '普贤',
+        '經卷', '经卷', '唐卡', '曼陀', '舍利', '袈裟', '蓮座', '莲座',
+        // 道教
+        '道教', '太上', '三清', '真人', '仙', '神仙', '八仙',
+        // 儒家/圣贤
+        '孔廟', '孔庙', '聖人', '圣人',
+        // 基督教
+        '十字架', '聖母', '圣母', '基督', '天使',
+        // 神话/神兽
+        '神像', '神話', '神话', '祭祀',
+        '龍紋', '龙纹', '龍', '龙', '鳳', '凤', '鳳凰', '凤凰', '麒麟',
+        '饕餮', '夔龍', '夔龙', '夔', '雲龍', '云龙', '蟠龍', '蟠龙',
+        '瑞獸', '瑞兽', '辟邪', '貔貅', '朱雀', '玄武', '青龍', '青龙', '白虎'
+      ]
+    },
+    gaps: ['道教细分神祇', '印度教细分化身', '萨满', '拜火教', '神道教细分']
+  },
+
+  historical_figure: {
+    label: '历史/文学人物',
+    keywords: {
+      en: [
+        // 中国
+        'confucius', 'laozi', 'lao tzu', 'mencius', 'zhuangzi', 'sun tzu',
+        'li bai', 'du fu', 'su shi', 'qu yuan',
+        // 日本
+        'genji', 'murasaki', 'basho',
+        // 埃及/近东
+        'pharaoh', 'tutankhamun', 'nefertiti', 'cleopatra', 'ramses', 'akhenaten',
+        'hammurabi',
+        // 希腊罗马
+        'alexander', 'caesar', 'augustus', 'nero', 'hadrian', 'cicero',
+        'aristotle', 'plato', 'socrates', 'homer',
+        // 欧洲/近代
+        'napoleon', 'louis xiv', 'charlemagne', 'richard', 'elizabeth',
+        'shakespeare', 'dante',
+        // 宗教/灵性人物
+        'buddha', 'lao-tzu',
+        // 肖像画通用
+        'portrait of'
+      ],
+      zh: [
+        // ⚠️ 中国帝王年号在博物馆上下文中 90%+ 是年号用法（"乾隆時"、"康熙款"、
+        // "雍正年製"），而非人物指代。故词典里**不包含裸年号**，避免误杀。
+        // 真要查帝王作为人物（如"乾隆御製"、"康熙帝肖像"）请用全文搜索。
+        // 保留那些不作为年号使用的武将文学形象：
+        '關羽', '关羽', '張飛', '张飞', '諸葛亮', '诸葛亮', '曹操',
+        // 中国文人/圣贤（皆为个人名字，无年号歧义）
+        '孔子', '老子', '孟子', '莊子', '庄子', '孫子', '孙子',
+        '李白', '杜甫', '蘇軾', '苏轼', '屈原', '王羲之', '陶淵明', '陶渊明',
+        // 文学形象
+        '寶玉', '宝玉', '黛玉', '西遊', '西游', '悟空', '紅樓', '红楼',
+        // 日本
+        '光源氏', '芭蕉'
+      ]
+    },
+    gaps: ['欧洲艺术史人物', '文学角色细化（红楼人物、西游人物）', '现代文化偶像']
+  },
+
+  folk_custom: {
+    label: '民俗节庆',
+    keywords: {
+      en: [
+        // 节日
+        'festival', 'new year', 'lunar new year', 'mid-autumn', 'lantern festival',
+        'dragon boat', 'carnival', 'mardi gras',
+        // 仪式
+        'wedding', 'funeral', 'rite of passage', 'ceremonial procession',
+        // 物件/活动
+        'lantern', 'firework', 'puppet', 'shadow play',
+        // 面具/戏剧
+        'mask', 'kabuki', 'noh', 'opera costume', 'theatrical',
+        // 民俗总称
+        'folk', 'folklore', 'folk art', 'folk custom'
+      ],
+      zh: [
+        // 节庆
+        '節慶', '节庆', '節日', '节日', '春節', '春节', '元宵', '中秋',
+        '端午', '清明', '重陽', '重阳', '廟會', '庙会',
+        // 仪式/风俗
+        '婚俗', '婚禮', '婚礼', '祭祀', '祭禮', '祭礼',
+        // 民俗物件
+        '龍舟', '龙舟', '燈籠', '灯笼', '皮影', '木偶', '年畫', '年画',
+        '剪紙', '剪纸', '面具',
+        // 戏剧
+        '戲曲', '戏曲', '京劇', '京剧', '儺戲', '傩戏', '儺', '傩',
+        '秦腔', '昆曲', '崑曲',
+        // 总称
+        '民俗', '風俗', '风俗', '民間', '民间'
+      ]
+    },
+    gaps: ['具体地域节庆（藏历新年/泼水节/那达慕）', '西方节庆（圣诞/复活节主题）']
+  },
+
+  regional_culture: {
+    label: '文化圈',
+    keywords: {
+      en: [
+        // 欧洲文化圈
+        'viking', 'norse', 'scandinavian', 'celtic', 'gaelic',
+        'gothic', 'romanesque', 'baroque', 'rococo', 'art nouveau', 'art deco',
+        // 美洲古文明
+        'maya', 'mayan', 'aztec', 'inca', 'olmec', 'zapotec', 'toltec',
+        'pre-columbian', 'mesoamerican',
+        // 中亚/南亚/丝路
+        'gandhara', 'sogdian', 'kushan', 'tibetan', 'bhutanese', 'nepali',
+        'silk road', 'silk-road', 'silk route', 'central asian',
+        // 东亚特色文化圈
+        'samurai', 'shogunate', 'bushido',
+        // 地中海/近东
+        'minoan', 'mycenaean', 'etruscan', 'phoenician', 'carthaginian',
+        'persian', 'achaemenid', 'sassanian', 'parthian',
+        'byzantine', 'ottoman', 'mamluk', 'seljuk', 'safavid', 'qajar',
+        'mughal', 'timurid',
+        // 非洲
+        'benin', 'ife', 'nok', 'yoruba', 'ashanti', 'ethiopian', 'coptic',
+        // 大洋洲/东南亚
+        'maori', 'polynesian', 'khmer', 'champa', 'javanese', 'balinese',
+        'srivijaya', 'majapahit',
+        // 美洲原住民（北美）
+        'native american', 'navajo', 'hopi', 'inuit'
+      ],
+      zh: [
+        // 中国特色文化圈（非国别）
+        '武士', '絲路', '丝路', '胡人', '胡風', '胡风',
+        '吐蕃', '藏傳', '藏传',
+        '楚文化', '巴蜀', '古蜀', '古越', '古羌',
+        '閩南', '闽南', '嶺南', '岭南', '敦煌', '西域',
+        // 日本审美
+        '和風', '和风', '和式',
+        // 中国古代民族
+        '匈奴', '契丹', '女真', '党項', '党项', '鮮卑', '鲜卑',
+        '粟特'
+      ]
+    },
+    gaps: ['更细致的伊斯兰文化圈（阿拉伯/波斯/突厥分支）',
+           '中国古蜀三星堆（已进但词典薄）',
+           '北美原住民（部分已进）',
+           '未接入非洲馆藏时 Benin/Yoruba 命中仍少']
+  },
+
+  craft_heritage: {
+    label: '工艺与非遗',
+    keywords: {
+      en: [
+        // 陶瓷
+        'porcelain', 'ceramic', 'stoneware', 'earthenware', 'pottery',
+        'celadon', 'blanc-de-chine', 'blue and white', 'famille',
+        // 金工/青铜
+        'bronze', 'bronze vessel', 'gold', 'silver', 'gilt', 'gilded',
+        'metalwork', 'repoussé', 'niello',
+        // 玉石/宝石
+        'jade', 'jadeite', 'nephrite', 'agate', 'turquoise', 'lapis lazuli',
+        'cinnabar', 'ivory', 'horn',
+        // 漆器/木工
+        'lacquer', 'lacquerware', 'wood carving', 'bamboo carving',
+        'inlay', 'mother-of-pearl',
+        // 珐琅
+        'cloisonne', 'cloisonné', 'enamel', 'champlevé', 'plique-à-jour',
+        // 织绣
+        'textile', 'silk', 'embroidery', 'brocade', 'tapestry', 'weaving',
+        'kesi', 'damask',
+        // 金银细工
+        'filigree', 'granulation',
+        // 玻璃
+        'glass', 'glassware',
+        // 书画/文房
+        'calligraphy', 'painting', 'ink painting', 'scroll', 'handscroll',
+        'hanging scroll', 'album', 'fan', 'seal',
+        'ink ', 'brush ', 'inkstone',
+        // 版画/印刷
+        'woodblock', 'woodcut', 'engraving', 'etching', 'print',
+        'ukiyo-e',
+        // 家具
+        'furniture', 'cabinet', 'chair'
+      ],
+      zh: [
+        // 陶瓷
+        '陶', '瓷', '陶瓷', '青瓷', '白瓷', '青花', '釉', '窯', '窑',
+        '汝窯', '汝窑', '官窯', '官窑', '哥窯', '哥窑', '定窯', '定窑',
+        '鈞窯', '钧窑', '龍泉', '龙泉', '景德鎮', '景德镇',
+        // 金属/青铜
+        '青銅', '青铜', '銅器', '铜器', '銅', '铜', '鐵器', '铁器',
+        '金器', '銀器', '银器', '金銀', '金银', '鎏金', '镏金', '鍍金', '镀金',
+        '鼎', '簋', '觚', '觶', '觯', '尊', '爵', '壺', '壶', '鈁', '钫',
+        // 玉石
+        '玉', '玉器', '玉石', '白玉', '翡翠', '瑪瑙', '玛瑙', '玉佩',
+        '璧', '琮', '璜', '珮', '珩',
+        // 漆器/木石
+        '漆', '漆器', '剔紅', '剔红', '雕漆', '蒔繪', '莳绘',
+        '象牙', '犀角', '牙雕', '竹刻', '竹雕', '木雕', '石雕',
+        '螺鈿', '螺钿',
+        // 珐琅
+        '琺瑯', '珐琅', '景泰藍', '景泰蓝', '掐絲', '掐丝',
+        // 织绣
+        '絲', '丝', '絲綢', '丝绸', '織錦', '织锦', '緙絲', '缂丝',
+        '刺繡', '刺绣', '蘇繡', '苏绣', '湘繡', '湘绣', '蜀錦', '蜀锦',
+        '雲錦', '云锦', '宋錦', '宋锦',
+        // 金银细工
+        '花絲', '花丝',
+        // 玻璃
+        '玻璃',
+        // 书画/文房
+        '書畫', '书画', '書法', '书法', '繪畫', '绘画', '水墨', '工筆', '工笔',
+        '卷軸', '卷轴', '手卷', '冊頁', '册页', '掛軸', '挂轴',
+        '扇面', '摺扇', '折扇',
+        '文房', '筆', '笔', '墨', '紙', '纸', '硯', '砚',
+        // 印章/玺印
+        '璽印', '玺印', '印章', '銅印', '铜印',
+        // 家具/器具
+        '紫檀', '黃花梨', '黄花梨', '家具',
+        // 杂项小件
+        '鼻煙壺', '鼻烟壶', '手鐲', '手镯', '珠寶', '珠宝',
+        // 牙骨角蚌皮小件
+        '骨器', '骨雕', '骨', '牙器', '牙雕', '貝', '贝', '蚌', '角', '扳指',
+        '錦', '锦'
+      ]
+    },
+    gaps: ['非洲金工/雕刻工艺', '南美原住民工艺', '伊斯兰细密画工艺',
+           '欧洲现代设计工艺']
+  },
+
+  expert_resource: {
+    label: '专家与口述',
+    keywords: {
+      // 现阶段博物馆静态藏品无对应；待接入传承人访谈/学术论文/口述史时启用
+      en: ['interview', 'oral history', 'documentary', 'testimony',
+           'lecture', 'research paper', 'dissertation'],
+      zh: ['訪談', '访谈', '口述', '傳承人', '传承人', '紀錄片', '纪录片',
+           '論文', '论文', '研究']
+    },
+    gaps: ['现阶段博物馆数据无覆盖；接入非遗传承人访谈 / 学术资源时启用']
+  }
+};
+
+// 打标器：纯遍历词典，代码稳定不随词典增改
+// 方案 C（2026-05-13）：移除默认 museum_collection 兜底（museum_collection 不再作为
+// 筛选 theme 出现）；改为 others 兜底——任何资产至少挂一个 theme，UI 加总更对齐总数
+function enrichThemes(item) {
+  const themes = [];
+  const hay = [
+    item.classification, item.title, item.desc, item.description,
+    item.culture, item.period, item.medium, item.dynasty
+  ].filter(Boolean).join(' ').toLowerCase();
+  for (const [theme, def] of Object.entries(THEME_DICT)) {
+    const allKw = [...(def.keywords.en || []), ...(def.keywords.zh || [])];
+    if (allKw.some(kw => kw && hay.includes(kw.toLowerCase()))) {
+      themes.push(theme);
+    }
+  }
+  // 没有命中任何特殊 theme → 挂 others 兜底（保证每件至少一个 theme）
+  if (themes.length === 0) themes.push('others');
+  return [...new Set(themes)];
+}
+
+// 文化主题筛选中 UI 的展示顺序（others 作为兜底放末尾）
+const THEME_ORDER = [
+  'landmark', 'landscape', 'mythology_religion', 'historical_figure',
+  'folk_custom', 'regional_culture', 'craft_heritage', 'expert_resource',
+  'others'
+];
+
+// =====================================================================
+// =================== 时期匹配：区间重叠 + 文本兜底 =====================
+// =====================================================================
+// 设计：每个时期 checkbox 的 value = "起始年,结束年"（BCE 用负号）
+// 匹配三级回退：
+//   ① 优先：item.dateRange.begin/end 与 checkbox 区间重叠
+//   ② 回退：从 dateDisplay 抽年份数字（识别 BCE/BC/公元前/前）
+//   ③ 文本兜底：匹配该时期对应的学术语词（如 "medieval" / "tang" / "唐"）
+//      用于既没有 dateRange 也没有年份数字、但 culture/period 字段有时代
+//      关键词的藏品（如 culture="Tang Dynasty"）
+// 
+// 详见 设计规则说明.md 第五章「时期匹配规则」
+
+const PERIOD_TEXT_KEYWORDS = {
+  // 世界通用时期
+  '-10000,-3000': ['neolithic', '新石器'],
+  '-3000,-500':   ['ancient', 'bronze age', 'iron age', 'dynastic egypt',
+                    'shang', 'zhou', 'warring states', 'spring and autumn'],
+  '-500,500':     ['classical', 'hellenistic', 'roman empire', 'roman period',
+                    'han dynasty', 'qin dynasty'],
+  '500,1400':     ['medieval', 'gothic', 'romanesque', 'byzantine',
+                    'tang dynasty', 'song dynasty', 'yuan dynasty',
+                    'heian', 'kamakura'],
+  '1400,1600':    ['renaissance', 'mannerism', 'ming dynasty', 'muromachi'],
+  '1600,1800':    ['baroque', 'rococo', 'enlightenment', 'qing dynasty',
+                    'edo period', 'colonial'],
+  '1800,2100':    ['modern', 'contemporary', '19th century', '20th century',
+                    '21st century', 'meiji', 'taisho', 'showa'],
+  // 中国朝代（与世界通用的同区间共存，文本词独立）
+  '-1600,-256':   ['shang', 'zhou', '商', '周', 'western zhou', 'eastern zhou',
+                    'warring states'],
+  '-206,220':     ['han dynasty', '汉', 'western han', 'eastern han'],
+  '618,907':      ['tang dynasty', '唐', 'tang'],
+  '960,1279':     ['song dynasty', '宋', 'northern song', 'southern song'],
+  '1271,1368':    ['yuan dynasty', '元', 'mongol'],
+  '1368,1644':    ['ming dynasty', '明'],
+  '1644,1912':    ['qing dynasty', '清', 'qing']
+};
+
+function extractYearFromText(s) {
+  if (!s) return null;
+  const str = String(s);
+  // 识别 BCE 标记（英文 BC/BCE、中文"公元前"/"前"开头）
+  const isBC = /\b(BCE|BC|B\.C\.)\b/i.test(str)
+            || /(公元前|^前|西元前)/.test(str);
+  // 抽 3-4 位数字（优先负号形式，如 -500）
+  const negMatch = str.match(/-\d{1,4}/);
+  const posMatch = str.match(/\d{1,4}/);
+  let y = null;
+  if (negMatch) y = parseInt(negMatch[0], 10);
+  else if (posMatch) y = parseInt(posMatch[0], 10);
+  if (y == null) return null;
+  if (isBC && y > 0) y = -y;
+  return y;
+}
+
+// 判断一个 item 是否命中某个 period 区间
+// periodValue 形如 "500,1400"
+function matchPeriod(item, periodValue) {
+  const [pStart, pEnd] = periodValue.split(',').map(Number);
+  if (isNaN(pStart) || isNaN(pEnd)) return false;
+
+  // ① 优先：item.dateRange 做区间重叠
+  const ib = item.dateRange?.begin, ie = item.dateRange?.end;
+  if (typeof ib === 'number' && typeof ie === 'number') {
+    // 区间重叠判定：两段有交集
+    return ie >= pStart && ib <= pEnd;
+  }
+
+  // ② 回退：从 dateDisplay / dateEn / period 抽单年份
+  const dateSrc = item.dateDisplay || item.dateEn || item.period || '';
+  const yr = extractYearFromText(dateSrc);
+  if (yr != null) {
+    return yr >= pStart && yr <= pEnd;
+  }
+
+  // ③ 文本兜底：匹配该区间的学术语词
+  const kws = PERIOD_TEXT_KEYWORDS[periodValue] || [];
+  if (!kws.length) return false;
+  const hay = `${item.period || ''} ${item.culture || ''} ${item.dynasty || ''} ${item.dateDisplay || ''} ${item.title || ''}`.toLowerCase();
+  return kws.some(k => hay.includes(k.toLowerCase()));
+}
+
+
+
+
+
+// 兼容旧调用：根据 type 字符串推断徽章 class（不严谨，仅作 fallback）
+function licenseBadgeClass(type) {
+  if (['CC0', 'CC BY 4.0'].includes(type)) return 'license-com';
+  if (['Reference', 'Copyright', 'In Copyright'].includes(type)) return 'license-copyright';
+  return 'license-restricted';
+}
+
+// 卡片徽章用的完整 CSS 类名（与 .badge-license-xxx 配对）
+// 接收 license 对象和 source（用于判定三态）
+function licenseBadgeFullClass(license, source) {
+  const status = licenseStatusOf(license, source);
+  return 'badge-license-' + status;
+}
+
+// =====================================================================
+// =================== ADAPTER: The Met ================================
+// =====================================================================
 const MET = 'https://collectionapi.metmuseum.org/public/collection/v1';
 
-// ===== Met API =====
 async function metSearch(q, f = {}) {
   const p = new URLSearchParams(); p.set('q', q);
   if (f.hasImagesOnly) p.set('hasImages', 'true');
-  if (f.publicDomainOnly) p.set('isPublicDomain', 'true');
+  // Met 接口仅支持 isPublicDomain=true（PD-only）；当用户只勾"可商用"时下推该参数提升相关性，
+  // 其它组合都让 Met 返回全量结果，由客户端 filterItems 按三态过滤。
+  const lic = f.licenseStatuses || [];
+  if (lic.length === 1 && lic[0] === 'com') p.set('isPublicDomain', 'true');
   if (f.departmentId) p.set('departmentId', f.departmentId);
   if (f.geoLocations?.length) p.set('geoLocation', f.geoLocations.join('|'));
   if (f.dateBegin != null && f.dateEnd != null) { p.set('dateBegin', f.dateBegin); p.set('dateEnd', f.dateEnd); }
@@ -1377,74 +2198,579 @@ async function metSearch(q, f = {}) {
 async function metObj(id) { return (await fetch(`${MET}/objects/${id}`)).json(); }
 async function metDepts() { try { const d = await (await fetch(`${MET}/departments`)).json(); return d.departments || []; } catch { return []; } }
 
-// ===== Met normalizer =====
-function norm(o) {
+function normMet(o) {
+  const thumb = o.primaryImageSmall || o.primaryImage || '';
+  const full = o.primaryImage || o.primaryImageSmall || '';
   return {
-    id: `met:${o.objectID}`, source: 'met', sourceUrl: o.objectURL || '',
+    id: `met:${o.objectID}`, source: 'met', sourceName: 'The Met', sourceUrl: o.objectURL || '',
     title: o.title || 'Untitled', desc: [o.objectName, o.medium].filter(Boolean).join(' · '),
-    img: { thumb: o.primaryImageSmall || '', full: o.primaryImage || '', extra: o.additionalImages || [] },
-    culture: o.culture || '', period: o.period || '', dateDisplay: o.objectDate || '',
+    img: { thumb, full, extra: o.additionalImages || [] },
+    culture: o.culture || '', period: o.period || '', dynasty: o.dynasty || '',
+    dateDisplay: o.objectDate || '',
     dateRange: { begin: o.objectBeginDate || 0, end: o.objectEndDate || 0 },
     medium: o.medium || '', classification: o.classification || '', department: o.department || '',
     geo: { country: o.country || '', region: o.region || '', city: o.city || '' },
     artist: { name: o.artistDisplayName || '', bio: o.artistDisplayBio || '' },
-    license: { type: o.isPublicDomain ? 'CC0' : 'Restricted', pd: o.isPublicDomain || false, com: o.isPublicDomain || false },
-    tags: (o.tags || []).map(t => t.term), dimensions: o.dimensions || '', raw: o
+    license: { type: o.isPublicDomain ? 'CC0' : 'Reference', pd: o.isPublicDomain || false, com: o.isPublicDomain || false },
+    tags: (o.tags || []).map(t => t.term), dimensions: o.dimensions || '',
+    accessionNumber: o.accessionNumber || '', raw: o
   };
 }
 
-// ===== Search (Met only) =====
+// Met adapter: search → return array of normalized items (paginated)
+async function metAdapterSearch(q, maxItems = 40) {
+  try {
+    const f = { ...state.filters, dateBegin: parseInt(document.getElementById('dateBegin')?.value) || -3000, dateEnd: parseInt(document.getElementById('dateEnd')?.value) || 2000 };
+    const res = await metSearch(q, f);
+    // Request more to compensate for relevance filtering
+    const ids = (res.objectIDs || []).slice(0, Math.min(maxItems * 3, 120));
+    const items = [];
+    const keywords = q.toLowerCase().split(/\s+/).filter(k => k.length > 2);
+    for (let i = 0; i < ids.length; i += 10) {
+      const batch = ids.slice(i, i + 10);
+      const results = await Promise.allSettled(batch.map(id => metObj(id)));
+      results.forEach(r => {
+        if (r.status === 'fulfilled' && r.value) {
+          const n = normMet(r.value);
+          if (!(n.img.thumb || n.img.full)) return;
+          // Client-side relevance: check if key fields match at least one keyword
+          const text = `${n.title} ${n.culture} ${n.classification} ${n.medium} ${n.period} ${n.department}`.toLowerCase();
+          const relevant = keywords.length === 0 || keywords.some(k => text.includes(k));
+          if (relevant) items.push(n);
+        }
+      });
+      if (items.length >= maxItems) break;
+    }
+    return items.slice(0, maxItems);
+  } catch (e) { console.error('[Met]', e); return []; }
+}
+
+// =====================================================================
+// =================== ADAPTER: AIC (Art Institute of Chicago) =========
+// =====================================================================
+const AIC_API = 'https://api.artic.edu/api/v1';
+const AIC_IIIF = 'https://www.artic.edu/iiif/2';
+
+function normAIC(o) {
+  const imgId = o.image_id;
+  const thumb = imgId ? `${AIC_IIIF}/${imgId}/full/400,/0/default.jpg` : '';
+  const full = imgId ? `${AIC_IIIF}/${imgId}/full/843,/0/default.jpg` : '';
+  return {
+    id: `aic:${o.id}`, source: 'aic', sourceName: 'AIC Chicago',
+    sourceUrl: `https://www.artic.edu/artworks/${o.id}`,
+    title: o.title || 'Untitled',
+    desc: [o.artwork_type_title, o.medium_display].filter(Boolean).join(' · '),
+    img: { thumb, full, extra: (o.alt_image_ids || []).map(aid => `${AIC_IIIF}/${aid}/full/400,/0/default.jpg`) },
+    culture: o.style_title || '', period: o.date_display || '', dynasty: '',
+    dateDisplay: o.date_display || '',
+    dateRange: { begin: o.date_start || 0, end: o.date_end || 0 },
+    medium: o.medium_display || '', classification: o.artwork_type_title || '',
+    department: o.department_title || '',
+    geo: { country: o.place_of_origin || '', region: '', city: '' },
+    artist: { name: o.artist_display || '', bio: '' },
+    license: { type: o.is_public_domain ? 'CC0' : 'Reference', pd: o.is_public_domain || false, com: o.is_public_domain || false },
+    tags: (o.term_titles || []), dimensions: o.dimensions || '',
+    accessionNumber: o.main_reference_number || '', raw: o
+  };
+}
+
+async function aicAdapterSearch(q, maxItems = 20) {
+  try {
+    // 不再强制 is_public_domain=true 过滤，让混合结果（CC0 + 仍在版权期作品）都进来；
+    // 由 normAIC 根据 is_public_domain 字段动态打三态 license 标签
+    const url = `${AIC_API}/artworks/search?q=${encodeURIComponent(q)}&fields=id,title,image_id,alt_image_ids,date_display,date_start,date_end,place_of_origin,artist_display,medium_display,dimensions,artwork_type_title,style_title,classification_title,department_title,is_public_domain,main_reference_number,term_titles&limit=${maxItems}`;
+    const res = await fetch(url).then(r => r.json());
+    return (res.data || []).map(normAIC).filter(item => item.img.thumb);
+  } catch (e) { console.error('[AIC]', e); return []; }
+}
+
+// =====================================================================
+// =================== ADAPTER: Cleveland Museum of Art ================
+// =====================================================================
+const CMA_API = 'https://openaccess-api.clevelandart.org/api/artworks/';
+
+function normCMA(o) {
+  const images = o.images || {};
+  const web = images.web || {};
+  const print = images.print || {};
+  // CMA 用 share_license_status 字段标识许可证（"CC0" / "Copyrighted"）
+  const isCC0 = o.share_license_status === 'CC0';
+  return {
+    id: `cma:${o.id}`, source: 'cma', sourceName: 'Cleveland',
+    sourceUrl: o.url || `https://www.clevelandart.org/art/${o.accession_number}`,
+    title: o.title || 'Untitled',
+    desc: [o.type, o.technique].filter(Boolean).join(' · '),
+    img: { thumb: web.url || '', full: print.url || web.url || '', extra: [] },
+    culture: o.culture?.[0] || '', period: o.creation_date || '', dynasty: '',
+    dateDisplay: o.creation_date || '',
+    dateRange: { begin: o.creation_date_earliest || 0, end: o.creation_date_latest || 0 },
+    medium: o.technique || '', classification: o.type || '', department: o.department || '',
+    geo: { country: o.culture?.[0] || '', region: '', city: '' },
+    artist: {
+      name: o.creators?.map(c => c.description).join(', ') || '',
+      bio: o.creators?.[0]?.biography || ''
+    },
+    license: { type: isCC0 ? 'CC0' : 'Reference', pd: isCC0, com: isCC0 },
+    tags: [], dimensions: o.dimensions?.framed || o.dimensions?.unframed || '',
+    accessionNumber: o.accession_number || '', raw: o
+  };
+}
+
+async function cmaAdapterSearch(q, maxItems = 20) {
+  try {
+    // 不再强制 cc0=1 过滤，让混合结果都进来；由 normCMA 根据 share_license_status 动态打 license 标签
+    const url = `${CMA_API}?q=${encodeURIComponent(q)}&has_image=1&limit=${maxItems}`;
+    const res = await fetch(url).then(r => r.json());
+    return (res.data || []).map(normCMA).filter(item => item.img.thumb);
+  } catch (e) { console.error('[CMA]', e); return []; }
+}
+
+// =====================================================================
+// =================== ADAPTER: V&A Museum =============================
+// =====================================================================
+const VAM_API = 'https://api.vam.ac.uk/v2';
+
+function normVAM(o) {
+  const meta = o._primaryImageId || '';
+  const imgBase = o._images?._iiif_image_base_url || '';
+  const thumb = imgBase ? `${imgBase}/full/400,/0/default.jpg` : '';
+  const full = imgBase ? `${imgBase}/full/843,/0/default.jpg` : '';
+  return {
+    id: `vam:${o.systemNumber}`, source: 'vam', sourceName: 'V&A Museum',
+    sourceUrl: `https://collections.vam.ac.uk/item/${o.systemNumber}`,
+    title: o._primaryTitle || 'Untitled',
+    desc: [o.objectType, o._primaryMaker?.name].filter(Boolean).join(' · '),
+    img: { thumb, full, extra: [] },
+    culture: o._primaryPlace || '', period: o._primaryDate || '', dynasty: '',
+    dateDisplay: o._primaryDate || '',
+    dateRange: { begin: 0, end: 0 },
+    medium: o.materialsAndTechniques || '', classification: o.objectType || '',
+    department: '',
+    geo: { country: o._primaryPlace || '', region: '', city: '' },
+    artist: { name: o._primaryMaker?.name || '', bio: '' },
+    // V&A API search 接口不返回任何授权字段（实测 records 仅含 systemNumber/_primaryTitle/_images 等，无 license/rights）。
+    // 依据 V&A 网站条款（https://www.vam.ac.uk/info/va-websites-terms-conditions Section 9）：
+    // 内容可用于非商业用途；商业使用必须通过 vandaimages.com 申请付费授权。
+    // 因此统一标 Non-Commercial，com=false。
+    license: { type: 'Non-Commercial', pd: false, com: false },
+    tags: [], dimensions: '',
+    accessionNumber: o.accessionNumber || '', raw: o
+  };
+}
+
+async function vamAdapterSearch(q, maxItems = 20) {
+  try {
+    const url = `${VAM_API}/objects/search?q=${encodeURIComponent(q)}&page_size=${maxItems}&images_exist=true&order_sort=relevance`;
+    const res = await fetch(url).then(r => r.json());
+    return (res.records || []).map(normVAM).filter(item => item.img.thumb);
+  } catch (e) { console.error('[V&A]', e); return []; }
+}
+
+// =====================================================================
+// =================== ADAPTER: MIA (Minneapolis Institute of Art) =====
+// =====================================================================
+const MIA_API = 'https://search.artsmia.org/search';
+const MIA_IMG = 'https://collections.artsmia.org/api/cdn';
+
+function normMIA(o) {
+  const id = o.id;
+  // collections.artsmia.org CDN endpoint (more accessible than IIIF subdomain)
+  const thumb = id ? `${MIA_IMG}/${id}.jpg` : '';
+  const full = thumb;
+  // 公共领域判定：仅当 rights_type 严格等于 "Public Domain" 时才视为 CC0
+  // "Public Domain (Not Evaluated)" 等推测但未确认的，不当 CC0，直传原值（保守标灰）
+  const isPD = o.rights_type === 'Public Domain';
+  // license.type：PD → CC0；其余直接用 rights_type 原值（如 "Public Domain (Not Evaluated)"、"Copyright"），未提供则 fallback 到 Reference
+  const licenseType = isPD ? 'CC0' : (o.rights_type || 'Reference');
+  return {
+    id: `mia:${id}`, source: 'mia', sourceName: 'MIA Minneapolis',
+    sourceUrl: `https://collections.artsmia.org/art/${id}`,
+    title: o.title || 'Untitled',
+    desc: [o.object_name, o.medium].filter(Boolean).join(' · '),
+    img: { thumb, full, extra: [] },
+    culture: o.culture || o.country || '', period: o.style || o.dated || '', dynasty: '',
+    dateDisplay: o.dated || '',
+    dateRange: { begin: 0, end: 0 },
+    medium: o.medium || '', classification: o.classification || o.object_name || '',
+    department: o.department || '',
+    geo: { country: o.country || '', region: o.region || '', city: '' },
+    artist: { name: o.artist || '', bio: '' },
+    license: { type: licenseType, pd: isPD, com: isPD },
+    tags: [], dimensions: o.dimension || '',
+    accessionNumber: o.accession_number || '', raw: o
+  };
+}
+
+async function miaAdapterSearch(q, maxItems = 100) {
+  try {
+    const url = `${MIA_API}?q=${encodeURIComponent(q)}&size=${maxItems}`;
+    const res = await fetch(url).then(r => r.json());
+    const hits = res?.hits?.hits || [];
+    return hits
+      .map(h => normMIA(h._source))
+      .filter(item => item.img.thumb && item.raw.image === 'valid');
+  } catch (e) { console.error('[MIA]', e); return []; }
+}
+
+// =====================================================================
+// =================== ADAPTER: British Museum (预构建精选) ==============
+// =====================================================================
+// 注意：大英博物馆网站有 Cloudflare 保护，无法直接调用 REST API。
+// 此处使用预构建精选数据，所有图片来自 Wikimedia Commons。
+// 授权：大英博物馆数据整体为 CC-BY-NC-SA 4.0，不可商用，仅供参考浏览。
+const BM_FEATURED = [
+  { id:'bm:rosetta', title:'Rosetta Stone', dateDisplay:'196 BC', culture:'Ancient Egyptian', classification:'Stela', medium:'Granodiorite', country:'Egypt', period:'Ptolemaic Period', img:'https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Rosetta_Stone.JPG/400px-Rosetta_Stone.JPG', imgFull:'https://upload.wikimedia.org/wikipedia/commons/2/23/Rosetta_Stone.JPG', accessionNumber:'EA 24', desc:'Ancient Egyptian decree inscribed in three scripts', license:'CC-BY-NC-SA' },
+  { id:'bm:parthenon', title:'Parthenon Sculptures (Elgin Marbles)', dateDisplay:'447–432 BC', culture:'Ancient Greek', classification:'Sculpture', medium:'Marble', country:'Greece', period:'Classical Period', img:'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Elgin_Marbles_east_pediment.jpg/400px-Elgin_Marbles_east_pediment.jpg', imgFull:'https://upload.wikimedia.org/wikipedia/commons/2/2e/Elgin_Marbles_east_pediment.jpg', accessionNumber:'1816,0610.1', desc:'Marble sculptures from the Parthenon frieze', license:'CC-BY-NC-SA' },
+  { id:'bm:lewischess', title:'Lewis Chessmen', dateDisplay:'ca. 1150–1200', culture:'Norse', classification:'Game Piece', medium:'Walrus ivory', country:'Scotland/Norway', period:'Medieval', img:'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Lewis_Chessmen_Overview.jpg/400px-Lewis_Chessmen_Overview.jpg', imgFull:'https://upload.wikimedia.org/wikipedia/commons/4/4b/Lewis_Chessmen_Overview.jpg', accessionNumber:'1831,1101.78-159', desc:'Medieval chess pieces carved from walrus ivory', license:'CC-BY-NC-SA' },
+  { id:'bm:sutton', title:'Sutton Hoo Helmet', dateDisplay:'Early 7th century', culture:'Anglo-Saxon', classification:'Helmet', medium:'Iron, copper alloy, silver, gold, garnet', country:'England', period:'Early Medieval', img:'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Sutton_Hoo_helmet_2016.png/400px-Sutton_Hoo_helmet_2016.png', imgFull:'https://upload.wikimedia.org/wikipedia/commons/e/e9/Sutton_Hoo_helmet_2016.png', accessionNumber:'1939,1010.93', desc:'Anglo-Saxon ceremonial helmet from ship burial', license:'CC-BY-NC-SA' },
+  { id:'bm:cyrus', title:'Cyrus Cylinder', dateDisplay:'539–530 BC', culture:'Achaemenid Persian', classification:'Cylinder', medium:'Baked clay', country:'Iraq (Babylon)', period:'Achaemenid Empire', img:'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Cyrus_Cylinder.jpg/400px-Cyrus_Cylinder.jpg', imgFull:'https://upload.wikimedia.org/wikipedia/commons/d/d5/Cyrus_Cylinder.jpg', accessionNumber:'1880,0617.1941', desc:'Ancient declaration of Cyrus the Great', license:'CC-BY-NC-SA' },
+  { id:'bm:floodtablet', title:'Flood Tablet (Epic of Gilgamesh)', dateDisplay:'7th century BC', culture:'Assyrian', classification:'Tablet', medium:'Clay', country:'Iraq (Nineveh)', period:'Neo-Assyrian', img:'https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/British_Museum_Flood_Tablet.jpg/400px-British_Museum_Flood_Tablet.jpg', imgFull:'https://upload.wikimedia.org/wikipedia/commons/2/21/British_Museum_Flood_Tablet.jpg', accessionNumber:'K.3375', desc:'Cuneiform tablet with Flood narrative from the Epic of Gilgamesh', license:'CC-BY-NC-SA' },
+  { id:'bm:hokusai', title:'The Great Wave off Kanagawa (Hokusai)', dateDisplay:'ca. 1831', culture:'Japanese', classification:'Print', medium:'Woodblock print, ink and color on paper', country:'Japan', period:'Edo Period', img:'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Tsunami_by_hokusai_19th_century.jpg/400px-Tsunami_by_hokusai_19th_century.jpg', imgFull:'https://upload.wikimedia.org/wikipedia/commons/a/a5/Tsunami_by_hokusai_19th_century.jpg', accessionNumber:'1906,1220,0.525', desc:'Iconic ukiyo-e woodblock print by Katsushika Hokusai', license:'CC-BY-NC-SA' },
+  { id:'bm:benin', title:'Benin Bronzes – Plaque', dateDisplay:'16th–17th century', culture:'Edo (Benin Kingdom)', classification:'Plaque', medium:'Brass', country:'Nigeria', period:'Kingdom of Benin', img:'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Benin_plaque_in_the_British_Museum.jpg/400px-Benin_plaque_in_the_British_Museum.jpg', imgFull:'https://upload.wikimedia.org/wikipedia/commons/b/b4/Benin_plaque_in_the_British_Museum.jpg', accessionNumber:'1898,0115.44', desc:'Cast brass plaque from the Royal Palace of Benin', license:'CC-BY-NC-SA' },
+  { id:'bm:samurai', title:'Samurai Armour (Gusoku)', dateDisplay:'ca. 1859', culture:'Japanese', classification:'Armour', medium:'Iron, lacquer, silk, gilt copper', country:'Japan', period:'Edo Period', img:'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Armour_of_a_samurai.jpg/400px-Armour_of_a_samurai.jpg', imgFull:'https://upload.wikimedia.org/wikipedia/commons/7/7c/Armour_of_a_samurai.jpg', accessionNumber:'1959,0714.1', desc:'Complete set of Japanese samurai armour', license:'CC-BY-NC-SA' },
+  { id:'bm:amaravati', title:'Amaravati Sculpture', dateDisplay:'2nd century AD', culture:'Indian', classification:'Sculpture', medium:'Limestone', country:'India', period:'Satavahana Dynasty', img:'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Amravati-Stupa-Relief.jpg/400px-Amravati-Stupa-Relief.jpg', imgFull:'https://upload.wikimedia.org/wikipedia/commons/f/fd/Amravati-Stupa-Relief.jpg', accessionNumber:'1880,0709.10', desc:'Buddhist limestone relief from the Great Stupa at Amaravati', license:'CC-BY-NC-SA' },
+  { id:'bm:ringofnestor', title:'Mold Gold Cape', dateDisplay:'1900–1600 BC', culture:'Bronze Age British', classification:'Metalwork', medium:'Gold', country:'Wales', period:'Bronze Age', img:'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Mold_gold_cape%2C_British_Museum.jpg/400px-Mold_gold_cape%2C_British_Museum.jpg', imgFull:'https://upload.wikimedia.org/wikipedia/commons/0/0c/Mold_gold_cape%2C_British_Museum.jpg', accessionNumber:'1836,0901.1', desc:'Elaborate Bronze Age gold ceremonial cape', license:'CC-BY-NC-SA' },
+  { id:'bm:assyria', title:'Assyrian Lion Hunt Reliefs', dateDisplay:'645–640 BC', culture:'Assyrian', classification:'Relief', medium:'Gypsum alabaster', country:'Iraq (Nineveh)', period:'Neo-Assyrian', img:'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/Assyrian_reliefs_-_Dying_Lion.jpg/400px-Assyrian_reliefs_-_Dying_Lion.jpg', imgFull:'https://upload.wikimedia.org/wikipedia/commons/d/d8/Assyrian_reliefs_-_Dying_Lion.jpg', accessionNumber:'1856,0909.51', desc:'Stunning stone reliefs depicting royal lion hunts of King Ashurbanipal', license:'CC-BY-NC-SA' },
+  { id:'bm:portland', title:'Portland Vase', dateDisplay:'1st century AD', culture:'Roman', classification:'Glass', medium:'Cameo glass', country:'Italy (Rome)', period:'Roman Empire', img:'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Portland_Vase_BM_Gem4036_n5.jpg/400px-Portland_Vase_BM_Gem4036_n5.jpg', imgFull:'https://upload.wikimedia.org/wikipedia/commons/6/6a/Portland_Vase_BM_Gem4036_n5.jpg', accessionNumber:'GR 1945,0927.1', desc:'Roman cameo glass vase, masterpiece of ancient glasswork', license:'CC-BY-NC-SA' },
+  { id:'bm:tang_horse', title:'Tang Dynasty Ceramic Horse', dateDisplay:'ca. 728 AD', culture:'Chinese', classification:'Ceramics', medium:'Glazed earthenware (sancai)', country:'China', period:'Tang Dynasty', img:'https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/British_Museum_Tang_Dynasty_Tomb_Figure.jpg/400px-British_Museum_Tang_Dynasty_Tomb_Figure.jpg', imgFull:'https://upload.wikimedia.org/wikipedia/commons/4/45/British_Museum_Tang_Dynasty_Tomb_Figure.jpg', accessionNumber:'1936,1012.228', desc:'Tang sancai glazed tomb figure of a horse', license:'CC-BY-NC-SA' },
+  { id:'bm:admonitions', title:'Admonitions Scroll (女史箴图)', dateDisplay:'5th–8th century', culture:'Chinese', classification:'Painting', medium:'Ink and color on silk', country:'China', period:'Tang Dynasty copy (original Jin Dynasty)', img:'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Ku_K%27ai-chih_001.jpg/400px-Ku_K%27ai-chih_001.jpg', imgFull:'https://upload.wikimedia.org/wikipedia/commons/4/4a/Ku_K%27ai-chih_001.jpg', accessionNumber:'1903,0408,0.1', desc:'Ancient Chinese handscroll painting attributed to Gu Kaizhi', license:'CC-BY-NC-SA' },
+  { id:'bm:oxusgold', title:'Oxus Treasure – Gold Armlet', dateDisplay:'5th–4th century BC', culture:'Achaemenid Persian', classification:'Jewelry', medium:'Gold', country:'Tajikistan', period:'Achaemenid Empire', img:'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Oxus_Treasure_-_Gold_Armlet.jpg/400px-Oxus_Treasure_-_Gold_Armlet.jpg', imgFull:'https://upload.wikimedia.org/wikipedia/commons/1/1f/Oxus_Treasure_-_Gold_Armlet.jpg', accessionNumber:'1897,1231.116', desc:'Gold griffin-head armlet from the Oxus Treasure', license:'CC-BY-NC-SA' },
+  { id:'bm:easter', title:'Hoa Hakananai\'a (Easter Island Moai)', dateDisplay:'ca. 1000–1200 AD', culture:'Rapa Nui', classification:'Sculpture', medium:'Basalt', country:'Easter Island (Chile)', period:'Polynesian', img:'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Hoa_Hakananai%27a.jpg/400px-Hoa_Hakananai%27a.jpg', imgFull:'https://upload.wikimedia.org/wikipedia/commons/c/c5/Hoa_Hakananai%27a.jpg', accessionNumber:'Oc1869,1005.1', desc:'Basalt moai figure from Easter Island', license:'CC-BY-NC-SA' },
+  { id:'bm:durerrhino', title:'Dürer\'s Rhinoceros (woodcut)', dateDisplay:'1515', culture:'German', classification:'Print', medium:'Woodcut on paper', country:'Germany', period:'Renaissance', img:'https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/The_Rhinoceros_%28NGA_1964.8.697%29_enhanced.png/400px-The_Rhinoceros_%28NGA_1964.8.697%29_enhanced.png', imgFull:'https://upload.wikimedia.org/wikipedia/commons/b/bc/The_Rhinoceros_%28NGA_1964.8.697%29_enhanced.png', accessionNumber:'1895,1222.714', desc:'Albrecht Dürer famous woodcut of a rhinoceros', license:'CC-BY-NC-SA' },
+  { id:'bm:lindow', title:'Lindow Man', dateDisplay:'2 BC – 119 AD', culture:'Celtic/Iron Age British', classification:'Human remains', medium:'Preserved bog body', country:'England', period:'Iron Age / Roman', img:'https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Lindow_Man_1.jpg/400px-Lindow_Man_1.jpg', imgFull:'https://upload.wikimedia.org/wikipedia/commons/1/13/Lindow_Man_1.jpg', accessionNumber:'P.1984.10-1', desc:'Well-preserved Iron Age bog body found in Cheshire', license:'CC-BY-NC-SA' },
+  { id:'bm:mildenhall', title:'Mildenhall Great Dish', dateDisplay:'4th century AD', culture:'Roman', classification:'Metalwork', medium:'Silver', country:'England', period:'Late Roman', img:'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Great_Dish%2C_part_of_the_Mildenhall_Treasure.jpg/400px-Great_Dish%2C_part_of_the_Mildenhall_Treasure.jpg', imgFull:'https://upload.wikimedia.org/wikipedia/commons/b/b4/Great_Dish%2C_part_of_the_Mildenhall_Treasure.jpg', accessionNumber:'1946,1007.1', desc:'Magnificent Late Roman silver dish with Bacchic scenes', license:'CC-BY-NC-SA' },
+  { id:'bm:ceramic_tile', title:'Iznik Tile Panel', dateDisplay:'ca. 1575', culture:'Ottoman', classification:'Ceramics', medium:'Fritware with underglaze painting', country:'Turkey', period:'Ottoman Empire', img:'https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Iznik_tiles_in_the_British_Museum.jpg/400px-Iznik_tiles_in_the_British_Museum.jpg', imgFull:'https://upload.wikimedia.org/wikipedia/commons/5/56/Iznik_tiles_in_the_British_Museum.jpg', accessionNumber:'G.1983.20', desc:'Ottoman Iznik ceramic tile with floral motifs', license:'CC-BY-NC-SA' },
+  { id:'bm:chinese_bronze', title:'Shang Dynasty Bronze Ritual Vessel (Gui)', dateDisplay:'ca. 1100 BC', culture:'Chinese', classification:'Bronze', medium:'Cast bronze', country:'China', period:'Shang Dynasty', img:'https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Bronze_gui_vessel%2C_Shang_dynasty.jpg/400px-Bronze_gui_vessel%2C_Shang_dynasty.jpg', imgFull:'https://upload.wikimedia.org/wikipedia/commons/7/70/Bronze_gui_vessel%2C_Shang_dynasty.jpg', accessionNumber:'1944,0714.1', desc:'Shang dynasty bronze ritual food vessel', license:'CC-BY-NC-SA' },
+  { id:'bm:jade_bi', title:'Jade Bi Disc', dateDisplay:'3000–2000 BC', culture:'Chinese (Neolithic)', classification:'Jade', medium:'Nephrite jade', country:'China', period:'Neolithic / Liangzhu', img:'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Bi_with_two_dragons%2C_Warring_States.jpg/400px-Bi_with_two_dragons%2C_Warring_States.jpg', imgFull:'https://upload.wikimedia.org/wikipedia/commons/4/4f/Bi_with_two_dragons%2C_Warring_States.jpg', accessionNumber:'1937,0416.1', desc:'Ceremonial jade disc, symbol of heaven in Chinese culture', license:'CC-BY-NC-SA' },
+];
+
+function normBM(o) {
+  const fullImg = o.imgFull || o.img;
+  return {
+    id: o.id, source: 'bm', sourceName: 'British Museum',
+    sourceUrl: `https://www.britishmuseum.org/collection`,
+    title: o.title, desc: o.desc || '',
+    img: { thumb: fullImg, full: fullImg, extra: [] },
+    culture: o.culture || '', period: o.period || '', dynasty: '',
+    dateDisplay: o.dateDisplay || '',
+    dateRange: { begin: 0, end: 0 },
+    medium: o.medium || '', classification: o.classification || '', department: '',
+    geo: { country: o.country || '', region: '', city: '' },
+    artist: { name: '', bio: '' },
+    license: { type: 'CC-BY-NC-SA', pd: false, com: false },
+    tags: [], dimensions: '',
+    accessionNumber: o.accessionNumber || '', raw: o
+  };
+}
+
+async function bmAdapterSearch(q, maxItems = 20) {
+  // Local fuzzy search against featured items
+  const ql = q.toLowerCase();
+  const keywords = ql.split(/\s+/);
+  return BM_FEATURED
+    .filter(o => {
+      const text = `${o.title} ${o.culture} ${o.classification} ${o.medium} ${o.country} ${o.period} ${o.desc}`.toLowerCase();
+      return keywords.some(k => text.includes(k));
+    })
+    .slice(0, maxItems)
+    .map(normBM);
+}
+
+// =====================================================================
+// =================== ADAPTER: 台北故宫 (NPM - 本地数据集) ==============
+// =====================================================================
+// 数据集：从「故宫资料3万余件」抽样 65 件，本地图片 + 完整中英文元数据。
+// 由 build-npm-local.js 生成 → npm-local.json + assets/npm/<id>.jpg。
+// 解决问题：原方案使用 wikimedia 远程图，被公司网络拦截。
+let NPM_LOCAL = [];
+let NPM_LOAD_PROMISE = null;
+
+function loadNPMLocal() {
+  if (NPM_LOAD_PROMISE) return NPM_LOAD_PROMISE;
+  NPM_LOAD_PROMISE = fetch('npm-local.json')
+    .then(r => r.ok ? r.json() : [])
+    .then(arr => { NPM_LOCAL = Array.isArray(arr) ? arr : []; console.log('[NPM] 加载本地数据集', NPM_LOCAL.length, '条'); return NPM_LOCAL; })
+    .catch(e => { console.warn('[NPM] 本地数据集加载失败：', e); NPM_LOCAL = []; return []; });
+  return NPM_LOAD_PROMISE;
+}
+// 页面初始化即异步加载
+loadNPMLocal();
+
+function normNPM(o) {
+  // 标题：中文 + 英文（若有英文）；若仅中文（含繁体）也直接展示
+  const title = o.titleEn ? `${o.titleZh} · ${o.titleEn}` : o.titleZh;
+  // 时代显示：中文朝代 + 西元年份说明（如 "商 · 西元前16-前11世紀"）
+  const dateDisplay = [o.dateZh, o.dateEn].filter(Boolean).join(' · ');
+  // 描述：把 类别/质材/尺寸/说明 拼成一段
+  const descParts = [];
+  if (o.medium) descParts.push(`【质材】${o.medium}`);
+  if (o.size) descParts.push(`【尺寸】${o.size}`);
+  if (o.desc) descParts.push(o.desc);
+  const desc = descParts.join(' ');
+
+  return {
+    id: o.id,
+    source: 'npm',
+    sourceName: '台北故宫',
+    sourceUrl: o.sourceUrl || 'https://www.npm.gov.tw/',
+    title,
+    desc,
+    img: { thumb: o.img, full: o.img, extra: [] },
+    culture: 'Chinese',
+    period: o.period || '',
+    dynasty: o.period || '',
+    dateDisplay,
+    dateRange: { begin: 0, end: 0 },
+    medium: o.medium || '',
+    classification: o.classification || 'Object',
+    department: '',
+    geo: { country: 'China', region: '', city: '' },
+    artist: { name: '', bio: '' },
+    // 台北故宫 OpenData 整体采用「政府资料开放授权 1.0」(OGDL-1.0)，等价于 CC BY 4.0：
+    // 可商用、可衍生，但必须署名来源。卡片层面统一标 CC BY 4.0（保守严格者）。
+    license: { type: 'CC BY 4.0', pd: false, com: true },
+    tags: o.tagZh ? [o.tagZh] : [],
+    dimensions: o.size || '',
+    accessionNumber: o.accession || '',
+    raw: o
+  };
+}
+
+async function npmAdapterSearch(q, maxItems = 100) {
+  await loadNPMLocal();
+  if (!NPM_LOCAL.length) return [];
+  const ql = (q || '').toLowerCase().trim();
+  // 空查询：返回全量（或最多 maxItems）
+  if (!ql) return NPM_LOCAL.slice(0, maxItems).map(normNPM);
+
+  const keywords = ql.split(/\s+/).filter(Boolean);
+  return NPM_LOCAL
+    .filter(o => {
+      // 把所有可搜文本拼起来（含中英文）
+      const text = [
+        o.titleZh, o.titleEn, o.dateZh, o.dateEn, o.period,
+        o.category, o.medium, o.func, o.desc, o.tagZh, o.classification
+      ].filter(Boolean).join(' ').toLowerCase();
+      return keywords.some(k => text.includes(k));
+    })
+    .slice(0, maxItems)
+    .map(normNPM);
+}
+
+// =====================================================================
+// =================== Chinese → English Keyword Mapping ===============
+// =====================================================================
+const ZH_EN_MAP = {
+  // 分类
+  '瓷器':'ceramics porcelain', '陶瓷':'ceramics porcelain', '陶器':'pottery',
+  '绘画':'painting', '油画':'oil painting', '水墨':'ink painting', '山水画':'landscape painting',
+  '雕塑':'sculpture', '雕刻':'carving', '浮雕':'relief',
+  '版画':'print woodblock', '书法':'calligraphy',
+  '青铜':'bronze', '青铜器':'bronze vessel', '金属':'metalwork',
+  '玉器':'jade', '玉':'jade', '翡翠':'jadeite',
+  '纺织':'textile', '丝绸':'silk', '刺绣':'embroidery', '挂毯':'tapestry',
+  '盔甲':'armor armour', '甲胄':'armor armour', '武器':'weapon arms', '刀剑':'sword',
+  '珠宝':'jewelry', '首饰':'jewelry ornament',
+  '家具':'furniture', '漆器':'lacquer lacquerware',
+  '面具':'mask', '木雕':'wood carving',
+  // 文化/地域
+  '中国':'Chinese China', '日本':'Japanese Japan', '韩国':'Korean Korea',
+  '埃及':'Egyptian Egypt', '希腊':'Greek Greece', '罗马':'Roman Rome',
+  '印度':'Indian India', '波斯':'Persian Iran', '伊斯兰':'Islamic',
+  '法国':'French France', '意大利':'Italian Italy', '英国':'British England',
+  '非洲':'African Africa', '美洲':'American Americas',
+  // 朝代/时期
+  '宋代':'Song dynasty', '宋朝':'Song dynasty', '唐代':'Tang dynasty', '唐朝':'Tang dynasty',
+  '明代':'Ming dynasty', '明朝':'Ming dynasty', '清代':'Qing dynasty', '清朝':'Qing dynasty',
+  '汉代':'Han dynasty', '汉朝':'Han dynasty', '元代':'Yuan dynasty', '元朝':'Yuan dynasty',
+  '商代':'Shang dynasty', '商朝':'Shang dynasty', '周代':'Zhou dynasty',
+  '战国':'Warring States', '春秋':'Spring Autumn',
+  '文艺复兴':'Renaissance', '中世纪':'Medieval', '巴洛克':'Baroque',
+  '古典':'Classical', '新石器':'Neolithic', '石器时代':'Stone Age',
+  // 材质
+  '大理石':'marble', '石灰石':'limestone', '花岗岩':'granite',
+  '象牙':'ivory', '琥珀':'amber', '玻璃':'glass',
+  '金':'gold', '银':'silver', '铜':'copper',
+  // 主题
+  '花卉':'floral flower', '动物':'animal', '龙':'dragon', '凤凰':'phoenix',
+  '佛':'Buddha Buddhist', '菩萨':'Bodhisattva', '神话':'mythology',
+  '肖像':'portrait', '风景':'landscape', '静物':'still life',
+  '纹样':'pattern ornament', '几何':'geometric', '花瓶':'vase',
+};
+
+function translateQuery(q) {
+  // Fast path: no Chinese characters → return as-is
+  if (!/[\u4e00-\u9fff]/.test(q)) return q;
+
+  let translated = q;
+  const parts = [];
+  let remaining = q;
+  // Try to match longer terms first (sort by key length descending)
+  const sortedKeys = Object.keys(ZH_EN_MAP).sort((a, b) => b.length - a.length);
+  for (const zh of sortedKeys) {
+    if (remaining.includes(zh)) {
+      parts.push(ZH_EN_MAP[zh]);
+      remaining = remaining.replace(zh, '');
+    }
+  }
+  if (parts.length > 0) {
+    translated = parts.join(' ') + (remaining.trim() ? ' ' + remaining.trim() : '');
+  }
+  return translated;
+}
+
+// Async translation via Google Translate free endpoint (fallback for unmapped terms)
+async function autoTranslate(q) {
+  // If no Chinese characters, return as-is
+  if (!/[\u4e00-\u9fff]/.test(q)) return q;
+
+  // First try local mapping (instant)
+  const localResult = translateQuery(q);
+  // If local mapping resolved all Chinese characters, use it
+  if (!/[\u4e00-\u9fff]/.test(localResult)) return localResult;
+
+  // Otherwise, call Google Translate free endpoint for remaining Chinese
+  try {
+    const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=zh-CN&tl=en&dt=t&q=${encodeURIComponent(q)}`;
+    const res = await fetch(url);
+    const data = await res.json();
+    // data[0] is array of [translated_segment, original_segment, ...]
+    const translated = data[0].map(seg => seg[0]).join('');
+    if (translated && translated !== q) {
+      // Combine: original Chinese (for local sources) + translated English (for API sources)
+      return translated;
+    }
+  } catch (e) {
+    console.warn('[Translate] Google Translate failed, using local mapping:', e.message);
+  }
+  return localResult;
+}
+
+// =====================================================================
+// =================== Unified Multi-Source Search =====================
+// =====================================================================
+async function multiSourceSearch(q, maxPerSource = 100) {
+  // Auto-translate Chinese keywords to English for API sources
+  const engQ = await autoTranslate(q);
+  const adapters = [];
+  const sf = state.sourceFilter;
+  // Each source returns up to 100 items (API hard limits or practical maximum)
+  if (sf === 'all' || sf === 'met') adapters.push(metAdapterSearch(engQ, 100));
+  if (sf === 'all' || sf === 'aic') adapters.push(aicAdapterSearch(engQ, 100));
+  if (sf === 'all' || sf === 'cma') adapters.push(cmaAdapterSearch(engQ, 100));
+  if (sf === 'all' || sf === 'vam') adapters.push(vamAdapterSearch(engQ, 100));
+  if (sf === 'all' || sf === 'mia') adapters.push(miaAdapterSearch(engQ, 100));
+  // Local sources: search with both original Chinese + translated English
+  const localQ = q + ' ' + engQ;
+  if (sf === 'all' || sf === 'bm')  adapters.push(bmAdapterSearch(localQ, 100));
+  if (sf === 'all' || sf === 'npm') adapters.push(npmAdapterSearch(localQ, 100));
+
+  const results = await Promise.allSettled(adapters);
+  const merged = [];
+  results.forEach(r => { if (r.status === 'fulfilled') merged.push(...r.value); });
+
+  // Relevance-first interleave:
+  // Each source returns results in relevance order (index 0 = most relevant).
+  // We take rank 1 from all sources, then rank 2, etc.
+  // Sources with no more results are skipped — no padding, no bias.
+  if (sf === 'all' && merged.length > 0) {
+    const bySource = {};
+    merged.forEach(item => { (bySource[item.source] = bySource[item.source] || []).push(item); });
+    const sources = Object.keys(bySource);
+    const interleaved = [];
+    let rank = 0, done = false;
+    while (!done) {
+      done = true;
+      for (const s of sources) {
+        if (rank < bySource[s].length) {
+          interleaved.push(bySource[s][rank]);
+          done = false;
+        }
+      }
+      rank++;
+    }
+    return interleaved;
+  }
+  return merged;
+}
+
+// ===== Search (Multi-Source) =====
 async function performSearch(reset = true) {
-  const q = document.getElementById('searchInput').value.trim();
+  // Sync values between Hero and Results search inputs
+  const heroInput = document.getElementById('searchInput');
+  const resultsInput = document.getElementById('searchInputResults');
+  const q = (heroInput.value || resultsInput?.value || '').trim();
   if (!q) return;
+  if (heroInput) heroInput.value = q;
+  if (resultsInput) resultsInput.value = q;
+
   if (reset) state.currentPage = 1;
   state.query = q;
   document.getElementById('heroSection').style.display = 'none';
   document.getElementById('collectionDetailView').classList.remove('active');
   document.getElementById('projectPage')?.classList.remove('active');
+  document.getElementById('resultsSearchBar').style.display = 'flex';
   document.getElementById('toolbar').style.display = 'flex';
   document.getElementById('contentLayout').style.display = 'flex';
   showLoad(true); clearGrid();
   try {
-    const f = { ...state.filters, dateBegin: parseInt(document.getElementById('dateBegin').value) || -3000, dateEnd: parseInt(document.getElementById('dateEnd').value) || 2000 };
-    const res = await metSearch(q, f);
-    state.objectIDs = res.objectIDs || []; state.totalResults = res.total || 0;
-    document.getElementById('resultCount').innerHTML = `找到 <strong>${state.totalResults.toLocaleString()}</strong> 件藏品`;
-    if (!state.objectIDs.length) { showEmpty(true); showLoad(false); return; }
-    await loadPage();
+    // Build enriched query: base query + period/geo keywords（period 走文本兜底关键词，
+    // 不直接拼区间字符串）
+    const periodKeywords = (state.filters.periods || [])
+      .flatMap(p => PERIOD_TEXT_KEYWORDS[p] || [])
+      .filter(k => /^[a-z\s\-]+$/i.test(k))   // API 只接英文/拉丁字母，过滤中文 fallback
+      .join(' ');
+    const geoKeywords = (state.filters.geoLocations || []).join(' ');
+    const enrichedQ = [q, periodKeywords, geoKeywords].filter(Boolean).join(' ');
+
+    const items = await multiSourceSearch(enrichedQ, 100);
+
+    // 给所有 items 打上 themes 标签（词典驱动，未命中只挂 museum_collection）
+    // 同时默认 assetType='image'（现阶段所有博物馆数据都是图片；未来接入 3D/text/video 时在对应 adapter 里设置）
+    items.forEach(it => {
+      it.themes = enrichThemes(it);
+      if (!it.assetType) it.assetType = 'image';
+    });
+
+    // Client-side filter to ensure results actually match the selected filters
+    const filtered = filterItems(items);
+
+    state.allSourceItems = items;
+    state.loadedItems = filtered;
+    state.totalResults = filtered.length;
+
+    // 顶部只保留"找到 X 件藏品"，各馆分布吸收到左侧「数据来源」筛选项命中数
+    document.getElementById('resultCount').innerHTML = `找到 <strong>${state.totalResults}</strong> 件藏品`;
+
+    // 刷新左侧筛选栏所有 checkbox 旁的命中数（B 方案：联动其他筛选后的数字）
+    updateFilterCounts();
+
+    if (!filtered.length) { showEmpty(true); showLoad(false); return; }
+    renderCards(filtered);
+    showLoad(false);
   } catch (e) { console.error(e); showLoad(false); showEmpty(true); }
 }
 
-async function loadPage() {
-  showLoad(true);
-  const s = (state.currentPage - 1) * state.pageSize;
-  const ids = state.objectIDs.slice(s, s + state.pageSize);
-  const items = [];
-  for (let i = 0; i < ids.length; i += 10) {
-    const batch = ids.slice(i, i + 10);
-    const results = await Promise.allSettled(batch.map(id => metObj(id)));
-    results.forEach(r => { if (r.status === 'fulfilled' && r.value) { const n = norm(r.value); if (n.img.thumb || n.img.full) items.push(n); } });
-    renderCards(items);
-  }
-  state.loadedItems = items;
-  showLoad(false);
-  if (!items.length) showEmpty(true);
-  renderPagination();
-}
+// Legacy alias for Met-only functions used by collections
+const norm = normMet;
 
 function renderCards(items) {
   const g = document.getElementById('resultsGrid'); g.innerHTML = '';
   items.forEach(item => {
     const fav = state.favorites.includes(item.id);
+    const srcInfo = SOURCES[item.source] || {};
+    const licenseClass = licenseBadgeFullClass(item.license, item.source);
+    const imgSrc = item.img.thumb || item.img.full;
     const c = document.createElement('div'); c.className = 'card';
     c.onclick = () => openDetail(item);
     c.innerHTML = `
       <div class="card-img-wrap">
-        ${item.img.thumb
-          ? `<img class="card-img" src="${item.img.thumb}" alt="${esc(item.title)}" loading="lazy" onerror="this.onerror=null;this.parentElement.innerHTML='<div class=\\'card-img-placeholder\\'>🖼️</div>'">`
+        ${imgSrc
+          ? `<img class="card-img" src="${imgSrc}" alt="${esc(item.title)}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+             <div class="card-img-placeholder" style="display:none">🖼️</div>`
           : '<div class="card-img-placeholder">🖼️</div>'}
-        ${item.license.pd ? '<div class="badge-license">CC0</div>' : ''}
-        <button class="card-heart ${fav ? 'active' : ''}" onclick="event.stopPropagation(); toggleFav('${item.id}',this)">
+        <div class="badge-source" style="background:${srcInfo.color || '#333'};color:#fff;">${srcInfo.flag || ''} ${srcInfo.name || item.source}</div>
+        <button class="card-heart ${fav ? 'active' : ''}" onclick="event.stopPropagation(); toggleFav('${item.id}',this)" style="top:auto;bottom:var(--sp-3);">
           ${fav ? '❤️' : '♡'}
         </button>
       </div>
@@ -1453,7 +2779,7 @@ function renderCards(items) {
         ${item.culture ? `<div class="card-culture">${esc(item.culture)}</div>` : ''}
         ${item.dateDisplay ? `<div class="card-date">${esc(item.dateDisplay)}</div>` : ''}
         <div class="card-tag-row">
-          ${item.license.pd ? '<span class="mini-tag cc0">可商用</span>' : ''}
+          <span class="badge-license ${licenseClass}" title="${esc(item.license.type)}">${esc(licenseBadgeLabel(item.license.type))}</span>
           ${item.period ? `<span class="mini-tag">${esc(item.period)}</span>` : ''}
         </div>
       </div>`;
@@ -1462,24 +2788,12 @@ function renderCards(items) {
 }
 
 function renderPagination() {
-  const pg = document.getElementById('pagination');
-  const tp = Math.ceil(state.objectIDs.length / state.pageSize);
-  if (tp <= 1) { pg.innerHTML = ''; return; }
-  let h = `<button class="pg-btn" onclick="goPage(${state.currentPage-1})" ${state.currentPage<=1?'disabled':''}>‹</button>`;
-  let s = Math.max(1, state.currentPage - 3), e = Math.min(tp, s + 6);
-  if (e - s < 6) s = Math.max(1, e - 6);
-  if (s > 1) { h += `<button class="pg-btn" onclick="goPage(1)">1</button>`; if (s > 2) h += '<span style="color:var(--text-tertiary);padding:0 4px">…</span>'; }
-  for (let i = s; i <= e; i++) h += `<button class="pg-btn ${i===state.currentPage?'active':''}" onclick="goPage(${i})">${i}</button>`;
-  if (e < tp) { if (e < tp - 1) h += '<span style="color:var(--text-tertiary);padding:0 4px">…</span>'; h += `<button class="pg-btn" onclick="goPage(${tp})">${tp}</button>`; }
-  h += `<button class="pg-btn" onclick="goPage(${state.currentPage+1})" ${state.currentPage>=tp?'disabled':''}>›</button>`;
-  pg.innerHTML = h;
+  // Multi-source: no server-side pagination, results already loaded
+  document.getElementById('pagination').innerHTML = '';
 }
 
 function goPage(p) {
-  const tp = Math.ceil(state.objectIDs.length / state.pageSize);
-  if (p < 1 || p > tp) return;
-  state.currentPage = p; clearGrid(); loadPage();
-  window.scrollTo({ top: 120, behavior: 'smooth' });
+  // No-op in multi-source mode
 }
 
 var lastDetailItem = null;
@@ -1493,23 +2807,103 @@ async function openDetail(item) {
   ia.innerHTML = src ? `<img src="${src}" alt="${esc(item.title)}" onclick="window.open('${src}','_blank')">` : '<div class="card-img-placeholder" style="font-size:72px">🖼️</div>';
   const info = document.getElementById('modalInfo');
   const fav = state.favorites.includes(item.id);
+  const srcInfo = SOURCES[item.source] || {};
+  // 详情卡片版权区：三态配色（绿/黄/灰）+ 严格按官方原文的细分说明
+  const licType = item.license.type;
+  const licStatus = licenseStatusOf(item.license, item.source);  // 'com' | 'copyright' | 'restricted'
+  const licCardClass = licStatus;  // 与 .license-card.com / .copyright / .restricted 对应
+  const licColor =
+    licStatus === 'com' ? 'var(--success)' :
+    licStatus === 'copyright' ? '#d97706' : '#9aa0a6';
+
+  // 灵感参考使用建议（弱化展示，放在馆方原文说明下方）
+  // 三态对应不同建议文案，让用户在看完官方说法后获得"路径感知"
+  const usageTipMap = {
+    com:        '可放心用于商业项目，也可作为内部灵感参考与浏览。',
+    copyright:  '可作为内部灵感参考与浏览。',
+    restricted: '可作为内部灵感参考与浏览。',
+  };
+  const usageTip = usageTipMap[licStatus] || usageTipMap.restricted;
+
+  // 详细版权说明（细粒度，按 license.type 对应官方条款）
+  const licNoteMap = {
+    // ===== 可商用 =====
+    'CC0':
+      '公共领域贡献（CC0 1.0 Universal Public Domain Dedication）。' +
+      '可自由复制、修改、分发、表演，包括商业用途，无需获得许可，无需署名。' +
+      '<br><a href="https://creativecommons.org/publicdomain/zero/1.0/deed.zh" target="_blank" rel="noopener">查看 CC0 条款原文</a>',
+    'CC BY 4.0':
+      (item.source === 'npm'
+        ? '台北故宫 OpenData 采用「政府资料开放授权 1.0」(OGDL-1.0)，等价于 CC BY 4.0。' +
+          '可自由使用、修改、再传播，包括商业用途；必须保留来源说明（建议标注：来源 国立故宫博物院）。'
+        : '知识共享 署名 4.0 国际许可（CC BY 4.0）。' +
+          '可自由复制、修改、分发，包括商业用途；必须署名原作者及来源、提供许可证链接、说明是否做了修改。') +
+      '<br><a href="https://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="noopener">查看 CC BY 4.0 条款原文</a>',
+
+    // ===== 受版权保护（黄色：作品本身在版权期）=====
+    'Reference':
+      '该作品仍在版权保护期内（如现当代艺术家作品、版权图像授权使用等）。' +
+      '来源馆开放其元数据用于学术研究、教育与个人欣赏。' +
+      '<br>商业使用、再分发、衍生创作需联系<b>版权方</b>单独申请授权。',
+    'Copyright':
+      '受版权保护（来源馆字段：Copyright）。' +
+      '商业使用、复制、分发、改编需联系版权方授权。',
+    'In Copyright':
+      '受版权保护（来源馆字段：In Copyright）。' +
+      '商业使用、复制、分发、改编需联系版权方授权。',
+
+    // ===== 来源馆限制（灰色：作品可能 PD 但馆方限制）=====
+    'Non-Commercial':
+      'V&A 网站使用条款（参见 ' +
+      '<a href="https://www.vam.ac.uk/info/va-websites-terms-conditions" target="_blank" rel="noopener">vam.ac.uk Section 9</a>）：' +
+      '内容可用于非商业目的（个人、学术、研究、教育）。' +
+      '<br>商业使用必须通过 <a href="https://www.vandaimages.com/" target="_blank" rel="noopener">vandaimages.com</a> 申请付费授权。',
+    'CC-BY-NC-SA':
+      '知识共享 署名-非商业性使用-相同方式共享 4.0 国际许可（CC BY-NC-SA 4.0）。' +
+      '可分享、改编，但仅限非商业用途；必须署名；衍生作品须以相同许可发布。' +
+      '<br><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" rel="noopener">查看 CC BY-NC-SA 4.0 条款原文</a>',
+    'Public Domain (Not Evaluated)':
+      '来源馆字段：Public Domain (Not Evaluated)。' +
+      '该作品推测属于公共领域但尚未经版权专员正式确认，' +
+      '版权未评估，建议联系来源馆确认后再做商业使用。',
+    'Rights Not Evaluated':
+      '来源馆字段：Rights Not Evaluated。' +
+      '该作品的版权状态尚未评估。建议联系来源馆确认后再做商业使用。',
+  };
+  const licNote = licNoteMap[licType] ||
+    (item.license.com
+      ? '可商用'
+      : '版权未评估 · 来源馆原始版权字段：' + esc(licType) + '。建议联系来源馆确认。');
+
   info.innerHTML = `
     <div class="detail-section">
+      <h4>数据来源</h4>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
+        <span style="font-size:24px;">${srcInfo.flag || '🏛️'}</span>
+        <span style="font-size:16px;font-weight:700;">${srcInfo.name || item.source}</span>
+      </div>
+    </div>
+    <div class="detail-section">
       <h4>版权信息</h4>
-      <div class="license-card">
-        <div class="license-type">${item.license.type}</div>
-        <div class="license-note">${item.license.pd ? '✅ 公共领域 · 可自由用于商业和非商业用途' : '⚠️ 受限使用 · 商用前请确认授权'}</div>
+      <div class="license-card ${licCardClass}">
+        <div class="license-type" style="color:${licColor}">${licenseDetailLabel(licType)}（${esc(licType)}）</div>
+        <div class="license-note">${licNote}</div>
+        <div class="usage-tip">
+          <span class="ut-icon">💡</span>
+          <span>${usageTip}</span>
+        </div>
       </div>
     </div>
     <div class="detail-section"><h4>基本信息</h4>
       ${dr('标题', item.title)}${dr('年代', item.dateDisplay)}${dr('文化', item.culture)}
       ${dr('时期', item.period)}${dr('分类', item.classification)}${dr('材质', item.medium)}
       ${dr('部门', item.department)}${item.dimensions ? dr('尺寸', item.dimensions) : ''}
+      ${item.accessionNumber ? dr('文物号', item.accessionNumber) : ''}
     </div>
     ${item.artist.name ? `<div class="detail-section"><h4>艺术家</h4>${dr('姓名', item.artist.name)}${dr('简介', item.artist.bio)}</div>` : ''}
     ${item.geo.country ? `<div class="detail-section"><h4>地理信息</h4>${dr('国家', item.geo.country)}${item.geo.region ? dr('地区', item.geo.region) : ''}${item.geo.city ? dr('城市', item.geo.city) : ''}</div>` : ''}
-    ${item.tags.length ? `<div class="detail-section"><h4>标签</h4><div class="detail-tags">${item.tags.map(t=>`<span class="mini-tag">${esc(t)}</span>`).join('')}</div></div>` : ''}
-    ${item.img.extra.length ? `<div class="detail-section"><h4>更多图片 (${item.img.extra.length})</h4><div class="detail-thumbs">${item.img.extra.slice(0,6).map(u=>`<img src="${u}" onclick="document.querySelector('.modal-photo img').src='${u}'">`).join('')}</div></div>` : ''}
+    ${item.tags?.length ? `<div class="detail-section"><h4>标签</h4><div class="detail-tags">${item.tags.map(t=>`<span class="mini-tag">${esc(t)}</span>`).join('')}</div></div>` : ''}
+    ${item.img.extra?.length ? `<div class="detail-section"><h4>更多图片 (${item.img.extra.length})</h4><div class="detail-thumbs">${item.img.extra.slice(0,6).map(u=>`<img src="${u}" onclick="document.querySelector('.modal-photo img').src='${u}'">`).join('')}</div></div>` : ''}
     <div class="action-row">
       <a class="btn-primary" href="${src}" target="_blank" onclick="event.stopPropagation()">⬇ 下载原图</a>
       <button class="btn-outline" onclick="toggleFav('${item.id}');this.textContent=state.favorites.includes('${item.id}')?'❤️ 已收藏':'♡ 收藏'">
@@ -1517,7 +2911,7 @@ async function openDetail(item) {
       </button>
     </div>
     <button class="btn-primary" style="width:100%;margin-top:var(--sp-3);background:linear-gradient(135deg,#6c5ce7,#a29bfe);" onclick="closeModal();openAIGenerate(lastDetailItem)">✨ 以此为参考 · AI 生成</button>
-    <a class="btn-link" href="${item.sourceUrl}" target="_blank">在 The Met 官网查看 →</a>
+    ${item.sourceUrl ? `<a class="btn-link" href="${item.sourceUrl}" target="_blank">在 ${srcInfo.name || '博物馆'} 官网查看 →</a>` : ''}
   `;
 }
 function closeModal() { document.getElementById('detailModal').classList.remove('active'); document.body.style.overflow = ''; }
@@ -1532,12 +2926,288 @@ function toggleFav(id, btn) {
 }
 function applyFilters() {
   state.filters.geoLocations = Array.from(document.querySelectorAll('[data-filter="geo"]:checked')).map(c => c.value);
-  state.filters.publicDomainOnly = document.getElementById('publicDomainOnly').checked;
+  state.filters.periods = Array.from(document.querySelectorAll('[data-filter="period"]:checked')).map(c => c.value);
+  state.filters.licenseStatuses = Array.from(document.querySelectorAll('[data-filter="license"]:checked')).map(c => c.value);
+  state.filters.sources = Array.from(document.querySelectorAll('[data-filter="source"]:checked')).map(c => c.value);
+  state.filters.themes = Array.from(document.querySelectorAll('[data-filter="theme"]:checked')).map(c => c.value);
+  state.filters.assetTypes = Array.from(document.querySelectorAll('[data-filter="assetType"]:checked')).map(c => c.value);
   state.filters.hasImagesOnly = document.getElementById('hasImagesOnly').checked;
-  if (state.query) performSearch(true);
+  // 如果已有搜索结果：只做客户端重新筛选 + 重绘；不再重跑 API（性能 & 体验更顺）
+  if (state.allSourceItems && state.allSourceItems.length) {
+    rerenderFromCache();
+  } else if (state.query) {
+    performSearch(true);
+  }
 }
-function switchSource(s, btn) { state.source = s; document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active')); btn.classList.add('active'); if (state.query) performSearch(true); }
+
+// 基于 state.allSourceItems（不重跑 API）按当前 filters 重新过滤 + 渲染 + 更新命中数
+function rerenderFromCache() {
+  const filtered = filterItems(state.allSourceItems);
+  state.loadedItems = filtered;
+  state.totalResults = filtered.length;
+  document.getElementById('resultCount').innerHTML = `找到 <strong>${state.totalResults}</strong> 件藏品`;
+  updateFilterCounts();
+  if (!filtered.length) { showEmpty(true); document.getElementById('resultsGrid').innerHTML = ''; return; }
+  showEmpty(false);
+  renderCards(filtered);
+}
+
+// Client-side filter: source + assetType + period + geo + license + theme
+// skipDim 参数：计算命中数时排除"自身维度"，用于 B 方案联动命中数
+function filterItems(items, skipDim = null) {
+  const periods = state.filters.periods || [];
+  const geos = state.filters.geoLocations || [];
+  const sources = state.filters.sources || [];
+  const themes = state.filters.themes || [];
+  const assetTypes = state.filters.assetTypes || [];
+  const licStatuses = state.filters.licenseStatuses || [];
+  const useLicFilter = licStatuses.length > 0 && licStatuses.length < 3;
+
+  return items.filter(item => {
+    // Source filter（左侧栏"数据来源"勾选）
+    if (skipDim !== 'source' && sources.length > 0 && sources.length < 7) {
+      if (!sources.includes(item.source)) return false;
+    }
+    // Asset type filter（资产形式）
+    if (skipDim !== 'assetType' && assetTypes.length > 0) {
+      const it = item.assetType || 'image';
+      if (!assetTypes.includes(it)) return false;
+    }
+    // Period filter（区间重叠匹配，详见 matchPeriod 注释）
+    if (skipDim !== 'period' && periods.length > 0) {
+      const matchesPeriod = periods.some(p => matchPeriod(item, p));
+      if (!matchesPeriod) return false;
+    }
+    // Geo filter
+    if (skipDim !== 'geo' && geos.length > 0) {
+      const itemGeo = `${item.geo?.country || ''} ${item.culture || ''}`.toLowerCase();
+      const matchesGeo = geos.some(g => itemGeo.includes(g.toLowerCase()));
+      if (!matchesGeo) return false;
+    }
+    // License 三态过滤
+    if (skipDim !== 'license' && useLicFilter) {
+      const status = licenseStatusOf(item.license, item.source);
+      if (!licStatuses.includes(status)) return false;
+    }
+    // Theme 过滤（themes 为空 = 不过滤；非空 = 必须命中至少一个已勾选 theme）
+    if (skipDim !== 'theme' && themes.length > 0) {
+      const itemThemes = item.themes || ['museum_collection'];
+      if (!themes.some(t => itemThemes.includes(t))) return false;
+    }
+    return true;
+  });
+}
+function switchSource(s, btn) { state.sourceFilter = s; document.querySelectorAll('.nav-tab[data-source]').forEach(t => t.classList.remove('active')); btn.classList.add('active'); if (state.query) performSearch(true); }
 function quickSearch(q) { document.getElementById('searchInput').value = q; performSearch(true); }
+
+// =====================================================================
+// ============ 筛选项命中数（B 方案：联动其他维度）=====================
+// =====================================================================
+// 原则：每个 checkbox 旁的数字 = 在"当前其他维度筛选都应用"前提下，
+//       如果勾选/独占该选项，还能返回多少条结果
+// 实现：对每一维度，基于 allSourceItems 用 filterItems(items, skipDim=该维度)
+//       先得到"除此维度外都过滤过"的候选集，再针对每个选项做单项匹配计数
+
+function updateFilterCounts() {
+  const all = state.allSourceItems || [];
+  if (!all.length) return;
+
+  // --- 数据来源（source） ---
+  const srcPool = filterItems(all, 'source');
+  const srcCounts = {};
+  srcPool.forEach(i => { srcCounts[i.source] = (srcCounts[i.source] || 0) + 1; });
+  document.querySelectorAll('[data-filter="source"]').forEach(cb => {
+    _setCount(cb, srcCounts[cb.value] || 0);
+  });
+
+  // --- 资产形式（assetType） ---
+  const atPool = filterItems(all, 'assetType');
+  const atCounts = {};
+  atPool.forEach(i => {
+    const t = i.assetType || 'image';
+    atCounts[t] = (atCounts[t] || 0) + 1;
+  });
+  document.querySelectorAll('[data-filter="assetType"]').forEach(cb => {
+    _setCount(cb, atCounts[cb.value] || 0);
+  });
+
+  // --- 时期（period） ---
+  const periodPool = filterItems(all, 'period');
+  document.querySelectorAll('[data-filter="period"]').forEach(cb => {
+    const n = periodPool.filter(i => matchPeriod(i, cb.value)).length;
+    _setCount(cb, n);
+  });
+
+  // --- 文化地域（geo） ---
+  const geoPool = filterItems(all, 'geo');
+  document.querySelectorAll('[data-filter="geo"]').forEach(cb => {
+    const v = cb.value.toLowerCase();
+    const n = geoPool.filter(i =>
+      `${i.geo?.country || ''} ${i.culture || ''}`.toLowerCase().includes(v)
+    ).length;
+    _setCount(cb, n);
+  });
+
+  // --- 授权三态（license） ---
+  const licPool = filterItems(all, 'license');
+  const licCounts = { com: 0, copyright: 0, restricted: 0 };
+  licPool.forEach(i => {
+    const s = licenseStatusOf(i.license, i.source);
+    if (licCounts[s] !== undefined) licCounts[s]++;
+  });
+  document.querySelectorAll('[data-filter="license"]').forEach(cb => {
+    _setCount(cb, licCounts[cb.value] || 0);
+  });
+
+  // --- 文化主题（theme） ---
+  const themePool = filterItems(all, 'theme');
+  const themeCounts = {};
+  themePool.forEach(i => {
+    (i.themes || []).forEach(t => { themeCounts[t] = (themeCounts[t] || 0) + 1; });
+  });
+  document.querySelectorAll('[data-filter="theme"]').forEach(cb => {
+    _setCount(cb, themeCounts[cb.value] || 0);
+  });
+
+  // --- 仅含图片（单独处理）---
+  // 不参与 B 方案，因为它不是多选枚举，始终显示"勾选后还能剩多少"即可
+}
+
+// 把命中数写到 checkbox 所在 .filter-option 行末的 .filter-count 里
+function _setCount(cb, n) {
+  const row = cb.closest('.filter-option');
+  if (!row) return;
+  let span = row.querySelector('.filter-count');
+  if (!span) {
+    span = document.createElement('span');
+    span.className = 'filter-count';
+    row.appendChild(span);
+  }
+  span.textContent = n;
+  // 命中数为 0 时灰化整行（不禁用，因为可能是用户想调试的信号）
+  row.classList.toggle('is-zero', n === 0);
+}
+
+// =====================================================================
+// =================== "猜你想搜" 关键词池 + 换一批 ====================
+// =====================================================================
+// 关键词池：覆盖东方文物 / 西方艺术 / 古文明 / 专题题材 四大类，约 50 个
+// [中文显示文案, 英文搜索关键词]
+// 英文关键词写得稍宽泛，与多家 API 的命中率更高
+const SUGGEST_POOL = [
+  // ===== 东方文物 =====
+  ['中国陶瓷',     'Chinese ceramics'],
+  ['唐三彩',       'Tang sancai pottery'],
+  ['宋代绘画',     'Song dynasty painting'],
+  ['明代青花',     'Ming blue and white porcelain'],
+  ['清代珐琅',     'Qing enamel'],
+  ['日本甲胄',     'Japanese armor samurai'],
+  ['浮世绘',       'ukiyo-e woodblock print'],
+  ['日本武士刀',   'Japanese katana sword'],
+  ['高丽青瓷',     'Korean celadon'],
+  ['印度细密画',   'Indian miniature painting'],
+  ['波斯地毯',     'Persian carpet'],
+  ['佛教造像',     'Buddhist sculpture'],
+
+  // ===== 西方艺术 =====
+  ['文艺复兴',     'Renaissance portrait'],
+  ['巴洛克绘画',   'Baroque painting'],
+  ['印象派',       'Impressionist painting'],
+  ['古希腊雕塑',   'ancient Greek sculpture'],
+  ['希腊花瓶',     'Greek vase'],
+  ['罗马马赛克',   'Roman mosaic'],
+  ['哥特式',       'Gothic art'],
+  ['中世纪手抄本', 'medieval manuscript illumination'],
+  ['维多利亚瓷器', 'Victorian porcelain'],
+  ['新艺术运动',   'Art Nouveau'],
+  ['装饰艺术',     'Art Deco'],
+  ['洛可可',       'Rococo painting'],
+
+  // ===== 古文明 =====
+  ['埃及雕塑',     'Egyptian sculpture'],
+  ['美索不达米亚', 'Mesopotamian art'],
+  ['玛雅纹样',     'Mayan pattern'],
+  ['维京饰品',     'Viking ornament'],
+  ['凯尔特纹饰',   'Celtic pattern'],
+  ['拜占庭马赛克', 'Byzantine mosaic'],
+  ['伊特鲁里亚',   'Etruscan art'],
+  ['印加织物',     'Inca textile'],
+  ['阿兹特克',     'Aztec art'],
+  ['法老黄金',     'Egyptian gold pharaoh'],
+  ['苏美尔楔形',   'Sumerian cuneiform'],
+
+  // ===== 专题题材 =====
+  ['中世纪挂毯',   'medieval European tapestry'],
+  ['伊斯兰纹样',   'Islamic pattern tile'],
+  ['龙纹',         'dragon pattern Chinese'],
+  ['凤鸟纹',       'phoenix bird pattern'],
+  ['莲花纹',       'lotus pattern'],
+  ['花鸟图',       'flower and bird painting'],
+  ['山水画',       'Chinese landscape painting'],
+  ['动物雕刻',     'animal sculpture'],
+  ['神话场景',     'mythology scene'],
+  ['武士肖像',     'warrior portrait'],
+  ['帝王肖像',     'royal portrait emperor'],
+  ['宗教题材',     'religious art icon'],
+  ['星空神话',     'celestial mythology'],
+  ['花卉静物',     'flower still life'],
+  ['书法',         'calligraphy'],
+];
+
+// 已展示过的关键词索引（避免与上一批重复）
+let _suggestLastBatch = [];
+
+function _pickSuggestBatch(count = 8) {
+  const pool = SUGGEST_POOL;
+  // 候选池：排除上一批用过的项；如果排除后不够，则从全池抽
+  const lastSet = new Set(_suggestLastBatch);
+  let candidates = pool.filter((_, i) => !lastSet.has(i));
+  if (candidates.length < count) candidates = pool.slice();
+
+  // 洗牌取前 N 个
+  const shuffled = candidates
+    .map(item => ({ item, r: Math.random() }))
+    .sort((a, b) => a.r - b.r)
+    .slice(0, count)
+    .map(x => x.item);
+
+  // 记录本批索引，下次刷新时排除
+  _suggestLastBatch = shuffled.map(it => pool.indexOf(it));
+  return shuffled;
+}
+
+function renderSuggestBatch() {
+  const wrap = document.getElementById('heroSuggestWords');
+  if (!wrap) return;
+  const batch = _pickSuggestBatch(8);
+  // 用 data-q 承载英文搜索关键词，避免双引号嵌套 onclick 导致点击失效
+  wrap.innerHTML = batch
+    .map(([zh, en]) => `<button class="hs-link" type="button" data-q="${esc(en)}">${esc(zh)}</button>`)
+    .join('');
+  // 事件委托（仅绑一次）：点击任意 .hs-link 即跳转搜索
+  if (!wrap._delegated) {
+    wrap.addEventListener('click', (e) => {
+      const btn = e.target.closest('.hs-link');
+      if (!btn) return;
+      const q = btn.getAttribute('data-q');
+      if (q) quickSearch(q);
+    });
+    wrap._delegated = true;
+  }
+  // 容器是 overflow:hidden + nowrap，scrollWidth > clientWidth 即代表溢出
+  // 逐个删除最后一项，直到放得下，保证视觉单行
+  requestAnimationFrame(() => {
+    let safety = 16;  // 防死循环
+    while (wrap.scrollWidth > wrap.clientWidth && wrap.children.length > 1 && safety-- > 0) {
+      wrap.removeChild(wrap.lastElementChild);
+    }
+  });
+}
+
+// 暴露给 onclick="shuffleSuggest()"
+function shuffleSuggest() {
+  renderSuggestBatch();
+}
 function setView(v, btn) {
   state.view = v; document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active');
   document.getElementById('resultsGrid').style.gridTemplateColumns = v === 'large' ? 'repeat(auto-fill, minmax(380px, 1fr))' : 'repeat(auto-fill, minmax(280px, 1fr))';
@@ -1728,33 +3398,34 @@ async function openCollection(id) {
   document.getElementById('collEmpty').style.display = 'none';
 
   try {
-    // Search Met API with all queries, merge results
-    const allIDs = new Set();
-    const searchPromises = col.searchQueries.map(q => {
-      const params = new URLSearchParams();
-      params.set('q', q); params.set('hasImages', 'true'); params.set('isPublicDomain', 'true');
-      if (col.geoHint) params.set('geoLocation', col.geoHint);
-      return fetch(`${MET}/search?${params}`).then(r => r.json());
-    });
-    const results = await Promise.allSettled(searchPromises);
-    results.forEach(r => {
-      if (r.status === 'fulfilled' && r.value && r.value.objectIDs) {
-        r.value.objectIDs.forEach(id => allIDs.add(id));
+    // Use the same search logic as the top search bar, for each query
+    const allItems = [];
+    const seen = new Set();
+    // Search all queries in parallel via multiSourceSearch
+    const queryResults = await Promise.allSettled(
+      col.searchQueries.map(q => multiSourceSearch(q, 15))
+    );
+    queryResults.forEach(r => {
+      if (r.status === 'fulfilled') {
+        r.value.forEach(item => {
+          if (!seen.has(item.id)) { seen.add(item.id); allItems.push(item); }
+        });
       }
     });
 
-    collState.objectIDs = shuffleArray([...allIDs]);
-    const total = collState.objectIDs.length;
+    collState.loadedItems = allItems;
+    const total = allItems.length;
 
     document.getElementById('collResultCount').innerHTML =
-      `<strong>${esc(col.title)}</strong> · 共 <strong>${total.toLocaleString()}</strong> 件藏品`;
+      `<strong>${esc(col.title)}</strong> · 共 <strong>${total.toLocaleString()}</strong> 件藏品（多馆聚合）`;
 
     if (total === 0) {
       document.getElementById('collLoading').style.display = 'none';
       document.getElementById('collEmpty').style.display = 'block';
       return;
     }
-    await loadCollectionPage();
+    renderCollectionCards(allItems);
+    document.getElementById('collLoading').style.display = 'none';
   } catch(e) {
     console.error('Collection load failed:', e);
     document.getElementById('collLoading').style.display = 'none';
@@ -1768,21 +3439,29 @@ async function loadCollectionPage() {
   document.getElementById('collLoading').style.display = 'flex';
   const s = (collState.currentPage - 1) * collState.pageSize;
   const ids = collState.objectIDs.slice(s, s + collState.pageSize);
-  const items = [];
+  const metItems = [];
   for (let i = 0; i < ids.length; i += 8) {
     const batch = ids.slice(i, i + 8);
     const results = await Promise.allSettled(batch.map(id => metObj(id)));
     results.forEach(r => {
       if (r.status === 'fulfilled' && r.value) {
         const n = norm(r.value);
-        if (n.img.thumb || n.img.full) items.push(n);
+        if (n.img.thumb || n.img.full) metItems.push(n);
       }
     });
-    renderCollectionCards(items);
   }
-  collState.loadedItems = items;
+  // Merge Met + other sources evenly (1:1 alternating)
+  const otherItems = collState.otherSourceItems || [];
+  const mixed = [];
+  let mi = 0, oi = 0;
+  while (mi < metItems.length || oi < otherItems.length) {
+    if (mi < metItems.length) mixed.push(metItems[mi++]);
+    if (oi < otherItems.length) mixed.push(otherItems[oi++]);
+  }
+  collState.loadedItems = mixed;
+  renderCollectionCards(mixed);
   document.getElementById('collLoading').style.display = 'none';
-  if (!items.length) document.getElementById('collEmpty').style.display = 'block';
+  if (!mixed.length) document.getElementById('collEmpty').style.display = 'block';
   renderCollectionPagination();
 }
 
@@ -1790,15 +3469,19 @@ function renderCollectionCards(items) {
   const g = document.getElementById('collResultsGrid'); g.innerHTML = '';
   items.forEach(item => {
     const fav = state.favorites.includes(item.id);
+    const srcInfo = SOURCES[item.source] || {};
+    const licenseClass = licenseBadgeFullClass(item.license, item.source);
+    const imgSrc = item.img.thumb || item.img.full;
     const c = document.createElement('div'); c.className = 'card';
     c.onclick = () => openDetail(item);
     c.innerHTML = `
       <div class="card-img-wrap">
-        ${item.img.thumb
-          ? `<img class="card-img" src="${item.img.thumb}" alt="${esc(item.title)}" loading="lazy" onerror="this.onerror=null;this.parentElement.innerHTML='<div class=\\'card-img-placeholder\\'>🖼️</div>'">`
+        ${imgSrc
+          ? `<img class="card-img" src="${imgSrc}" alt="${esc(item.title)}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+             <div class="card-img-placeholder" style="display:none">🖼️</div>`
           : '<div class="card-img-placeholder">🖼️</div>'}
-        ${item.license.pd ? '<div class="badge-license">CC0</div>' : ''}
-        <button class="card-heart ${fav ? 'active' : ''}" onclick="event.stopPropagation(); toggleFav('${item.id}',this)">
+        <div class="badge-source" style="background:${srcInfo.color || '#333'};color:#fff;">${srcInfo.flag || ''} ${srcInfo.name || item.source}</div>
+        <button class="card-heart ${fav ? 'active' : ''}" onclick="event.stopPropagation(); toggleFav('${item.id}',this)" style="top:auto;bottom:var(--sp-3);">
           ${fav ? '❤️' : '♡'}
         </button>
       </div>
@@ -1807,7 +3490,7 @@ function renderCollectionCards(items) {
         ${item.culture ? `<div class="card-culture">${esc(item.culture)}</div>` : ''}
         ${item.dateDisplay ? `<div class="card-date">${esc(item.dateDisplay)}</div>` : ''}
         <div class="card-tag-row">
-          ${item.license.pd ? '<span class="mini-tag cc0">可商用</span>' : ''}
+          <span class="badge-license ${licenseClass}" title="${esc(item.license.type)}">${esc(licenseBadgeLabel(item.license.type))}</span>
           ${item.period ? `<span class="mini-tag">${esc(item.period)}</span>` : ''}
         </div>
       </div>`;
@@ -1866,7 +3549,7 @@ async function createCustomCollection() {
     id: 'custom_' + Date.now(),
     title: keyword,
     subtitle: '自定义合集',
-    description: `基于关键词「${keyword}」从 The Met 藏品中生成的精品合集`,
+    description: `基于关键词「${keyword}」从 6 大博物馆藏品中生成的精品合集`,
     cover: '',
     coverObjectId: null,
     searchQueries: [keyword],
@@ -1903,21 +3586,21 @@ async function createCustomCollection() {
   document.getElementById('collEmpty').style.display = 'none';
 
   try {
-    const params = new URLSearchParams();
-    params.set('q', keyword); params.set('hasImages', 'true'); params.set('isPublicDomain', 'true');
-    const res = await fetch(`${MET}/search?${params}`).then(r => r.json());
-    collState.objectIDs = shuffleArray(res.objectIDs || []);
-    const total = collState.objectIDs.length;
+    // Use the same search logic as the top search bar
+    const items = await multiSourceSearch(keyword, 20);
+    collState.loadedItems = items;
+    const total = items.length;
 
     document.getElementById('collResultCount').innerHTML =
-      `<strong>${esc(keyword)}</strong> · 共 <strong>${total.toLocaleString()}</strong> 件藏品`;
+      `<strong>${esc(keyword)}</strong> · 共 <strong>${total.toLocaleString()}</strong> 件藏品（多馆聚合）`;
 
     if (total === 0) {
       document.getElementById('collLoading').style.display = 'none';
       document.getElementById('collEmpty').style.display = 'block';
       return;
     }
-    await loadCollectionPage();
+    renderCollectionCards(items);
+    document.getElementById('collLoading').style.display = 'none';
   } catch(e) {
     console.error(e);
     document.getElementById('collLoading').style.display = 'none';
@@ -1929,12 +3612,23 @@ async function createCustomCollection() {
 function goHome() {
   document.getElementById('heroSection').style.display = '';
   document.getElementById('collectionDetailView').classList.remove('active');
+  document.getElementById('resultsSearchBar').style.display = 'none';
   document.getElementById('toolbar').style.display = 'none';
   document.getElementById('contentLayout').style.display = 'none';
   document.getElementById('searchInput').value = '';
+  const ri = document.getElementById('searchInputResults');
+  if (ri) ri.value = '';
   state.query = '';
   collState.current = null;
   window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Triggered by the search bar shown above the results grid
+function performSearchFromResults() {
+  const v = document.getElementById('searchInputResults').value.trim();
+  if (!v) return;
+  document.getElementById('searchInput').value = v;
+  performSearch(true);
 }
 
 // ===================================================================
@@ -2273,14 +3967,18 @@ goHome = function() {
 // ===================================================================
 
 async function init() {
-  try {
-    const ds = await metDepts(); state.departments = ds;
-    const c = document.getElementById('departmentFilters');
-    c.innerHTML = `<div class="filter-option"><input type="radio" name="dept" value="" checked onchange="state.filters.departmentId=null;if(state.query)performSearch(true)"> 全部</div>`
-      + ds.map(d => `<div class="filter-option"><input type="radio" name="dept" value="${d.departmentId}" onchange="state.filters.departmentId=${d.departmentId};if(state.query)performSearch(true)"> ${esc(d.displayName)}</div>`).join('');
-  } catch(e) { console.error(e); }
   document.getElementById('searchInput').addEventListener('keydown', e => { if (e.key === 'Enter') performSearch(true); });
+  document.getElementById('searchInputResults').addEventListener('keydown', e => { if (e.key === 'Enter') performSearchFromResults(); });
   document.getElementById('curatedSearchInput').addEventListener('keydown', e => { if (e.key === 'Enter') createCustomCollection(); });
+
+  // 渲染首批"猜你想搜"关键词
+  renderSuggestBatch();
+  // 窗口大小变化时重新计算单行可容纳的关键词数（防抖）
+  let _suggestResizeTimer = null;
+  window.addEventListener('resize', () => {
+    clearTimeout(_suggestResizeTimer);
+    _suggestResizeTimer = setTimeout(() => renderSuggestBatch(), 200);
+  });
 
   // Render curated collections on homepage (with gradient fallback first)
   renderCollections();
