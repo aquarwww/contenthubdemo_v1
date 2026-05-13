@@ -1,0 +1,42 @@
+# GitHub Pages 自动部署
+# 监听 main 分支 push → 排除内部文档/脚本 → 推到 gh-pages 分支 → 自动部署
+#
+# 首次启用后需要手动到仓库 Settings → Pages → Source 选 gh-pages 分支
+
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:  # 允许手动触发
+
+# 需要写权限才能推 gh-pages 分支
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+
+      - name: Remove non-deploy files
+        run: |
+          # 删除内部文档、构建脚本、配置文件（不部署到公开站点）
+          rm -f *.md
+          rm -f build-npm-local.js
+          rm -f package.json package-lock.json
+          rm -f ref-airbnb-design.png sanxingdui-cover.png
+          rm -rf .github
+          rm -rf inspiration-page
+          # 保留的文件：content-hub-demo.html, npm-local.json, assets/, .gitignore
+
+      - name: Deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./
+          publish_branch: gh-pages
+          force_orphan: true
+          commit_message: "deploy: ${{ github.event.head_commit.message }}"
