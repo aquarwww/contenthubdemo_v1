@@ -2420,36 +2420,28 @@ async function miaAdapterSearch(q, maxItems = 100) {
 }
 
 // =====================================================================
-// =================== ADAPTER: British Museum (预构建精选) ==============
+// =================== ADAPTER: British Museum (本地数据集) ==============
 // =====================================================================
-// 注意：大英博物馆网站有 Cloudflare 保护，无法直接调用 REST API。
-// 此处使用预构建精选数据，所有图片来自 Wikimedia Commons。
+// 大英博物馆未提供公开 API（前 SPARQL 端点已下线，官网有 Cloudflare 反爬保护）。
+// 当前使用本地预构建数据集 bm-local.json：
+//   - 来源：第三方爬取的开放数据（hayeah/british-museum-dataset）
+//   - 抽样：约 2600 件（基础文化均衡 1800 + 埃及加权 500 + 敦煌丝路 100 + 中国神兽 200）
+//   - 图片：大英官方 CDN media.britishmuseum.org（无 Cloudflare 拦截，可加载）
+//   - 由 build-bm-local.js（在 _bm-explore/）生成
 // 授权：大英博物馆数据整体为 CC-BY-NC-SA 4.0，不可商用，仅供参考浏览。
-const BM_FEATURED = [
-  { id:'bm:rosetta', title:'Rosetta Stone', dateDisplay:'196 BC', culture:'Ancient Egyptian', classification:'Stela', medium:'Granodiorite', country:'Egypt', period:'Ptolemaic Period', img:'https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Rosetta_Stone.JPG/400px-Rosetta_Stone.JPG', imgFull:'https://upload.wikimedia.org/wikipedia/commons/2/23/Rosetta_Stone.JPG', accessionNumber:'EA 24', desc:'Ancient Egyptian decree inscribed in three scripts', license:'CC-BY-NC-SA' },
-  { id:'bm:parthenon', title:'Parthenon Sculptures (Elgin Marbles)', dateDisplay:'447–432 BC', culture:'Ancient Greek', classification:'Sculpture', medium:'Marble', country:'Greece', period:'Classical Period', img:'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Elgin_Marbles_east_pediment.jpg/400px-Elgin_Marbles_east_pediment.jpg', imgFull:'https://upload.wikimedia.org/wikipedia/commons/2/2e/Elgin_Marbles_east_pediment.jpg', accessionNumber:'1816,0610.1', desc:'Marble sculptures from the Parthenon frieze', license:'CC-BY-NC-SA' },
-  { id:'bm:lewischess', title:'Lewis Chessmen', dateDisplay:'ca. 1150–1200', culture:'Norse', classification:'Game Piece', medium:'Walrus ivory', country:'Scotland/Norway', period:'Medieval', img:'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Lewis_Chessmen_Overview.jpg/400px-Lewis_Chessmen_Overview.jpg', imgFull:'https://upload.wikimedia.org/wikipedia/commons/4/4b/Lewis_Chessmen_Overview.jpg', accessionNumber:'1831,1101.78-159', desc:'Medieval chess pieces carved from walrus ivory', license:'CC-BY-NC-SA' },
-  { id:'bm:sutton', title:'Sutton Hoo Helmet', dateDisplay:'Early 7th century', culture:'Anglo-Saxon', classification:'Helmet', medium:'Iron, copper alloy, silver, gold, garnet', country:'England', period:'Early Medieval', img:'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Sutton_Hoo_helmet_2016.png/400px-Sutton_Hoo_helmet_2016.png', imgFull:'https://upload.wikimedia.org/wikipedia/commons/e/e9/Sutton_Hoo_helmet_2016.png', accessionNumber:'1939,1010.93', desc:'Anglo-Saxon ceremonial helmet from ship burial', license:'CC-BY-NC-SA' },
-  { id:'bm:cyrus', title:'Cyrus Cylinder', dateDisplay:'539–530 BC', culture:'Achaemenid Persian', classification:'Cylinder', medium:'Baked clay', country:'Iraq (Babylon)', period:'Achaemenid Empire', img:'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Cyrus_Cylinder.jpg/400px-Cyrus_Cylinder.jpg', imgFull:'https://upload.wikimedia.org/wikipedia/commons/d/d5/Cyrus_Cylinder.jpg', accessionNumber:'1880,0617.1941', desc:'Ancient declaration of Cyrus the Great', license:'CC-BY-NC-SA' },
-  { id:'bm:floodtablet', title:'Flood Tablet (Epic of Gilgamesh)', dateDisplay:'7th century BC', culture:'Assyrian', classification:'Tablet', medium:'Clay', country:'Iraq (Nineveh)', period:'Neo-Assyrian', img:'https://upload.wikimedia.org/wikipedia/commons/thumb/2/21/British_Museum_Flood_Tablet.jpg/400px-British_Museum_Flood_Tablet.jpg', imgFull:'https://upload.wikimedia.org/wikipedia/commons/2/21/British_Museum_Flood_Tablet.jpg', accessionNumber:'K.3375', desc:'Cuneiform tablet with Flood narrative from the Epic of Gilgamesh', license:'CC-BY-NC-SA' },
-  { id:'bm:hokusai', title:'The Great Wave off Kanagawa (Hokusai)', dateDisplay:'ca. 1831', culture:'Japanese', classification:'Print', medium:'Woodblock print, ink and color on paper', country:'Japan', period:'Edo Period', img:'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Tsunami_by_hokusai_19th_century.jpg/400px-Tsunami_by_hokusai_19th_century.jpg', imgFull:'https://upload.wikimedia.org/wikipedia/commons/a/a5/Tsunami_by_hokusai_19th_century.jpg', accessionNumber:'1906,1220,0.525', desc:'Iconic ukiyo-e woodblock print by Katsushika Hokusai', license:'CC-BY-NC-SA' },
-  { id:'bm:benin', title:'Benin Bronzes – Plaque', dateDisplay:'16th–17th century', culture:'Edo (Benin Kingdom)', classification:'Plaque', medium:'Brass', country:'Nigeria', period:'Kingdom of Benin', img:'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Benin_plaque_in_the_British_Museum.jpg/400px-Benin_plaque_in_the_British_Museum.jpg', imgFull:'https://upload.wikimedia.org/wikipedia/commons/b/b4/Benin_plaque_in_the_British_Museum.jpg', accessionNumber:'1898,0115.44', desc:'Cast brass plaque from the Royal Palace of Benin', license:'CC-BY-NC-SA' },
-  { id:'bm:samurai', title:'Samurai Armour (Gusoku)', dateDisplay:'ca. 1859', culture:'Japanese', classification:'Armour', medium:'Iron, lacquer, silk, gilt copper', country:'Japan', period:'Edo Period', img:'https://upload.wikimedia.org/wikipedia/commons/thumb/7/7c/Armour_of_a_samurai.jpg/400px-Armour_of_a_samurai.jpg', imgFull:'https://upload.wikimedia.org/wikipedia/commons/7/7c/Armour_of_a_samurai.jpg', accessionNumber:'1959,0714.1', desc:'Complete set of Japanese samurai armour', license:'CC-BY-NC-SA' },
-  { id:'bm:amaravati', title:'Amaravati Sculpture', dateDisplay:'2nd century AD', culture:'Indian', classification:'Sculpture', medium:'Limestone', country:'India', period:'Satavahana Dynasty', img:'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Amravati-Stupa-Relief.jpg/400px-Amravati-Stupa-Relief.jpg', imgFull:'https://upload.wikimedia.org/wikipedia/commons/f/fd/Amravati-Stupa-Relief.jpg', accessionNumber:'1880,0709.10', desc:'Buddhist limestone relief from the Great Stupa at Amaravati', license:'CC-BY-NC-SA' },
-  { id:'bm:ringofnestor', title:'Mold Gold Cape', dateDisplay:'1900–1600 BC', culture:'Bronze Age British', classification:'Metalwork', medium:'Gold', country:'Wales', period:'Bronze Age', img:'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/Mold_gold_cape%2C_British_Museum.jpg/400px-Mold_gold_cape%2C_British_Museum.jpg', imgFull:'https://upload.wikimedia.org/wikipedia/commons/0/0c/Mold_gold_cape%2C_British_Museum.jpg', accessionNumber:'1836,0901.1', desc:'Elaborate Bronze Age gold ceremonial cape', license:'CC-BY-NC-SA' },
-  { id:'bm:assyria', title:'Assyrian Lion Hunt Reliefs', dateDisplay:'645–640 BC', culture:'Assyrian', classification:'Relief', medium:'Gypsum alabaster', country:'Iraq (Nineveh)', period:'Neo-Assyrian', img:'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d8/Assyrian_reliefs_-_Dying_Lion.jpg/400px-Assyrian_reliefs_-_Dying_Lion.jpg', imgFull:'https://upload.wikimedia.org/wikipedia/commons/d/d8/Assyrian_reliefs_-_Dying_Lion.jpg', accessionNumber:'1856,0909.51', desc:'Stunning stone reliefs depicting royal lion hunts of King Ashurbanipal', license:'CC-BY-NC-SA' },
-  { id:'bm:portland', title:'Portland Vase', dateDisplay:'1st century AD', culture:'Roman', classification:'Glass', medium:'Cameo glass', country:'Italy (Rome)', period:'Roman Empire', img:'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Portland_Vase_BM_Gem4036_n5.jpg/400px-Portland_Vase_BM_Gem4036_n5.jpg', imgFull:'https://upload.wikimedia.org/wikipedia/commons/6/6a/Portland_Vase_BM_Gem4036_n5.jpg', accessionNumber:'GR 1945,0927.1', desc:'Roman cameo glass vase, masterpiece of ancient glasswork', license:'CC-BY-NC-SA' },
-  { id:'bm:tang_horse', title:'Tang Dynasty Ceramic Horse', dateDisplay:'ca. 728 AD', culture:'Chinese', classification:'Ceramics', medium:'Glazed earthenware (sancai)', country:'China', period:'Tang Dynasty', img:'https://upload.wikimedia.org/wikipedia/commons/thumb/4/45/British_Museum_Tang_Dynasty_Tomb_Figure.jpg/400px-British_Museum_Tang_Dynasty_Tomb_Figure.jpg', imgFull:'https://upload.wikimedia.org/wikipedia/commons/4/45/British_Museum_Tang_Dynasty_Tomb_Figure.jpg', accessionNumber:'1936,1012.228', desc:'Tang sancai glazed tomb figure of a horse', license:'CC-BY-NC-SA' },
-  { id:'bm:admonitions', title:'Admonitions Scroll (女史箴图)', dateDisplay:'5th–8th century', culture:'Chinese', classification:'Painting', medium:'Ink and color on silk', country:'China', period:'Tang Dynasty copy (original Jin Dynasty)', img:'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Ku_K%27ai-chih_001.jpg/400px-Ku_K%27ai-chih_001.jpg', imgFull:'https://upload.wikimedia.org/wikipedia/commons/4/4a/Ku_K%27ai-chih_001.jpg', accessionNumber:'1903,0408,0.1', desc:'Ancient Chinese handscroll painting attributed to Gu Kaizhi', license:'CC-BY-NC-SA' },
-  { id:'bm:oxusgold', title:'Oxus Treasure – Gold Armlet', dateDisplay:'5th–4th century BC', culture:'Achaemenid Persian', classification:'Jewelry', medium:'Gold', country:'Tajikistan', period:'Achaemenid Empire', img:'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/Oxus_Treasure_-_Gold_Armlet.jpg/400px-Oxus_Treasure_-_Gold_Armlet.jpg', imgFull:'https://upload.wikimedia.org/wikipedia/commons/1/1f/Oxus_Treasure_-_Gold_Armlet.jpg', accessionNumber:'1897,1231.116', desc:'Gold griffin-head armlet from the Oxus Treasure', license:'CC-BY-NC-SA' },
-  { id:'bm:easter', title:'Hoa Hakananai\'a (Easter Island Moai)', dateDisplay:'ca. 1000–1200 AD', culture:'Rapa Nui', classification:'Sculpture', medium:'Basalt', country:'Easter Island (Chile)', period:'Polynesian', img:'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Hoa_Hakananai%27a.jpg/400px-Hoa_Hakananai%27a.jpg', imgFull:'https://upload.wikimedia.org/wikipedia/commons/c/c5/Hoa_Hakananai%27a.jpg', accessionNumber:'Oc1869,1005.1', desc:'Basalt moai figure from Easter Island', license:'CC-BY-NC-SA' },
-  { id:'bm:durerrhino', title:'Dürer\'s Rhinoceros (woodcut)', dateDisplay:'1515', culture:'German', classification:'Print', medium:'Woodcut on paper', country:'Germany', period:'Renaissance', img:'https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/The_Rhinoceros_%28NGA_1964.8.697%29_enhanced.png/400px-The_Rhinoceros_%28NGA_1964.8.697%29_enhanced.png', imgFull:'https://upload.wikimedia.org/wikipedia/commons/b/bc/The_Rhinoceros_%28NGA_1964.8.697%29_enhanced.png', accessionNumber:'1895,1222.714', desc:'Albrecht Dürer famous woodcut of a rhinoceros', license:'CC-BY-NC-SA' },
-  { id:'bm:lindow', title:'Lindow Man', dateDisplay:'2 BC – 119 AD', culture:'Celtic/Iron Age British', classification:'Human remains', medium:'Preserved bog body', country:'England', period:'Iron Age / Roman', img:'https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Lindow_Man_1.jpg/400px-Lindow_Man_1.jpg', imgFull:'https://upload.wikimedia.org/wikipedia/commons/1/13/Lindow_Man_1.jpg', accessionNumber:'P.1984.10-1', desc:'Well-preserved Iron Age bog body found in Cheshire', license:'CC-BY-NC-SA' },
-  { id:'bm:mildenhall', title:'Mildenhall Great Dish', dateDisplay:'4th century AD', culture:'Roman', classification:'Metalwork', medium:'Silver', country:'England', period:'Late Roman', img:'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b4/Great_Dish%2C_part_of_the_Mildenhall_Treasure.jpg/400px-Great_Dish%2C_part_of_the_Mildenhall_Treasure.jpg', imgFull:'https://upload.wikimedia.org/wikipedia/commons/b/b4/Great_Dish%2C_part_of_the_Mildenhall_Treasure.jpg', accessionNumber:'1946,1007.1', desc:'Magnificent Late Roman silver dish with Bacchic scenes', license:'CC-BY-NC-SA' },
-  { id:'bm:ceramic_tile', title:'Iznik Tile Panel', dateDisplay:'ca. 1575', culture:'Ottoman', classification:'Ceramics', medium:'Fritware with underglaze painting', country:'Turkey', period:'Ottoman Empire', img:'https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Iznik_tiles_in_the_British_Museum.jpg/400px-Iznik_tiles_in_the_British_Museum.jpg', imgFull:'https://upload.wikimedia.org/wikipedia/commons/5/56/Iznik_tiles_in_the_British_Museum.jpg', accessionNumber:'G.1983.20', desc:'Ottoman Iznik ceramic tile with floral motifs', license:'CC-BY-NC-SA' },
-  { id:'bm:chinese_bronze', title:'Shang Dynasty Bronze Ritual Vessel (Gui)', dateDisplay:'ca. 1100 BC', culture:'Chinese', classification:'Bronze', medium:'Cast bronze', country:'China', period:'Shang Dynasty', img:'https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Bronze_gui_vessel%2C_Shang_dynasty.jpg/400px-Bronze_gui_vessel%2C_Shang_dynasty.jpg', imgFull:'https://upload.wikimedia.org/wikipedia/commons/7/70/Bronze_gui_vessel%2C_Shang_dynasty.jpg', accessionNumber:'1944,0714.1', desc:'Shang dynasty bronze ritual food vessel', license:'CC-BY-NC-SA' },
-  { id:'bm:jade_bi', title:'Jade Bi Disc', dateDisplay:'3000–2000 BC', culture:'Chinese (Neolithic)', classification:'Jade', medium:'Nephrite jade', country:'China', period:'Neolithic / Liangzhu', img:'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Bi_with_two_dragons%2C_Warring_States.jpg/400px-Bi_with_two_dragons%2C_Warring_States.jpg', imgFull:'https://upload.wikimedia.org/wikipedia/commons/4/4f/Bi_with_two_dragons%2C_Warring_States.jpg', accessionNumber:'1937,0416.1', desc:'Ceremonial jade disc, symbol of heaven in Chinese culture', license:'CC-BY-NC-SA' },
-];
+let BM_LOCAL = [];
+let BM_LOAD_PROMISE = null;
+
+function loadBMLocal() {
+  if (BM_LOAD_PROMISE) return BM_LOAD_PROMISE;
+  BM_LOAD_PROMISE = fetch('bm-local.json')
+    .then(r => r.ok ? r.json() : [])
+    .then(data => { BM_LOCAL = data || []; return BM_LOCAL; })
+    .catch(() => { BM_LOCAL = []; return BM_LOCAL; });
+  return BM_LOAD_PROMISE;
+}
+// 页面初始化即异步加载
+loadBMLocal();
 
 function normBM(o) {
   const fullImg = o.imgFull || o.img;
@@ -2470,11 +2462,14 @@ function normBM(o) {
   };
 }
 
-async function bmAdapterSearch(q, maxItems = 20) {
-  // Local fuzzy search against featured items
-  const ql = q.toLowerCase();
-  const keywords = ql.split(/\s+/);
-  return BM_FEATURED
+async function bmAdapterSearch(q, maxItems = 100) {
+  await loadBMLocal();
+  if (!BM_LOCAL.length) return [];
+  const ql = (q || '').toLowerCase().trim();
+  // 空查询：返回全量（或最多 maxItems）
+  if (!ql) return BM_LOCAL.slice(0, maxItems).map(normBM);
+  const keywords = ql.split(/\s+/).filter(k => k.length >= 2);
+  return BM_LOCAL
     .filter(o => {
       const text = `${o.title} ${o.culture} ${o.classification} ${o.medium} ${o.country} ${o.period} ${o.desc}`.toLowerCase();
       return keywords.some(k => text.includes(k));
