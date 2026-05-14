@@ -2369,14 +2369,20 @@ async function vamAdapterSearch(q, maxItems = 20) {
 // =====================================================================
 // =================== ADAPTER: MIA (Minneapolis Institute of Art) =====
 // =====================================================================
-const MIA_API = 'https://search.artsmia.org/search';
-const MIA_IMG = 'https://collections.artsmia.org/api/cdn';
+// 2026-05 重要修复：
+//   ① 旧端点 ?q=xxx&size=N 已停用，新 API 是路径参数式 /{q}?size=N
+//   ② 旧图床 iiif.dx.artsmia.org 域名已下线（DNS 无 A 记录）
+//      新图床为 https://{0|1}.api.artsmia.org/{宽度}/{id}.jpg
+//      实测公网可访问，无 Cloudflare 拦截
+const MIA_API = 'https://search.artsmia.org';
+// MIA 图床允许的尺寸：400 / 800 / full（其它如 1200 会返回 403）
+const MIA_IMG_THUMB = 'https://0.api.artsmia.org/400';   // 缩略图 400px 宽
+const MIA_IMG_FULL  = 'https://1.api.artsmia.org/full';  // 高清原图（约 1500-3000px）
 
 function normMIA(o) {
   const id = o.id;
-  // collections.artsmia.org CDN endpoint (more accessible than IIIF subdomain)
-  const thumb = id ? `${MIA_IMG}/${id}.jpg` : '';
-  const full = thumb;
+  const thumb = id ? `${MIA_IMG_THUMB}/${id}.jpg` : '';
+  const full  = id ? `${MIA_IMG_FULL}/${id}.jpg`  : '';
   // 公共领域判定：仅当 rights_type 严格等于 "Public Domain" 时才视为 CC0
   // "Public Domain (Not Evaluated)" 等推测但未确认的，不当 CC0，直传原值（保守标灰）
   const isPD = o.rights_type === 'Public Domain';
@@ -2403,7 +2409,8 @@ function normMIA(o) {
 
 async function miaAdapterSearch(q, maxItems = 100) {
   try {
-    const url = `${MIA_API}?q=${encodeURIComponent(q)}&size=${maxItems}`;
+    // 新 API 端点格式：/{query}?size=N（路径参数式，非 query string）
+    const url = `${MIA_API}/${encodeURIComponent(q)}?size=${maxItems}`;
     const res = await fetch(url).then(r => r.json());
     const hits = res?.hits?.hits || [];
     return hits
