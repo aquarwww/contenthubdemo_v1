@@ -525,6 +525,123 @@ img { display: block; }
   background: var(--surface);
 }
 
+/* Text-asset 缩略图：用文字+图标代替图片 */
+/* 风格：仿纸质文献卷轴质感，米白底 + 棕红边 + 大字标题 + 📜 角标 */
+.card-text-thumb {
+  width: 100%; height: 100%;
+  display: flex; flex-direction: column; justify-content: space-between;
+  padding: 16px 14px 12px;
+  background: linear-gradient(135deg, #faf6ee 0%, #f0e8d5 100%);
+  color: #5a3a1a;
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+.card-text-thumb::before {
+  content: '';
+  position: absolute; left: 0; top: 0; bottom: 0;
+  width: 4px;
+  background: linear-gradient(180deg, #8b4513 0%, #d4a574 100%);
+}
+.card-text-thumb .doc-icon {
+  font-size: 28px; line-height: 1;
+  opacity: 0.85;
+}
+.card-text-thumb .doc-title {
+  font-size: 16px; font-weight: 700;
+  line-height: 1.35;
+  /* 多行截断：仅显示 3 行 */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  letter-spacing: 0.3px;
+}
+.card-text-thumb .doc-author {
+  font-size: 11px; opacity: 0.7;
+  line-height: 1.3;
+  /* 仅显示 1 行 */
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ===== 文献阅读器（详情弹窗左侧大块区域，asset_type='text' 专用）===== */
+/* 设计：仿线装书 / 米黄宣纸质感
+ *  · contentMode='full_text' → 古典阅读：楷体 + 大字 + 长行距，适合读古文/词
+ *  · contentMode='outline'   → 大纲浏览：宋体 + 标准行距，适合扫读目录
+ */
+.doc-reader {
+  width: 100%; min-height: 100%; box-sizing: border-box;
+  background: linear-gradient(135deg, #faf6ee 0%, #f0e8d5 100%);
+  color: #2d1f0f;
+  padding: 28px 32px 24px;
+  border-left: 6px solid #8b4513;
+  display: flex; flex-direction: column; gap: 14px;
+  overflow-y: auto;
+  max-height: calc(100vh - 100px);
+}
+.doc-reader .doc-reader-header {
+  border-bottom: 1px dashed rgba(139, 69, 19, 0.4);
+  padding-bottom: 14px;
+  display: flex; flex-direction: column; gap: 6px;
+}
+.doc-reader .doc-reader-icon {
+  font-size: 32px; line-height: 1; opacity: 0.85;
+}
+.doc-reader .doc-reader-title {
+  font-size: 20px; font-weight: 700; line-height: 1.4;
+  color: #2d1f0f;
+}
+.doc-reader .doc-reader-meta {
+  font-size: 12px; color: #6b4d2c; opacity: 0.85;
+}
+.doc-reader .doc-reader-body {
+  /* 用 white-space:pre-wrap 保留原 txt 的换行与缩进 */
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  font-size: 15px;
+  line-height: 1.85;
+  color: #2d1f0f;
+  flex: 1;
+}
+.doc-reader.mode-full_text .doc-reader-body {
+  /* 全文模式：用楷体显示古典文本，更有线装书感 */
+  font-family: 'STKaiti', 'KaiTi', 'Kaiti SC', 'BiauKai', '楷体', serif;
+  font-size: 16px;
+  line-height: 2;
+  letter-spacing: 0.5px;
+}
+.doc-reader.mode-outline .doc-reader-body {
+  /* 大纲模式：用宋体或衬线字，扫读为主 */
+  font-family: 'Songti SC', 'STSong', 'SimSun', serif;
+  font-size: 14.5px;
+  line-height: 1.85;
+}
+.doc-reader .doc-reader-footer {
+  margin-top: 8px;
+  padding-top: 14px;
+  border-top: 1px dashed rgba(139, 69, 19, 0.4);
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 12px; flex-wrap: wrap;
+}
+.doc-reader .doc-reader-source-tip {
+  font-size: 11px; color: #6b4d2c; opacity: 0.75;
+  flex: 1; min-width: 0;
+}
+.doc-reader .doc-reader-cta {
+  display: inline-block;
+  padding: 9px 18px;
+  background: #8b4513; color: #fff;
+  text-decoration: none;
+  border-radius: 6px;
+  font-size: 13px; font-weight: 600;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.doc-reader .doc-reader-cta:hover { background: #6e3610; }
+
 /* Badge: source */
 .badge-source {
   position: absolute; top: var(--sp-3); left: var(--sp-3);
@@ -1523,6 +1640,7 @@ body.sidebar-open { padding-left: 280px; }
         <div class="filter-option"><input type="checkbox" checked data-filter="source" value="vam" onchange="applyFilters()"> 🇬🇧 V&A Museum</div>
         <div class="filter-option"><input type="checkbox" checked data-filter="source" value="bm" onchange="applyFilters()"> 🇬🇧 大英博物馆</div>
         <div class="filter-option"><input type="checkbox" checked data-filter="source" value="npm" onchange="applyFilters()"> 🇹🇼 台北故宫</div>
+        <div class="filter-option"><input type="checkbox" checked data-filter="source" value="doc" onchange="applyFilters()"> 📜 敦煌文献</div>
       </div>
       <div class="filter-group">
         <h3>时期</h3>
@@ -1641,7 +1759,7 @@ const state = {
     hasImagesOnly: true,
     geoLocations: [],
     periods: [],
-    sources: ['met','aic','cma','mia','vam','bm','npm'], // 左侧栏数据来源筛选（默认全选）
+    sources: ['met','aic','cma','mia','vam','bm','npm','doc'], // 左侧栏数据来源筛选（默认全选）
     categories: [],                                        // 资产门类筛选（空数组 = 不过滤，三维分类维度①）
     themes: [],                                            // 文化主题筛选（空数组 = 不过滤）
     assetTypes: [],                                        // 资产形式筛选（空数组 = 不过滤）
@@ -1667,7 +1785,8 @@ const SOURCES = {
   npm:  { name: '台北故宫',         flag: '🇹🇼', license: 'CC BY 4.0',      color: '#8b0000', active: true },
   vam:  { name: 'V&A Museum',      flag: '🇬🇧', license: '非商用',          color: '#2d5f2d', active: true },
   cma:  { name: 'Cleveland',       flag: '🇺🇸', license: 'CC0 + 版权混合', color: '#1a1a1a', active: true },
-  mia:  { name: 'MIA Minneapolis', flag: '🇺🇸', license: 'CC0 + 版权混合', color: '#a52a2a', active: true }
+  mia:  { name: 'MIA Minneapolis', flag: '🇺🇸', license: 'CC0 + 版权混合', color: '#a52a2a', active: true },
+  doc:  { name: '敦煌文献',         flag: '📜', license: 'PD / CC-BY',     color: '#8b4513', active: true }
 };
 
 // License badge helpers
@@ -1699,12 +1818,25 @@ function licenseStatusOf(license, source) {
   return 'restricted';
 }
 
-function licenseBadgeLabel(type) {
-  if (type === 'CC0') return 'CC0 可商用';
-  if (type === 'CC BY 4.0') return '署名可商用';
-  // 受版权保护一类（黄色）：作品本身在版权期 → 都标"受版权保护"
-  if (type === 'Reference' || type === 'Copyright' || type === 'In Copyright') return '受版权保护';
-  // 其余非商用情况（灰色）：统一标"来源馆限制"，原始 type 仍放在徽章 hover tooltip 里
+// 卡片徽章上的简短中文文案（与三态颜色一一对应）
+//
+// 重构（2026-05-15）：原实现按 license.type 字符串硬匹配（白名单），新增任何 PD/CC 变体
+// 都会落入"来源馆限制"兜底，造成卡片显示「来源馆限制」+ 详情页显示「Public Domain · 可商用」
+// 的错位（如敦煌文献 license.type='Public Domain' 时）。
+//
+// 改为：先复用 licenseStatusOf 推导三态（com/copyright/restricted），再根据三态 + 原始 type
+// 给出更精确的文案——保证 label 与卡片色块、详情卡片色块永远一致。
+function licenseBadgeLabel(type, source) {
+  // 注：旧调用点都只传 type；为兼容传 license 对象的新调用形式，做一次自适应
+  const lic = (typeof type === 'object' && type !== null) ? type : { type };
+  const status = licenseStatusOf(lic, source);
+  if (status === 'com') {
+    if (lic.type === 'CC0' || lic.type === 'Public Domain') return 'CC0 可商用';
+    if (lic.type === 'CC BY 4.0') return '署名可商用';
+    if (lic.type === 'CC BY-SA 4.0') return '署名相同共享';
+    return '可商用';
+  }
+  if (status === 'copyright') return '受版权保护';
   return '来源馆限制';
 }
 
@@ -2108,8 +2240,19 @@ const THEME_ORDER = [
 function enrichSchemaV11(items) {
   if (!items || !items.length) return items;
   items.forEach(it => {
-    // 1) themes：每次重打（词典在演化，重打才能反映最新词典）
-    it.themes = enrichThemes(it);
+    // 1) themes：词典自动打标 + 合并 adapter 预设值
+    //    - 词典打标永远跑（反映最新词典）
+    //    - 如果 adapter 已经手工标了（如 dunhuang-docs.json），取两者并集；
+    //      只有当词典打标只剩 'others' 兜底时，优先用 adapter 预设值
+    const dictThemes = enrichThemes(it);
+    const presetThemes = Array.isArray(it.themes) && it.themes.length > 0 ? it.themes : [];
+    if (presetThemes.length > 0) {
+      // 合并去重；如果词典只命中 others 而 adapter 有具体值，丢掉 others
+      const merged = [...new Set([...presetThemes, ...dictThemes])];
+      it.themes = merged.length > 1 ? merged.filter(t => t !== 'others') : merged;
+    } else {
+      it.themes = dictThemes;
+    }
     // 2) assetType：兜底 image（adapter 已设则保留）
     if (!it.assetType) it.assetType = 'image';
     // 3) category：兜底 artifact（adapter 已设则保留）
@@ -2524,6 +2667,82 @@ async function bmAdapterSearch(q, maxItems = 100) {
 }
 
 // =====================================================================
+// =================== ADAPTER: 敦煌文献（DOC - 本地 JSON） ==============
+// =====================================================================
+// 第一批"非图片素材"接入：8 篇敦煌相关公版文献（斯坦因 Serindia / Ruins、伯希和敦煌石窟、
+// 王重民敦煌曲子词集、IDP 国际敦煌项目、数字敦煌、敦煌变文、敦煌外国访客论文）。
+// 所有资源指向真实可访问的 archive.org / 维基文库 / 数字敦煌等公网链接。
+// 用于验证 v1.1 schema 在 asset_type='text' + category='document' 形态下的完整链路。
+// 详见 ../文化资产库_统一字段schema.md §2 + 实例 3。
+let DOC_LOCAL = [];
+let DOC_LOAD_PROMISE = null;
+
+function loadDocLocal() {
+  if (DOC_LOAD_PROMISE) return DOC_LOAD_PROMISE;
+  DOC_LOAD_PROMISE = fetch('dunhuang-docs.json')
+    .then(r => r.ok ? r.json() : [])
+    .then(arr => { DOC_LOCAL = Array.isArray(arr) ? arr : []; console.log('[DOC] 加载敦煌文献', DOC_LOCAL.length, '篇'); return DOC_LOCAL; })
+    .catch(e => { console.warn('[DOC] 敦煌文献加载失败：', e); DOC_LOCAL = []; return []; });
+  return DOC_LOAD_PROMISE;
+}
+// 页面初始化即异步加载
+loadDocLocal();
+
+// 把 dunhuang-docs.json 一条记录映射成统一 item（参照 normBM/normNPM 字段集）
+// 关键点：
+//   - assetType='text'、category='document'（在这里就显式打上，enrichSchemaV11 不会覆盖）
+//   - img.thumb/full 留空 → 卡片渲染层用 text-thumb 占位（📜 + 标题）
+//   - externalUrl → 详情弹窗"阅读全文"按钮
+function normDoc(o) {
+  return {
+    id: o.id, source: 'doc', sourceName: 'Archive.org · 敦煌文献',
+    sourceUrl: o.externalUrl || '',
+    title: o.title,
+    titleEn: o.titleEn || '',
+    desc: o.classification ? `${o.classification} · ${o.author || ''}` : (o.author || ''),
+    description: o.summary || '',
+    summary: o.summary || '',
+    img: { thumb: '', full: '', extra: [] },  // text 类型无图，渲染层兜底
+    culture: '', period: o.period || '', dynasty: '',
+    dateDisplay: o.dateDisplay || '',
+    dateRange: { begin: o.dateBegin || 0, end: o.dateEnd || 0 },
+    medium: o.medium || '', classification: o.classification || '', department: '',
+    geo: { country: o.country || '', region: o.region || '', city: o.city || '', locality: o.locality || '' },
+    artist: { name: o.author || '', bio: '' },
+    license: o.license || { type: 'Public Domain', com: true, pd: true },
+    tags: o.themes || [],
+    dimensions: '',
+    accessionNumber: '',
+    // ⭐ 三维分类显式打标（enrichSchemaV11 不会覆盖）
+    assetType: 'text',
+    category: 'document',
+    themes: o.themes || [],
+    // 文献专属：外部阅读链接 + 完整摘要 + 本地全文/目录 txt
+    externalUrl: o.externalUrl || '',
+    contentFile: o.contentFile || '',   // 本地 txt 文件路径（左侧阅读器内容来源）
+    contentMode: o.contentMode || '',   // 'full_text' | 'outline'（控制阅读器样式）
+    publishYear: o.publishYear || null,
+    raw: o
+  };
+}
+
+async function docAdapterSearch(q, maxItems = 100) {
+  await loadDocLocal();
+  if (!DOC_LOCAL.length) return [];
+  const ql = (q || '').toLowerCase().trim();
+  // 空查询：返回全量（仅 8 篇，全返回）
+  if (!ql) return DOC_LOCAL.slice(0, maxItems).map(normDoc);
+  const keywords = ql.split(/\s+/).filter(k => k.length >= 2);
+  return DOC_LOCAL
+    .filter(o => {
+      const text = `${o.title} ${o.titleEn || ''} ${o.author || ''} ${o.summary || ''} ${o.locality || ''} ${o.period || ''} ${(o.themes || []).join(' ')}`.toLowerCase();
+      return keywords.some(k => text.includes(k));
+    })
+    .slice(0, maxItems)
+    .map(normDoc);
+}
+
+// =====================================================================
 // =================== ADAPTER: 台北故宫 (NPM - 本地数据集) ==============
 // =====================================================================
 // 数据集：从「故宫资料3万余件」抽样 65 件，本地图片 + 完整中英文元数据。
@@ -2711,6 +2930,7 @@ async function multiSourceSearch(q, maxPerSource = 100) {
   const localQ = q + ' ' + engQ;
   if (sf === 'all' || sf === 'bm')  adapters.push(bmAdapterSearch(localQ, 100));
   if (sf === 'all' || sf === 'npm') adapters.push(npmAdapterSearch(localQ, 100));
+  if (sf === 'all' || sf === 'doc') adapters.push(docAdapterSearch(localQ, 100));
 
   const results = await Promise.allSettled(adapters);
   const merged = [];
@@ -2810,14 +3030,25 @@ function renderCards(items) {
     const srcInfo = SOURCES[item.source] || {};
     const licenseClass = licenseBadgeFullClass(item.license, item.source);
     const imgSrc = item.img.thumb || item.img.full;
+    // 文献类资产（asset_type='text'）：用文字缩略图代替图片
+    const isTextAsset = item.assetType === 'text';
+    const thumbHtml = isTextAsset
+      ? `<div class="card-text-thumb">
+           <div class="doc-icon">📜</div>
+           <div>
+             <div class="doc-title">${esc(item.title)}</div>
+             ${item.artist?.name ? `<div class="doc-author">${esc(item.artist.name)}</div>` : ''}
+           </div>
+         </div>`
+      : (imgSrc
+          ? `<img class="card-img" src="${imgSrc}" alt="${esc(item.title)}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+             <div class="card-img-placeholder" style="display:none">🖼️</div>`
+          : '<div class="card-img-placeholder">🖼️</div>');
     const c = document.createElement('div'); c.className = 'card';
     c.onclick = () => openDetail(item);
     c.innerHTML = `
       <div class="card-img-wrap">
-        ${imgSrc
-          ? `<img class="card-img" src="${imgSrc}" alt="${esc(item.title)}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
-             <div class="card-img-placeholder" style="display:none">🖼️</div>`
-          : '<div class="card-img-placeholder">🖼️</div>'}
+        ${thumbHtml}
         <div class="badge-source" style="background:${srcInfo.color || '#333'};color:#fff;">${srcInfo.flag || ''} ${srcInfo.name || item.source}</div>
         <button class="card-heart ${fav ? 'active' : ''}" onclick="event.stopPropagation(); toggleFav('${item.id}',this)" style="top:auto;bottom:var(--sp-3);">
           ${fav ? '❤️' : '♡'}
@@ -2828,7 +3059,7 @@ function renderCards(items) {
         ${item.culture ? `<div class="card-culture">${esc(item.culture)}</div>` : ''}
         ${item.dateDisplay ? `<div class="card-date">${esc(item.dateDisplay)}</div>` : ''}
         <div class="card-tag-row">
-          <span class="badge-license ${licenseClass}" title="${esc(item.license.type)}">${esc(licenseBadgeLabel(item.license.type))}</span>
+          <span class="badge-license ${licenseClass}" title="${esc(item.license.type)}">${esc(licenseBadgeLabel(item.license, item.source))}</span>
           ${item.period ? `<span class="mini-tag">${esc(item.period)}</span>` : ''}
         </div>
       </div>`;
@@ -2853,7 +3084,46 @@ async function openDetail(item) {
   document.getElementById('modalTitle').textContent = item.title;
   const ia = document.getElementById('modalImageArea');
   const src = item.img.full || item.img.thumb;
-  ia.innerHTML = src ? `<img src="${src}" alt="${esc(item.title)}" onclick="window.open('${src}','_blank')">` : '<div class="card-img-placeholder" style="font-size:72px">🖼️</div>';
+  // 文献资产（asset_type='text'）：左侧改为本地 txt 阅读器（全文 or 目录大纲）
+  // 渲染流程：先放 loading 占位 → fetch txt → 渲染古典阅读器
+  if (item.assetType === 'text') {
+    const ext = item.externalUrl || item.sourceUrl || '';
+    const summary = item.summary || item.description || '';
+    const ctaLabel = item.contentMode === 'full_text'
+      ? '🔗 完整原文 · 跳转出处'
+      : '📖 阅读完整原文';
+    // 先放占位（loading + 标题 + 摘要兜底）
+    const placeholder = `
+      <div class="doc-reader mode-${esc(item.contentMode || 'outline')}">
+        <div class="doc-reader-header">
+          <div class="doc-reader-icon">📜</div>
+          <div class="doc-reader-title">${esc(item.title)}</div>
+          ${item.artist?.name ? `<div class="doc-reader-meta">${esc(item.artist.name)}${item.publishYear ? ` · ${item.publishYear} 年` : ''}</div>` : ''}
+        </div>
+        <div class="doc-reader-body" id="docReaderBody">${esc(summary)}\n\n（加载文献内容中…）</div>
+        ${ext ? `<div class="doc-reader-footer">
+          <div class="doc-reader-source-tip">本电子文本采自原始出处，仅供检索与初判使用</div>
+          <a class="doc-reader-cta" href="${ext}" target="_blank" rel="noopener">${ctaLabel} ↗</a>
+        </div>` : ''}
+      </div>`;
+    ia.innerHTML = placeholder;
+    // 异步拉本地 txt
+    if (item.contentFile) {
+      fetch(item.contentFile)
+        .then(r => r.ok ? r.text() : Promise.reject(new Error('HTTP ' + r.status)))
+        .then(text => {
+          const body = document.getElementById('docReaderBody');
+          if (body) body.textContent = text;  // textContent 保留 \n 换行，由 CSS pre-wrap 渲染
+        })
+        .catch(err => {
+          console.warn('[DOC] 文献本地内容加载失败：', item.contentFile, err);
+          const body = document.getElementById('docReaderBody');
+          if (body) body.textContent = summary + '\n\n（注：完整内容请通过"跳转出处"按钮访问。）';
+        });
+    }
+  } else {
+    ia.innerHTML = src ? `<img src="${src}" alt="${esc(item.title)}" onclick="window.open('${src}','_blank')">` : '<div class="card-img-placeholder" style="font-size:72px">🖼️</div>';
+  }
   const info = document.getElementById('modalInfo');
   const fav = state.favorites.includes(item.id);
   const srcInfo = SOURCES[item.source] || {};
@@ -2924,6 +3194,24 @@ async function openDetail(item) {
       ? '可商用'
       : '版权未评估 · 来源馆原始版权字段：' + esc(licType) + '。建议联系来源馆确认。');
 
+  // ===== 三维分类展示数据准备 =====
+  const catDef = CATEGORY_LABEL[item.category] || null;
+  const atDef  = ASSET_TYPE_LABEL[item.assetType] || null;
+  const themesArr = (item.themes || []).filter(t => t !== 'others');  // others 不在详情区显示
+  // 「文物号 / ID」字段标题随 category 变化（文献叫"标识号"更合适）
+  const idLabel = item.category === 'document' ? '标识号'
+                : item.category === 'cultural_tourism' ? '编号'
+                : '文物号';
+  // 「作者/艺术家」分组标题：博物馆→艺术家，文献→作者/编者
+  const peopleLabel = item.category === 'document' ? '作者 / 编者'
+                    : item.category === 'creative_work' ? '创作者'
+                    : '艺术家';
+  // 「时间」字段：合并 dateDisplay + dateRange，去重
+  const timeText = item.dateDisplay ||
+    (item.dateRange?.begin && item.dateRange?.end
+      ? `${item.dateRange.begin}–${item.dateRange.end}`
+      : '');
+
   info.innerHTML = `
     <div class="detail-section">
       <h4>数据来源</h4>
@@ -2932,6 +3220,13 @@ async function openDetail(item) {
         <span style="font-size:16px;font-weight:700;">${srcInfo.name || item.source}</span>
       </div>
     </div>
+    ${drGroup('三维分类',
+      (catDef ? `<div class="detail-row"><span class="dl">门类</span><span class="dv">${catDef.icon} ${catDef.label}</span></div>` : '') +
+      (atDef  ? `<div class="detail-row"><span class="dl">资产形式</span><span class="dv">${atDef.icon} ${atDef.label}</span></div>` : '') +
+      (themesArr.length
+        ? `<div class="detail-row"><span class="dl">文化主题</span><span class="dv"><div class="detail-tags" style="margin:0;">${themesArr.map(t => `<span class="mini-tag">${esc(THEME_LABEL[t] || t)}</span>`).join('')}</div></span></div>`
+        : '')
+    )}
     <div class="detail-section">
       <h4>版权信息</h4>
       <div class="license-card ${licCardClass}">
@@ -2943,23 +3238,39 @@ async function openDetail(item) {
         </div>
       </div>
     </div>
-    <div class="detail-section"><h4>基本信息</h4>
-      ${dr('标题', item.title)}${dr('年代', item.dateDisplay)}${dr('文化', item.culture)}
-      ${dr('时期', item.period)}${dr('分类', item.classification)}${dr('材质', item.medium)}
-      ${dr('部门', item.department)}${item.dimensions ? dr('尺寸', item.dimensions) : ''}
-      ${item.accessionNumber ? dr('文物号', item.accessionNumber) : ''}
-    </div>
-    ${item.artist.name ? `<div class="detail-section"><h4>艺术家</h4>${dr('姓名', item.artist.name)}${dr('简介', item.artist.bio)}</div>` : ''}
-    ${item.geo.country ? `<div class="detail-section"><h4>地理信息</h4>${dr('国家', item.geo.country)}${item.geo.region ? dr('地区', item.geo.region) : ''}${item.geo.city ? dr('城市', item.geo.city) : ''}</div>` : ''}
-    ${item.tags?.length ? `<div class="detail-section"><h4>标签</h4><div class="detail-tags">${item.tags.map(t=>`<span class="mini-tag">${esc(t)}</span>`).join('')}</div></div>` : ''}
+    ${drGroup('基本信息',
+      dr('标题', item.title) +
+      dr('时间', timeText) +
+      dr('时期', item.period) +
+      dr('文化', item.culture) +
+      dr('分类', item.classification) +
+      dr('材质 / 体裁', item.medium) +
+      dr('尺寸 / 篇幅', item.dimensions) +
+      dr('部门', item.department) +
+      dr(idLabel, item.accessionNumber)
+    )}
+    ${drGroup(peopleLabel,
+      dr('姓名', item.artist?.name) +
+      dr('简介', item.artist?.bio)
+    )}
+    ${drGroup('地理信息',
+      dr('国家', item.geo?.country) +
+      dr('地区', item.geo?.region) +
+      dr('城市', item.geo?.city) +
+      dr('地点', item.geo?.locality)
+    )}
     ${item.img.extra?.length ? `<div class="detail-section"><h4>更多图片 (${item.img.extra.length})</h4><div class="detail-thumbs">${item.img.extra.slice(0,6).map(u=>`<img src="${u}" onclick="document.querySelector('.modal-photo img').src='${u}'">`).join('')}</div></div>` : ''}
     <div class="action-row">
-      <a class="btn-primary" href="${src}" target="_blank" onclick="event.stopPropagation()">⬇ 下载原图</a>
+      ${item.assetType === 'text'
+        ? (item.externalUrl ? `<a class="btn-primary" href="${item.externalUrl}" target="_blank" onclick="event.stopPropagation()">🔗 跳转原始出处</a>` : '')
+        : (src ? `<a class="btn-primary" href="${src}" target="_blank" onclick="event.stopPropagation()">⬇ 下载原图</a>` : '')}
       <button class="btn-outline" onclick="toggleFav('${item.id}');this.textContent=state.favorites.includes('${item.id}')?'❤️ 已收藏':'♡ 收藏'">
         ${fav ? '❤️ 已收藏' : '♡ 收藏'}
       </button>
     </div>
-    <button class="btn-primary" style="width:100%;margin-top:var(--sp-3);background:linear-gradient(135deg,#6c5ce7,#a29bfe);" onclick="closeModal();openAIGenerate(lastDetailItem)">✨ 以此为参考 · AI 生成</button>
+    ${item.assetType === 'text'
+      ? ''
+      : `<button class="btn-primary" style="width:100%;margin-top:var(--sp-3);background:linear-gradient(135deg,#6c5ce7,#a29bfe);" onclick="closeModal();openAIGenerate(lastDetailItem)">✨ 以此为参考 · AI 生成</button>`}
     ${item.sourceUrl ? `<a class="btn-link" href="${item.sourceUrl}" target="_blank">在 ${srcInfo.name || '博物馆'} 官网查看 →</a>` : ''}
   `;
 }
@@ -3017,7 +3328,7 @@ function filterItems(items, skipDim = null) {
 
   return items.filter(item => {
     // Source filter（左侧栏"数据来源"勾选）
-    if (skipDim !== 'source' && sources.length > 0 && sources.length < 7) {
+    if (skipDim !== 'source' && sources.length > 0 && sources.length < 8) {
       if (!sources.includes(item.source)) return false;
     }
     // Category filter（资产门类，三维分类维度①）
@@ -3283,6 +3594,41 @@ function showEmpty(s) { document.getElementById('emptyState').style.display = s 
 function clearGrid() { document.getElementById('resultsGrid').innerHTML = ''; document.getElementById('pagination').innerHTML = ''; document.getElementById('emptyState').style.display = 'none'; }
 function esc(s) { const d = document.createElement('div'); d.textContent = s || ''; return d.innerHTML; }
 function dr(l, v) { return v ? `<div class="detail-row"><span class="dl">${l}</span><span class="dv">${esc(v)}</span></div>` : ''; }
+
+// 渲染一整个 detail-section 分组；若内部所有行都是空（即 rows 拼出的字符串去除空白后为空），
+// 整个分组（含标题）都不输出。用于"无信息维度自动隐藏"。
+function drGroup(title, rowsHtml) {
+  const content = (rowsHtml || '').trim();
+  if (!content) return '';
+  return `<div class="detail-section"><h4>${esc(title)}</h4>${content}</div>`;
+}
+
+// 三维分类的可读化映射（用于详情面板「三维分类」分组展示）
+const CATEGORY_LABEL  = {
+  artifact:         { icon: '🏛️', label: '文物' },
+  creative_work:    { icon: '🎨', label: '文创' },
+  cultural_tourism: { icon: '🏞️', label: '文旅' },
+  document:         { icon: '📜', label: '文献' }
+};
+const ASSET_TYPE_LABEL = {
+  image:       { icon: '🖼️', label: '图片' },
+  '3d_model':  { icon: '🧊', label: '3D 模型' },
+  text:        { icon: '📄', label: '文本' },
+  audio_video: { icon: '▶️', label: '音视频' },
+  dataset:     { icon: '📊', label: '数据集' },
+  expert:      { icon: '🧑‍🏫', label: '专业人士' }
+};
+const THEME_LABEL = {
+  landmark:           '地标建筑',
+  landscape:          '风景地貌',
+  mythology_religion: '神话与信仰',
+  historical_figure:  '历史/文学人物',
+  folk_custom:        '民俗节庆',
+  regional_culture:   '文化圈',
+  craft_heritage:     '工艺与非遗',
+  expert_resource:    '专家与口述',
+  others:             '其他'
+};
 
 // ===================================================================
 // =================== 精品合集 (Curated Collections) =================
@@ -3558,7 +3904,7 @@ function renderCollectionCards(items) {
         ${item.culture ? `<div class="card-culture">${esc(item.culture)}</div>` : ''}
         ${item.dateDisplay ? `<div class="card-date">${esc(item.dateDisplay)}</div>` : ''}
         <div class="card-tag-row">
-          <span class="badge-license ${licenseClass}" title="${esc(item.license.type)}">${esc(licenseBadgeLabel(item.license.type))}</span>
+          <span class="badge-license ${licenseClass}" title="${esc(item.license.type)}">${esc(licenseBadgeLabel(item.license, item.source))}</span>
           ${item.period ? `<span class="mini-tag">${esc(item.period)}</span>` : ''}
         </div>
       </div>`;
