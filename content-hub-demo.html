@@ -1,0 +1,4410 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>内容力专区 · Cultural Hub</title>
+<style>
+/* ===== Airbnb-inspired Design Tokens ===== */
+:root {
+  /* Brand */
+  --rausch: #ff385c;
+  --rausch-deep: #e00b41;
+  --rausch-glow: rgba(255,56,92,0.12);
+
+  /* Text & Neutral */
+  --near-black: #222222;
+  --text-secondary: #6a6a6a;
+  --text-tertiary: #929292;
+  --border: #dddddd;
+  --border-light: #ebebeb;
+  --surface: #f7f7f7;
+  --white: #ffffff;
+
+  /* Semantic */
+  --success: #008a05;
+  --legal-blue: #428bff;
+  --error: #c13515;
+
+  /* Radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 50%;
+  --radius-pill: 999px;
+
+  /* Spacing scale: 4, 8, 12, 16, 24, 32, 48, 64 */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 24px;
+  --sp-6: 32px;
+  --sp-7: 48px;
+  --sp-8: 64px;
+
+  /* Shadow */
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.08);
+  --shadow-md: 0 2px 8px rgba(0,0,0,0.12);
+  --shadow-lg: 0 6px 20px rgba(0,0,0,0.16);
+  --shadow-xl: 0 12px 40px rgba(0,0,0,0.2);
+
+  /* Transition */
+  --ease: cubic-bezier(0.2, 0, 0, 1);
+  --duration: 0.2s;
+}
+
+/* ===== Reset ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+body {
+  font-family: "Circular", -apple-system, BlinkMacSystemFont, "PingFang SC", "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  color: var(--near-black);
+  background: var(--white);
+  line-height: 1.43;
+  min-height: 100vh;
+}
+a { color: inherit; text-decoration: none; }
+button { cursor: pointer; border: none; background: none; font-family: inherit; }
+input, select, textarea { font-family: inherit; }
+img { display: block; }
+
+/* ===== Typography Scale ===== */
+.t-section { font-size: 28px; font-weight: 700; line-height: 1.43; letter-spacing: -0.02em; }
+.t-card { font-size: 22px; font-weight: 600; line-height: 1.18; letter-spacing: -0.44px; }
+.t-feature { font-size: 20px; font-weight: 600; line-height: 1.2; letter-spacing: -0.18px; }
+.t-ui { font-size: 16px; font-weight: 500; line-height: 1.25; }
+.t-body { font-size: 14px; font-weight: 400; line-height: 1.43; }
+.t-tag { font-size: 12px; font-weight: 700; line-height: 1.33; }
+.t-micro { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.32px; }
+
+/* ===== Layout ===== */
+.container { max-width: 1280px; margin: 0 auto; padding: 0 var(--sp-5); }
+
+/* ===== Header ===== */
+.header {
+  position: sticky; top: 0; z-index: 100;
+  background: var(--white);
+  border-bottom: 1px solid var(--border-light);
+}
+.header-inner {
+  display: flex; align-items: center;
+  height: 80px;
+  max-width: 1280px; margin: 0 auto;
+  padding: 0 var(--sp-5); gap: var(--sp-5);
+}
+.logo {
+  display: flex; align-items: center; gap: var(--sp-2);
+  font-size: 20px; font-weight: 700; white-space: nowrap;
+  color: var(--rausch);
+}
+.logo-icon { font-size: 28px; }
+
+/* ===== Search Capsule (Airbnb Split Bar style) ===== */
+.search-capsule {
+  flex: 1; max-width: 560px;
+  display: flex; align-items: center;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  padding: var(--sp-1) var(--sp-1) var(--sp-1) var(--sp-5);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow var(--duration) var(--ease), border-color var(--duration) var(--ease);
+}
+.search-capsule:hover { box-shadow: var(--shadow-md); }
+.search-capsule:focus-within {
+  box-shadow: var(--shadow-md);
+  border-color: var(--near-black);
+}
+.search-capsule input {
+  flex: 1; border: none; outline: none;
+  font-size: 14px; font-weight: 500;
+  color: var(--near-black);
+  background: transparent;
+  padding: var(--sp-2) 0;
+}
+.search-capsule input::placeholder { color: var(--text-tertiary); }
+.search-capsule .search-icon-btn {
+  width: 40px; height: 40px;
+  border-radius: var(--radius-full);
+  background: var(--rausch);
+  color: white;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; flex-shrink: 0;
+  transition: background var(--duration) var(--ease), transform var(--duration) var(--ease);
+}
+.search-capsule .search-icon-btn:hover {
+  background: var(--rausch-deep);
+  transform: scale(1.04);
+}
+
+/* ===== Nav Tabs ===== */
+.nav-tabs {
+  display: flex; gap: var(--sp-2);
+  margin-left: auto;
+}
+.nav-tab {
+  padding: var(--sp-2) var(--sp-4);
+  border-radius: var(--radius-pill);
+  font-size: 14px; font-weight: 500;
+  color: var(--text-secondary);
+  border: 1px solid transparent;
+  transition: all var(--duration) var(--ease);
+}
+.nav-tab:hover { color: var(--near-black); }
+.nav-tab.active {
+  color: var(--near-black);
+  border-color: var(--near-black);
+}
+
+/* ===== Hero ===== */
+.hero {
+  padding: var(--sp-8) 0 var(--sp-7);
+  text-align: center;
+}
+.hero h1 {
+  font-size: 48px; font-weight: 800;
+  letter-spacing: -1px;
+  color: var(--near-black);
+  margin-bottom: var(--sp-3);
+}
+.hero h1 .accent { color: var(--rausch); }
+.hero-sub {
+  font-size: 18px; color: var(--text-secondary);
+  max-width: 760px; margin: 0 auto var(--sp-7);
+  font-weight: 400; line-height: 1.5;
+  white-space: nowrap;
+}
+
+/* ===== Hero Search Bar (Large) ===== */
+.hero-search {
+  display: flex; align-items: center;
+  max-width: 720px; margin: 0 auto var(--sp-6);
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  padding: var(--sp-2) var(--sp-2) var(--sp-2) var(--sp-5);
+  box-shadow: var(--shadow-md);
+  transition: box-shadow var(--duration) var(--ease), border-color var(--duration) var(--ease);
+}
+.hero-search:hover { box-shadow: var(--shadow-lg); }
+.hero-search:focus-within {
+  box-shadow: var(--shadow-lg);
+  border-color: var(--near-black);
+}
+.hero-search input {
+  flex: 1; border: none; outline: none;
+  font-size: 16px; font-weight: 500;
+  color: var(--near-black);
+  background: transparent;
+  padding: var(--sp-3) 0;
+}
+.hero-search input::placeholder { color: var(--text-tertiary); }
+.hero-search-btn {
+  flex-shrink: 0;
+  padding: var(--sp-3) var(--sp-5);
+  border-radius: var(--radius-pill);
+  background: var(--rausch);
+  color: var(--white);
+  font-size: 15px; font-weight: 600;
+  transition: background var(--duration) var(--ease), transform var(--duration) var(--ease);
+}
+.hero-search-btn:hover {
+  background: var(--rausch-deep);
+  transform: scale(1.02);
+}
+
+/* ===== "猜你想搜" 快捷搜索词（Hero 搜索框下方）===== */
+.hero-suggest {
+  max-width: 760px;
+  margin: -16px auto var(--sp-6);
+  padding: 0 var(--sp-3);
+  font-size: 15px;
+  color: var(--text-tertiary);
+  display: flex; align-items: center; flex-wrap: nowrap;  /* 强制单行 */
+  gap: 16px;
+  line-height: 1.6;
+  overflow: hidden;  /* 兜底：超出隐藏避免破坏布局 */
+  white-space: nowrap;
+}
+.hero-suggest .hs-label {
+  color: var(--text-tertiary);
+  flex-shrink: 0;
+  font-weight: 500;
+}
+.hero-suggest .hs-link {
+  color: var(--text-secondary);
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  padding: 0;
+  font-size: 15px;
+  font-weight: 500;
+  font-family: inherit;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: color var(--duration) var(--ease);
+}
+.hero-suggest .hs-link:hover {
+  color: var(--rausch);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+/* 关键词容器：横向单行，与 label / shuffle 同行 */
+.hero-suggest .hs-words {
+  display: inline-flex; align-items: center; flex-wrap: nowrap;
+  gap: 16px;
+  flex: 1; min-width: 0;
+  overflow: hidden;
+}
+/* "换一批"按钮 — 与关键词同色系，加换行图标作区分 */
+.hero-suggest .hs-shuffle {
+  display: inline-flex; align-items: center; gap: 4px;
+  margin-left: auto;
+  padding: 3px 10px;
+  font-size: 13px; font-family: inherit;
+  color: var(--text-tertiary);
+  background: transparent;
+  border: 1px dashed rgba(0,0,0,0.15);
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: color var(--duration) var(--ease), border-color var(--duration) var(--ease);
+}
+.hero-suggest .hs-shuffle:hover {
+  color: var(--rausch);
+  border-color: var(--rausch);
+}
+.hero-suggest .hs-shuffle .hs-shuffle-icon {
+  font-size: 11px;
+  display: inline-block;
+  transition: transform var(--duration) var(--ease);
+}
+.hero-suggest .hs-shuffle:hover .hs-shuffle-icon {
+  transform: rotate(180deg);
+}
+
+/* ===== Results Page Search Bar ===== */
+.results-search-bar {
+  display: flex; align-items: center;
+  margin: var(--sp-5) 0 var(--sp-3);
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  padding: var(--sp-1) var(--sp-1) var(--sp-1) var(--sp-5);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow var(--duration) var(--ease), border-color var(--duration) var(--ease);
+}
+.results-search-bar:hover { box-shadow: var(--shadow-md); }
+.results-search-bar:focus-within {
+  box-shadow: var(--shadow-md);
+  border-color: var(--near-black);
+}
+.results-search-bar input {
+  flex: 1; border: none; outline: none;
+  font-size: 14px; font-weight: 500;
+  color: var(--near-black);
+  background: transparent;
+  padding: var(--sp-2) 0;
+}
+.results-search-bar input::placeholder { color: var(--text-tertiary); }
+.results-search-btn {
+  flex-shrink: 0;
+  padding: var(--sp-2) var(--sp-4);
+  border-radius: var(--radius-pill);
+  background: var(--rausch);
+  color: var(--white);
+  font-size: 13px; font-weight: 600;
+  transition: background var(--duration) var(--ease);
+}
+.results-search-btn:hover { background: var(--rausch-deep); }
+
+/* ===== Category Pills ===== */
+.category-bar {
+  display: flex; justify-content: center;
+  flex-wrap: wrap; gap: var(--sp-2);
+  margin-bottom: var(--sp-6);
+}
+.category-pill {
+  display: flex; flex-direction: column;
+  align-items: center; gap: var(--sp-1);
+  padding: var(--sp-3) var(--sp-5);
+  border-radius: var(--radius-lg);
+  background: var(--white);
+  border: 1px solid var(--border-light);
+  font-size: 13px; font-weight: 500;
+  color: var(--text-secondary);
+  transition: all var(--duration) var(--ease);
+  min-width: 90px;
+}
+.category-pill:hover {
+  border-color: var(--near-black);
+  color: var(--near-black);
+  box-shadow: var(--shadow-sm);
+}
+.category-pill.active {
+  border-color: var(--near-black);
+  color: var(--near-black);
+  background: var(--surface);
+}
+.category-pill .pill-icon { font-size: 24px; }
+.category-pill .pill-text { font-size: 12px; font-weight: 600; }
+
+/* ===== Stats ===== */
+.stats-row {
+  display: flex; justify-content: center;
+  gap: var(--sp-7); padding: var(--sp-5) 0; margin-bottom: var(--sp-4);
+}
+.stat { text-align: center; }
+.stat-number { font-size: 32px; font-weight: 800; color: var(--near-black); }
+.stat-label { font-size: 12px; font-weight: 600; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.3px; margin-top: 2px; }
+
+/* ===== Toolbar ===== */
+.toolbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: var(--sp-4) 0; margin-bottom: var(--sp-4);
+}
+.toolbar-left { font-size: 16px; font-weight: 500; color: var(--text-secondary); }
+.toolbar-left strong { color: var(--near-black); font-weight: 700; }
+.toolbar-right { display: flex; align-items: center; gap: var(--sp-3); }
+.view-toggle {
+  display: flex; gap: 2px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+.view-btn {
+  padding: var(--sp-2) var(--sp-3);
+  font-size: 16px; color: var(--text-tertiary);
+  transition: all var(--duration) var(--ease);
+}
+.view-btn.active { background: var(--surface); color: var(--near-black); }
+.view-btn:hover { color: var(--near-black); }
+
+/* ===== Content Layout ===== */
+.content-layout { display: flex; gap: var(--sp-6); padding-bottom: var(--sp-8); }
+
+/* ===== Filter Sidebar ===== */
+.filter-sidebar {
+  width: 280px; flex-shrink: 0;
+  position: sticky; top: 100px;
+  align-self: flex-start;
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
+}
+.filter-sidebar::-webkit-scrollbar { width: 3px; }
+.filter-sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+.filter-group {
+  padding: var(--sp-4) 0;
+  border-bottom: 1px solid var(--border-light);
+}
+.filter-group:first-child { padding-top: 0; }
+.filter-group h3 {
+  font-size: 12px; font-weight: 700;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: var(--sp-2);
+}
+/* 分组标题旁的小字说明（如"一件可挂多个"） */
+.filter-group h3 .filter-hint {
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--text-tertiary);
+  text-transform: none;
+  letter-spacing: 0;
+  margin-left: var(--sp-2);
+  opacity: 0.7;
+}
+.filter-option {
+  display: flex; align-items: center; gap: var(--sp-2);
+  padding: 3px 0;
+  cursor: pointer; font-size: 14px;
+  line-height: 1.35;
+  color: var(--near-black);
+  transition: color var(--duration);
+}
+.filter-option:hover { color: var(--rausch); }
+.filter-option input[type="checkbox"],
+.filter-option input[type="radio"] {
+  accent-color: var(--near-black);
+  width: 16px; height: 16px;
+  border-radius: 4px;
+}
+/* 三态授权复选框旁的色点（与卡片徽章颜色对应） */
+.filter-option .lic-dot {
+  display: inline-block;
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.filter-option .lic-hint {
+  margin-left: auto;
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+/* 每个筛选项行尾的命中数（B 方案：联动命中数，实时反映当前筛选后的分布） */
+.filter-option .filter-count {
+  margin-left: auto;
+  font-size: 11px;
+  color: var(--text-tertiary);
+  font-variant-numeric: tabular-nums;
+  min-width: 22px;
+  text-align: right;
+}
+/* 命中为 0 时整行灰化（可见但不醒目，作为"当前筛选下无供给"的信号） */
+.filter-option.is-zero {
+  opacity: 0.45;
+}
+.filter-option.is-zero:hover { opacity: 0.75; }
+/* lic-hint 与 filter-count 同时存在时，让 count 紧挨最右，hint 排在其左 */
+.filter-option .lic-hint + .filter-count,
+.filter-option .filter-count + .lic-hint {
+  margin-left: var(--sp-2);
+}
+.date-range-row {
+  display: flex; gap: var(--sp-2); align-items: center;
+}
+.date-input {
+  flex: 1; padding: var(--sp-3) var(--sp-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 14px; color: var(--near-black);
+  outline: none; width: 80px;
+  transition: border-color var(--duration);
+}
+.date-input:focus { border-color: var(--near-black); }
+.date-range-row span { font-size: 14px; color: var(--text-tertiary); }
+.filter-clear {
+  font-size: 13px; font-weight: 600;
+  color: var(--near-black);
+  text-decoration: underline;
+  margin-top: var(--sp-3);
+  display: inline-block;
+}
+
+/* ===== Main Content ===== */
+.main-content { flex: 1; min-width: 0; }
+
+/* ===== Masonry / Grid ===== */
+.results-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--sp-5);
+}
+
+/* ===== Card (Airbnb-style) ===== */
+.card {
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  cursor: pointer;
+  position: relative;
+  transition: transform var(--duration) var(--ease);
+}
+.card:hover { transform: translateY(-2px); }
+.card-img-wrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--surface);
+}
+.card-img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s var(--ease);
+}
+.card:hover .card-img { transform: scale(1.03); }
+.card-img-placeholder {
+  width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--text-tertiary); font-size: 48px;
+  background: var(--surface);
+}
+
+/* Text-asset 缩略图：用文字+图标代替图片 */
+/* 风格：仿纸质文献卷轴质感，米白底 + 棕红边 + 大字标题 + 📜 角标 */
+.card-text-thumb {
+  width: 100%; height: 100%;
+  display: flex; flex-direction: column; justify-content: space-between;
+  padding: 16px 14px 12px;
+  background: linear-gradient(135deg, #faf6ee 0%, #f0e8d5 100%);
+  color: #5a3a1a;
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+.card-text-thumb::before {
+  content: '';
+  position: absolute; left: 0; top: 0; bottom: 0;
+  width: 4px;
+  background: linear-gradient(180deg, #8b4513 0%, #d4a574 100%);
+}
+.card-text-thumb .doc-icon {
+  font-size: 28px; line-height: 1;
+  opacity: 0.85;
+}
+.card-text-thumb .doc-title {
+  font-size: 16px; font-weight: 700;
+  line-height: 1.35;
+  /* 多行截断：仅显示 3 行 */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  letter-spacing: 0.3px;
+}
+.card-text-thumb .doc-author {
+  font-size: 11px; opacity: 0.7;
+  line-height: 1.3;
+  /* 仅显示 1 行 */
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ===== 文献阅读器（详情弹窗左侧大块区域，asset_type='text' 专用）===== */
+/* 设计：仿线装书 / 米黄宣纸质感
+ *  · contentMode='full_text' → 古典阅读：楷体 + 大字 + 长行距，适合读古文/词
+ *  · contentMode='outline'   → 大纲浏览：宋体 + 标准行距，适合扫读目录
+ */
+.doc-reader {
+  width: 100%; min-height: 100%; box-sizing: border-box;
+  background: linear-gradient(135deg, #faf6ee 0%, #f0e8d5 100%);
+  color: #2d1f0f;
+  padding: 28px 32px 24px;
+  border-left: 6px solid #8b4513;
+  display: flex; flex-direction: column; gap: 14px;
+  overflow-y: auto;
+  max-height: calc(100vh - 100px);
+}
+.doc-reader .doc-reader-header {
+  border-bottom: 1px dashed rgba(139, 69, 19, 0.4);
+  padding-bottom: 14px;
+  display: flex; flex-direction: column; gap: 6px;
+}
+.doc-reader .doc-reader-icon {
+  font-size: 32px; line-height: 1; opacity: 0.85;
+}
+.doc-reader .doc-reader-title {
+  font-size: 20px; font-weight: 700; line-height: 1.4;
+  color: #2d1f0f;
+}
+.doc-reader .doc-reader-meta {
+  font-size: 12px; color: #6b4d2c; opacity: 0.85;
+}
+.doc-reader .doc-reader-body {
+  /* 用 white-space:pre-wrap 保留原 txt 的换行与缩进 */
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  font-size: 15px;
+  line-height: 1.85;
+  color: #2d1f0f;
+  flex: 1;
+}
+.doc-reader.mode-full_text .doc-reader-body {
+  /* 全文模式：用楷体显示古典文本，更有线装书感 */
+  font-family: 'STKaiti', 'KaiTi', 'Kaiti SC', 'BiauKai', '楷体', serif;
+  font-size: 16px;
+  line-height: 2;
+  letter-spacing: 0.5px;
+}
+.doc-reader.mode-outline .doc-reader-body {
+  /* 大纲模式：用宋体或衬线字，扫读为主 */
+  font-family: 'Songti SC', 'STSong', 'SimSun', serif;
+  font-size: 14.5px;
+  line-height: 1.85;
+}
+.doc-reader .doc-reader-footer {
+  margin-top: 8px;
+  padding-top: 14px;
+  border-top: 1px dashed rgba(139, 69, 19, 0.4);
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 12px; flex-wrap: wrap;
+}
+.doc-reader .doc-reader-source-tip {
+  font-size: 11px; color: #6b4d2c; opacity: 0.75;
+  flex: 1; min-width: 0;
+}
+.doc-reader .doc-reader-cta {
+  display: inline-block;
+  padding: 9px 18px;
+  background: #8b4513; color: #fff;
+  text-decoration: none;
+  border-radius: 6px;
+  font-size: 13px; font-weight: 600;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.doc-reader .doc-reader-cta:hover { background: #6e3610; }
+
+/* Badge: source */
+.badge-source {
+  position: absolute; top: var(--sp-3); left: var(--sp-3);
+  background: var(--white);
+  box-shadow: var(--shadow-sm);
+  padding: 3px var(--sp-2);
+  border-radius: var(--radius-sm);
+  font-size: 10px; font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+  color: var(--text-secondary);
+}
+/* Badge: license — 三态配色 */
+/*  com        → 绿色：可商用（CC0、CC BY 4.0）                            */
+/*  copyright  → 黄色：受版权保护（作品仍在版权期，需联系版权方）             */
+/*  restricted → 灰色：来源馆限制（作品多为公共领域但馆方要求非商用，可付费授权）*/
+.badge-license, .badge-license-com, .badge-license-copyright, .badge-license-restricted {
+  /* 内联式徽章：放在卡片信息区 .card-tag-row 中（与 period 等 mini-tag 同行） */
+  display: inline-block;
+  padding: 3px var(--sp-2);
+  border-radius: var(--radius-sm);
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 0.3px;
+  vertical-align: middle;
+}
+.badge-license { background: var(--near-black); color: var(--white); }
+/* 三态徽章配色 */
+.badge-license-com        { background: var(--success);  color: var(--white); } /* 绿色：可商用 */
+.badge-license-copyright  { background: #d97706;         color: var(--white); } /* 琥珀黄：受版权保护 */
+.badge-license-restricted { background: #9aa0a6;         color: var(--white); } /* 灰色：来源馆限制 */
+/* License card variants（详情弹窗版权信息卡片） */
+.license-card.com        { border-color: rgba(0,138,5,0.3);    background: rgba(0,138,5,0.04); }
+.license-card.copyright  { border-color: rgba(217,119,6,0.35); background: rgba(217,119,6,0.05); }
+.license-card.restricted { border-color: rgba(154,160,166,0.4); background: rgba(154,160,166,0.06); }
+/* 详情弹窗版权卡片底部「灵感参考使用建议」（弱化提示，与官方说明用分隔线区分） */
+.license-card .usage-tip {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px dashed rgba(0,0,0,0.08);
+  font-size: 12px;
+  color: var(--text-tertiary);
+  line-height: 1.5;
+  display: flex;
+  gap: 6px;
+  align-items: flex-start;
+}
+.license-card .usage-tip .ut-icon { flex-shrink: 0; font-size: 13px; }
+/* Nav tabs scrollable on small screens */
+.nav-tabs { overflow-x: auto; white-space: nowrap; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+.nav-tabs::-webkit-scrollbar { display: none; }
+/* Fav heart */
+.card-heart {
+  position: absolute; top: var(--sp-3); right: var(--sp-3);
+  width: 32px; height: 32px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.3));
+  color: white;
+  transition: transform var(--duration) var(--ease);
+  z-index: 2;
+}
+.card-heart:hover { transform: scale(1.15); }
+.card-heart.active { color: var(--rausch); }
+.badge-license ~ .card-heart { right: auto; left: auto; top: auto; bottom: var(--sp-3); right: var(--sp-3); }
+
+/* Card info */
+.card-info { padding: var(--sp-3) 0 var(--sp-2); }
+.card-info-top {
+  display: flex; justify-content: space-between;
+  align-items: flex-start; margin-bottom: 2px;
+}
+.card-title-text {
+  font-size: 15px; font-weight: 600;
+  color: var(--near-black);
+  display: -webkit-box; -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical; overflow: hidden;
+  flex: 1;
+}
+.card-culture {
+  font-size: 14px; color: var(--text-secondary);
+  font-weight: 400; margin-bottom: 2px;
+}
+.card-date {
+  font-size: 14px; color: var(--text-tertiary);
+  font-weight: 400;
+}
+.card-tag-row { display: flex; gap: var(--sp-1); margin-top: var(--sp-2); flex-wrap: wrap; }
+.mini-tag {
+  font-size: 11px; font-weight: 600;
+  padding: 2px 8px;
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  color: var(--text-secondary);
+}
+.mini-tag.cc0 { background: rgba(0,138,5,0.1); color: var(--success); }
+
+/* ===== Detail Modal ===== */
+.modal-overlay {
+  display: none;
+  position: fixed; inset: 0; z-index: 200;
+  background: rgba(0,0,0,0.5);
+  justify-content: center; align-items: flex-start;
+  padding: var(--sp-7) var(--sp-5);
+  overflow-y: auto;
+}
+.modal-overlay.active { display: flex; }
+.modal-box {
+  background: var(--white);
+  border-radius: var(--radius-md);
+  max-width: 1060px; width: 100%;
+  overflow: hidden;
+  box-shadow: var(--shadow-xl);
+  animation: fadeUp 0.25s var(--ease);
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.modal-top {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: var(--sp-5) var(--sp-5);
+  border-bottom: 1px solid var(--border-light);
+}
+.modal-top h2 {
+  font-size: 18px; font-weight: 700;
+  max-width: 85%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.modal-close-btn {
+  width: 36px; height: 36px;
+  border-radius: var(--radius-full);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; color: var(--near-black);
+  border: 1px solid var(--border);
+  transition: all var(--duration);
+}
+.modal-close-btn:hover { background: var(--surface); }
+.modal-grid {
+  display: grid; grid-template-columns: 1fr 380px;
+}
+.modal-photo {
+  background: var(--surface);
+  display: flex; align-items: center; justify-content: center;
+  min-height: 460px; padding: var(--sp-5);
+}
+.modal-photo img {
+  max-width: 100%; max-height: 68vh;
+  object-fit: contain; border-radius: var(--radius-sm);
+  cursor: zoom-in;
+}
+.modal-details {
+  padding: var(--sp-5);
+  overflow-y: auto; max-height: 72vh;
+  border-left: 1px solid var(--border-light);
+}
+.detail-section { margin-bottom: var(--sp-5); }
+.detail-section h4 {
+  font-size: 10px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.5px;
+  color: var(--text-tertiary);
+  margin-bottom: var(--sp-3);
+}
+.detail-row {
+  display: flex; justify-content: space-between;
+  padding: var(--sp-2) 0;
+  font-size: 14px;
+  border-bottom: 1px solid var(--border-light);
+}
+.detail-row .dl { color: var(--text-secondary); }
+.detail-row .dv { color: var(--near-black); font-weight: 500; text-align: right; max-width: 60%; }
+
+.license-card {
+  border: 1px solid rgba(0,138,5,0.3);
+  background: rgba(0,138,5,0.04);
+  border-radius: var(--radius-sm);
+  padding: var(--sp-4);
+}
+.license-type { font-size: 18px; font-weight: 800; color: var(--success); margin-bottom: 4px; }
+.license-note { font-size: 13px; color: var(--text-secondary); line-height: 1.5; }
+
+.detail-tags { display: flex; flex-wrap: wrap; gap: var(--sp-1); }
+
+.detail-thumbs {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: var(--sp-2);
+}
+.detail-thumbs img {
+  width: 100%; aspect-ratio: 1; object-fit: cover;
+  border-radius: var(--radius-sm); cursor: pointer;
+  transition: opacity var(--duration);
+}
+.detail-thumbs img:hover { opacity: 0.85; }
+
+.action-row { display: flex; gap: var(--sp-3); margin-top: var(--sp-5); }
+.btn-primary {
+  flex: 1; padding: var(--sp-3) var(--sp-5);
+  border-radius: var(--radius-sm);
+  background: var(--near-black); color: var(--white);
+  font-size: 14px; font-weight: 600;
+  text-align: center;
+  transition: background var(--duration) var(--ease), transform var(--duration) var(--ease);
+}
+.btn-primary:hover { background: #000; transform: scale(1.01); }
+.btn-outline {
+  flex: 1; padding: var(--sp-3) var(--sp-5);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--near-black);
+  color: var(--near-black);
+  font-size: 14px; font-weight: 600;
+  text-align: center;
+  transition: all var(--duration) var(--ease);
+}
+.btn-outline:hover { background: var(--surface); }
+.btn-link {
+  display: block; text-align: center;
+  margin-top: var(--sp-3);
+  font-size: 13px; font-weight: 600;
+  color: var(--near-black);
+  text-decoration: underline;
+}
+
+/* ===== Loading ===== */
+.loading-area {
+  display: flex; flex-direction: column;
+  align-items: center; padding: var(--sp-8) 0; gap: var(--sp-4);
+}
+.loader {
+  width: 36px; height: 36px;
+  border: 3px solid var(--border-light);
+  border-top-color: var(--rausch);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.loading-text { font-size: 14px; color: var(--text-secondary); }
+
+/* ===== Empty ===== */
+.empty-state {
+  text-align: center; padding: var(--sp-8) var(--sp-5);
+  color: var(--text-secondary);
+}
+.empty-state .empty-icon { font-size: 56px; margin-bottom: var(--sp-4); }
+.empty-state h3 { font-size: 20px; font-weight: 600; color: var(--near-black); margin-bottom: var(--sp-2); }
+.empty-state p { font-size: 14px; }
+
+/* ===== Pagination ===== */
+.pagination {
+  display: flex; justify-content: center; align-items: center;
+  gap: var(--sp-2); padding: var(--sp-7) 0 var(--sp-5);
+}
+.pg-btn {
+  padding: var(--sp-2) var(--sp-4);
+  border-radius: var(--radius-sm);
+  font-size: 14px; font-weight: 600;
+  color: var(--near-black);
+  border: 1px solid var(--border);
+  transition: all var(--duration) var(--ease);
+}
+.pg-btn:hover { border-color: var(--near-black); }
+.pg-btn.active { background: var(--near-black); color: var(--white); border-color: var(--near-black); }
+.pg-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+/* ===== Curated Section (精品展示区) ===== */
+.curated-section {
+  padding: var(--sp-7) 0 var(--sp-6);
+  border-top: 1px solid var(--border-light);
+}
+.curated-header {
+  display: flex; justify-content: space-between; align-items: baseline;
+  margin-bottom: var(--sp-5);
+}
+.curated-header h2 {
+  font-size: 28px; font-weight: 700; letter-spacing: -0.02em;
+}
+.curated-header .see-all {
+  font-size: 14px; font-weight: 600;
+  color: var(--near-black); text-decoration: underline;
+  cursor: pointer;
+}
+
+/* Curated Search Bar */
+.curated-search-bar {
+  display: flex; align-items: center;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  padding: var(--sp-1) var(--sp-1) var(--sp-1) var(--sp-5);
+  margin-bottom: var(--sp-5);
+  transition: box-shadow var(--duration) var(--ease), border-color var(--duration) var(--ease);
+}
+.curated-search-bar:hover { box-shadow: var(--shadow-md); }
+.curated-search-bar:focus-within { box-shadow: var(--shadow-md); border-color: var(--near-black); }
+.curated-search-bar input {
+  flex: 1; border: none; outline: none;
+  font-size: 14px; font-weight: 400;
+  color: var(--near-black);
+  background: transparent;
+  padding: var(--sp-3) 0;
+}
+.curated-search-bar input::placeholder { color: var(--text-tertiary); }
+.curated-search-btn {
+  flex-shrink: 0;
+  padding: var(--sp-3) var(--sp-5);
+  border-radius: var(--radius-pill);
+  background: var(--near-black);
+  color: var(--white);
+  font-size: 14px; font-weight: 600;
+  transition: background var(--duration) var(--ease), transform var(--duration) var(--ease);
+}
+.curated-search-btn:hover { background: #000; transform: scale(1.02); }
+
+/* Collection Cards Grid */
+.collections-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--sp-5);
+}
+
+/* Collection Card - Large Cover */
+.collection-card {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  cursor: pointer;
+  aspect-ratio: 3 / 4;
+  background: var(--surface);
+  transition: transform var(--duration) var(--ease), box-shadow var(--duration) var(--ease);
+}
+.collection-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+.collection-card .cover-img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s var(--ease);
+}
+.collection-card:hover .cover-img { transform: scale(1.04); }
+
+/* Gradient overlay */
+.collection-card .cover-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.72) 0%, rgba(0,0,0,0.15) 45%, transparent 70%);
+  pointer-events: none;
+}
+
+/* Card text */
+.collection-card .cover-content {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  padding: var(--sp-5);
+  color: var(--white);
+  z-index: 1;
+}
+.collection-card .cover-tag {
+  display: inline-block;
+  font-size: 10px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.4px;
+  background: rgba(255,255,255,0.2);
+  backdrop-filter: blur(4px);
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  margin-bottom: var(--sp-2);
+}
+.collection-card .cover-title {
+  font-size: 22px; font-weight: 700;
+  line-height: 1.2; letter-spacing: -0.3px;
+  margin-bottom: var(--sp-1);
+}
+.collection-card .cover-sub {
+  font-size: 13px; font-weight: 400;
+  opacity: 0.85; line-height: 1.4;
+  display: -webkit-box; -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical; overflow: hidden;
+}
+.collection-card .cover-count {
+  margin-top: var(--sp-2);
+  font-size: 12px; font-weight: 600;
+  opacity: 0.7;
+}
+
+/* Preview thumbnails strip */
+.collection-card .preview-strip {
+  position: absolute; top: var(--sp-3); right: var(--sp-3);
+  display: flex; gap: 3px; z-index: 1;
+}
+.collection-card .preview-dot {
+  width: 28px; height: 28px;
+  border-radius: var(--radius-sm);
+  object-fit: cover;
+  border: 2px solid rgba(255,255,255,0.6);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+
+/* ===== Collection Detail View (合集内页) ===== */
+.collection-detail-view {
+  display: none;
+  padding-bottom: var(--sp-8);
+}
+.collection-detail-view.active { display: block; }
+
+.collection-banner {
+  position: relative;
+  height: 320px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-bottom: var(--sp-6);
+}
+.collection-banner img {
+  width: 100%; height: 100%; object-fit: cover;
+}
+.collection-banner .banner-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.2) 50%, transparent 80%);
+}
+.collection-banner .banner-content {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  padding: var(--sp-6);
+  color: var(--white);
+}
+.collection-banner .banner-back {
+  display: inline-flex; align-items: center; gap: var(--sp-2);
+  font-size: 14px; font-weight: 600;
+  color: var(--white); opacity: 0.85;
+  margin-bottom: var(--sp-3);
+  cursor: pointer;
+  transition: opacity var(--duration);
+}
+.collection-banner .banner-back:hover { opacity: 1; }
+.collection-banner .banner-title {
+  font-size: 36px; font-weight: 800;
+  letter-spacing: -0.5px;
+  margin-bottom: var(--sp-2);
+}
+.collection-banner .banner-desc {
+  font-size: 16px; font-weight: 400;
+  opacity: 0.9; max-width: 600px; line-height: 1.5;
+}
+.collection-banner .banner-meta {
+  margin-top: var(--sp-3);
+  display: flex; gap: var(--sp-5);
+  font-size: 13px; font-weight: 600; opacity: 0.75;
+}
+
+/* ===== My Projects Sidebar ===== */
+.sidebar-rail {
+  position: fixed; left: 0; top: 80px;
+  width: 52px; height: calc(100vh - 80px);
+  background: var(--white);
+  border-right: 1px solid var(--border-light);
+  display: flex; flex-direction: column;
+  align-items: center; padding: var(--sp-4) 0;
+  gap: var(--sp-3); z-index: 90;
+  transition: width 0.3s var(--ease);
+}
+.sidebar-rail.expanded { width: 280px; align-items: stretch; padding: var(--sp-4) var(--sp-4); }
+.rail-icon-btn {
+  width: 36px; height: 36px;
+  border-radius: var(--radius-sm);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; color: var(--text-secondary);
+  transition: all var(--duration);
+  position: relative;
+}
+.rail-icon-btn:hover { background: var(--surface); color: var(--near-black); }
+.rail-icon-btn.active { color: var(--rausch); background: var(--rausch-glow); }
+.rail-icon-btn .rail-badge {
+  position: absolute; top: 2px; right: 2px;
+  width: 8px; height: 8px;
+  background: var(--rausch); border-radius: 50%;
+}
+.rail-icon-btn .rail-label { display: none; }
+.sidebar-rail.expanded .rail-icon-btn {
+  width: auto; justify-content: flex-start;
+  gap: var(--sp-3); padding: var(--sp-2) var(--sp-3);
+}
+.sidebar-rail.expanded .rail-icon-btn .rail-label {
+  display: inline; font-size: 14px; font-weight: 500;
+}
+
+/* Sidebar expanded content */
+.sidebar-expanded-content { display: none; flex: 1; overflow-y: auto; margin-top: var(--sp-3); }
+.sidebar-rail.expanded .sidebar-expanded-content { display: block; }
+.sidebar-expanded-content::-webkit-scrollbar { width: 3px; }
+.sidebar-expanded-content::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+.sidebar-section-title {
+  font-size: 10px; font-weight: 700;
+  color: var(--text-tertiary);
+  text-transform: uppercase; letter-spacing: 0.5px;
+  margin: var(--sp-4) 0 var(--sp-2);
+}
+.sidebar-section-title:first-child { margin-top: 0; }
+
+/* Project list items in sidebar */
+.sidebar-project-item {
+  display: flex; align-items: center; gap: var(--sp-3);
+  padding: var(--sp-2) var(--sp-2);
+  border-radius: var(--radius-sm);
+  cursor: pointer; transition: background var(--duration);
+  font-size: 13px; font-weight: 500; color: var(--near-black);
+}
+.sidebar-project-item:hover { background: var(--surface); }
+.sidebar-project-item .proj-emoji { font-size: 18px; flex-shrink: 0; }
+.sidebar-project-item .proj-name { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sidebar-project-item .proj-count { font-size: 11px; color: var(--text-tertiary); flex-shrink: 0; }
+
+.sidebar-add-btn {
+  display: flex; align-items: center; gap: var(--sp-2);
+  padding: var(--sp-2) var(--sp-2);
+  border-radius: var(--radius-sm);
+  font-size: 13px; font-weight: 600; color: var(--text-secondary);
+  border: 1px dashed var(--border); margin-top: var(--sp-2);
+  transition: all var(--duration);
+}
+.sidebar-add-btn:hover { border-color: var(--near-black); color: var(--near-black); }
+
+/* Fav mini thumbnails row in sidebar */
+.sidebar-favs-strip {
+  display: flex; gap: 4px; flex-wrap: wrap; margin-top: var(--sp-2);
+}
+.sidebar-fav-thumb {
+  width: 40px; height: 40px;
+  border-radius: 6px; object-fit: cover;
+  cursor: pointer; transition: opacity var(--duration);
+}
+.sidebar-fav-thumb:hover { opacity: 0.75; }
+
+/* Body offset when sidebar exists */
+body { padding-left: 52px; }
+body.sidebar-open { padding-left: 280px; }
+
+/* ===== Project Detail Page ===== */
+.project-page { display: none; padding-bottom: var(--sp-8); }
+.project-page.active { display: block; }
+.project-page-header {
+  display: flex; align-items: center; gap: var(--sp-4);
+  padding: var(--sp-6) 0 var(--sp-5);
+  border-bottom: 1px solid var(--border-light);
+  margin-bottom: var(--sp-5);
+}
+.project-page-header .proj-back {
+  width: 36px; height: 36px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; transition: all var(--duration);
+}
+.project-page-header .proj-back:hover { background: var(--surface); }
+.project-page-header .proj-info { flex: 1; }
+.project-page-header .proj-info h2 { font-size: 24px; font-weight: 700; }
+.project-page-header .proj-info p { font-size: 14px; color: var(--text-secondary); margin-top: 2px; }
+
+/* Tab switcher: Collected / Generated */
+.project-tabs {
+  display: flex; gap: var(--sp-1);
+  border-bottom: 1px solid var(--border-light);
+  margin-bottom: var(--sp-5);
+}
+.project-tab {
+  padding: var(--sp-3) var(--sp-5);
+  font-size: 14px; font-weight: 600;
+  color: var(--text-secondary);
+  border-bottom: 2px solid transparent;
+  transition: all var(--duration);
+}
+.project-tab:hover { color: var(--near-black); }
+.project-tab.active {
+  color: var(--near-black);
+  border-bottom-color: var(--near-black);
+}
+.project-tab-panel { display: none; }
+.project-tab-panel.active { display: block; }
+
+/* Generated items grid */
+.gen-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: var(--sp-5);
+}
+.gen-card {
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-light);
+  overflow: hidden; cursor: pointer;
+  transition: all var(--duration) var(--ease);
+}
+.gen-card:hover { border-color: var(--border); box-shadow: var(--shadow-sm); transform: translateY(-2px); }
+.gen-card-img {
+  width: 100%; aspect-ratio: 1;
+  object-fit: cover; background: var(--surface);
+}
+.gen-card-body { padding: var(--sp-3); }
+.gen-card-prompt {
+  font-size: 13px; color: var(--near-black);
+  display: -webkit-box; -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical; overflow: hidden;
+  margin-bottom: var(--sp-1);
+}
+.gen-card-meta { font-size: 11px; color: var(--text-tertiary); }
+.gen-card-base {
+  display: flex; align-items: center; gap: var(--sp-2);
+  margin-top: var(--sp-2); padding-top: var(--sp-2);
+  border-top: 1px solid var(--border-light);
+  font-size: 11px; color: var(--text-secondary);
+}
+.gen-card-base img { width: 24px; height: 24px; border-radius: 4px; object-fit: cover; }
+
+/* ===== AI Generate Modal ===== */
+.gen-modal-overlay {
+  display: none; position: fixed; inset: 0; z-index: 300;
+  background: rgba(0,0,0,0.5);
+  justify-content: center; align-items: center;
+  padding: var(--sp-5);
+}
+.gen-modal-overlay.active { display: flex; }
+.gen-modal {
+  background: var(--white); border-radius: var(--radius-lg);
+  max-width: 640px; width: 100%;
+  box-shadow: var(--shadow-xl);
+  animation: fadeUp 0.25s var(--ease);
+  max-height: 90vh; overflow-y: auto;
+}
+.gen-modal-header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: var(--sp-5); border-bottom: 1px solid var(--border-light);
+}
+.gen-modal-header h3 { font-size: 18px; font-weight: 700; }
+.gen-modal-body { padding: var(--sp-5); }
+.gen-ref-card {
+  display: flex; gap: var(--sp-4); padding: var(--sp-4);
+  background: var(--surface); border-radius: var(--radius-md);
+  margin-bottom: var(--sp-5);
+}
+.gen-ref-card img {
+  width: 80px; height: 80px;
+  border-radius: var(--radius-sm); object-fit: cover; flex-shrink: 0;
+}
+.gen-ref-card .ref-info { flex: 1; }
+.gen-ref-card .ref-info h4 { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+.gen-ref-card .ref-info p { font-size: 12px; color: var(--text-secondary); }
+
+.gen-prompt-label {
+  font-size: 12px; font-weight: 700; color: var(--text-tertiary);
+  text-transform: uppercase; letter-spacing: 0.5px;
+  margin-bottom: var(--sp-2);
+}
+.gen-prompt-input {
+  width: 100%; padding: var(--sp-3);
+  border: 1px solid var(--border); border-radius: var(--radius-sm);
+  font-size: 14px; color: var(--near-black);
+  outline: none; resize: vertical; min-height: 80px;
+  transition: border-color var(--duration);
+}
+.gen-prompt-input:focus { border-color: var(--near-black); }
+
+.gen-style-row {
+  display: flex; gap: var(--sp-2); margin: var(--sp-4) 0;
+  flex-wrap: wrap;
+}
+.gen-style-chip {
+  padding: var(--sp-2) var(--sp-4);
+  border: 1px solid var(--border); border-radius: var(--radius-pill);
+  font-size: 13px; font-weight: 500; color: var(--text-secondary);
+  transition: all var(--duration);
+}
+.gen-style-chip:hover { border-color: var(--near-black); color: var(--near-black); }
+.gen-style-chip.active { background: var(--near-black); color: var(--white); border-color: var(--near-black); }
+
+.gen-submit-btn {
+  width: 100%; padding: var(--sp-4);
+  background: var(--near-black); color: var(--white);
+  border-radius: var(--radius-sm);
+  font-size: 15px; font-weight: 600;
+  transition: all var(--duration) var(--ease);
+}
+.gen-submit-btn:hover { background: #000; }
+.gen-submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* Generation result */
+.gen-result { margin-top: var(--sp-5); display: none; }
+.gen-result.active { display: block; }
+.gen-result-img {
+  width: 100%; border-radius: var(--radius-md);
+  margin-bottom: var(--sp-3);
+}
+.gen-result-actions { display: flex; gap: var(--sp-3); }
+
+/* ===== Footer ===== */
+.footer {
+  border-top: 1px solid var(--border-light);
+  padding: var(--sp-5) 0;
+  text-align: center;
+  font-size: 12px; color: var(--text-tertiary);
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 1024px) {
+  .filter-sidebar { display: none; }
+  .modal-grid { grid-template-columns: 1fr; }
+  .modal-details { max-height: none; border-left: none; border-top: 1px solid var(--border-light); }
+  .collections-grid { grid-template-columns: repeat(2, 1fr); }
+  .sidebar-rail { display: none; }
+  body, body.sidebar-open { padding-left: 0; }
+}
+@media (max-width: 768px) {
+  .header-inner { flex-wrap: wrap; height: auto; padding: var(--sp-3) var(--sp-4); gap: var(--sp-3); }
+  .nav-tabs { margin-left: 0; order: 3; width: 100%; justify-content: center; }
+  .hero h1 { font-size: 32px; }
+  .results-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: var(--sp-4); }
+  .stats-row { gap: var(--sp-5); }
+  .category-bar { gap: var(--sp-2); }
+  .category-pill { min-width: 72px; padding: var(--sp-2) var(--sp-3); }
+  .collections-grid { grid-template-columns: 1fr 1fr; gap: var(--sp-3); }
+  .collection-card .cover-title { font-size: 18px; }
+  .collection-banner { height: 220px; }
+  .collection-banner .banner-title { font-size: 26px; }
+}
+</style>
+</head>
+<body>
+
+<!-- ===== My Projects Sidebar ===== -->
+<aside class="sidebar-rail" id="sidebarRail">
+  <button class="rail-icon-btn" onclick="toggleSidebar()" title="我的项目">
+    📁<span class="rail-label">我的项目</span>
+  </button>
+  <button class="rail-icon-btn" onclick="toggleSidebar(); showSidebarTab('favs')" title="收藏素材">
+    ♡<span class="rail-label">收藏素材</span>
+    <span class="rail-badge" id="favBadge" style="display:none;"></span>
+  </button>
+  <button class="rail-icon-btn" onclick="toggleSidebar(); showSidebarTab('gens')" title="AI 生成">
+    ✨<span class="rail-label">AI 生成</span>
+  </button>
+
+  <div class="sidebar-expanded-content" id="sidebarContent">
+    <!-- Projects list -->
+    <div class="sidebar-section-title">项目</div>
+    <div id="sidebarProjectsList"></div>
+    <button class="sidebar-add-btn" onclick="createNewProject()">
+      <span>＋</span> 新建项目
+    </button>
+
+    <!-- Recent favs -->
+    <div class="sidebar-section-title" id="sidebarFavsTitle">最近收藏</div>
+    <div class="sidebar-favs-strip" id="sidebarFavsStrip">
+      <div style="font-size:13px;color:var(--text-tertiary);">暂无收藏</div>
+    </div>
+
+    <!-- Recent generations -->
+    <div class="sidebar-section-title" id="sidebarGensTitle">最近生成</div>
+    <div class="sidebar-favs-strip" id="sidebarGensStrip">
+      <div style="font-size:13px;color:var(--text-tertiary);">暂无生成记录</div>
+    </div>
+  </div>
+</aside>
+
+<!-- ===== Project Detail Page ===== -->
+<div class="container">
+  <div class="project-page" id="projectPage">
+    <div class="project-page-header">
+      <button class="proj-back" onclick="closeProjectPage()">←</button>
+      <div class="proj-info">
+        <h2 id="projPageTitle">项目名称</h2>
+        <p id="projPageMeta">0 件素材 · 0 个生成</p>
+      </div>
+      <button class="btn-outline" style="flex:none;padding:8px 16px;" onclick="openAIGenerate(null)">✨ AI 生成</button>
+    </div>
+    <div class="project-tabs">
+      <button class="project-tab active" onclick="switchProjTab('collected',this)">📦 收藏素材</button>
+      <button class="project-tab" onclick="switchProjTab('generated',this)">✨ AI 生成</button>
+    </div>
+    <div class="project-tab-panel active" id="projTabCollected">
+      <div class="results-grid" id="projFavsGrid"></div>
+      <div class="empty-state" id="projFavsEmpty" style="display:none;">
+        <div class="empty-icon">📦</div>
+        <h3>还没有收藏素材</h3>
+        <p>浏览文物并点击 ♡ 收藏到项目中</p>
+      </div>
+    </div>
+    <div class="project-tab-panel" id="projTabGenerated">
+      <div class="gen-grid" id="projGensGrid"></div>
+      <div class="empty-state" id="projGensEmpty" style="display:none;">
+        <div class="empty-icon">✨</div>
+        <h3>还没有生成记录</h3>
+        <p>选择一件素材作为参考，用 AI 生成新内容</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== AI Generate Modal ===== -->
+<div class="gen-modal-overlay" id="genModal">
+  <div class="gen-modal">
+    <div class="gen-modal-header">
+      <h3>✨ AI 创意生成</h3>
+      <button class="modal-close-btn" onclick="closeGenModal()">✕</button>
+    </div>
+    <div class="gen-modal-body">
+      <div class="gen-ref-card" id="genRefCard" style="display:none;">
+        <img id="genRefImg" src="" alt="">
+        <div class="ref-info">
+          <h4 id="genRefTitle">参考素材</h4>
+          <p id="genRefMeta">—</p>
+        </div>
+      </div>
+
+      <div class="gen-prompt-label">描述你想生成的内容</div>
+      <textarea class="gen-prompt-input" id="genPromptInput" placeholder="例如：将这件宋代瓷器转化为赛博朋克风格的 3D 道具，发光效果，暗色背景"></textarea>
+
+      <div class="gen-prompt-label" style="margin-top:var(--sp-4);">选择风格</div>
+      <div class="gen-style-row">
+        <button class="gen-style-chip" onclick="toggleGenStyle(this)" data-style="3D渲染">🎮 3D 渲染</button>
+        <button class="gen-style-chip" onclick="toggleGenStyle(this)" data-style="概念原画">🎨 概念原画</button>
+        <button class="gen-style-chip" onclick="toggleGenStyle(this)" data-style="像素风">👾 像素风</button>
+        <button class="gen-style-chip" onclick="toggleGenStyle(this)" data-style="水墨国风">🖌️ 水墨国风</button>
+        <button class="gen-style-chip" onclick="toggleGenStyle(this)" data-style="赛博朋克">⚡ 赛博朋克</button>
+        <button class="gen-style-chip" onclick="toggleGenStyle(this)" data-style="写实照片">📷 写实照片</button>
+      </div>
+
+      <button class="gen-submit-btn" id="genSubmitBtn" onclick="simulateGenerate()">🚀 开始生成</button>
+
+      <div class="gen-result" id="genResult">
+        <img class="gen-result-img" id="genResultImg" src="">
+        <div style="font-size:13px;color:var(--text-secondary);margin-bottom:var(--sp-3);" id="genResultPrompt"></div>
+        <div class="gen-result-actions">
+          <button class="btn-primary" onclick="saveGeneration()">💾 保存到项目</button>
+          <button class="btn-outline" onclick="simulateGenerate()">🔄 重新生成</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== Header ===== -->
+<header class="header">
+  <div class="header-inner">
+    <div class="logo" onclick="goHome()" style="cursor:pointer;">
+      <span class="logo-icon">🏛️</span>
+      <span>内容力专区</span>
+    </div>
+    <div class="nav-tabs">
+      <button class="nav-tab" onclick="window.open('https://fluffyfu0323.github.io/contenthubdemo/inspiration-page/', '_blank')">🌐 灵感探索</button>
+      <button class="nav-tab" onclick="window.open('https://fluffyfu0323.github.io/culturecollaborationmapping/culture-game-mapping_0506.html', '_blank')">🎮 游戏联动</button>
+    </div>
+  </div>
+</header>
+
+<!-- ===== Hero ===== -->
+<section class="hero" id="heroSection">
+  <div class="container">
+    <h1>探索全球文化的<span class="accent">宝藏素材</span></h1>
+    <p class="hero-sub">聚合博物馆藏品、文化遗产、艺术经典，为你的游戏项目找到灵感与参考</p>
+
+    <!-- Stats（移到搜索框上方，强化"我们有多大"的认知）-->
+    <div class="stats-row">
+      <div class="stat">
+        <div class="stat-number">7</div>
+        <div class="stat-label">博物馆数据源</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">200 万+</div>
+        <div class="stat-label">可参考灵感素材</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">5,000+</div>
+        <div class="stat-label">年跨度</div>
+      </div>
+    </div>
+
+    <!-- Hero Search Bar -->
+    <div class="hero-search">
+      <input type="text" id="searchInput" placeholder="搜索文物、艺术品、纹样… 支持中英文" />
+      <button class="hero-search-btn" onclick="performSearch()">🔍 搜索</button>
+    </div>
+
+    <!-- "猜你想搜" 快捷搜索词（关键词由 SUGGEST_POOL 池随机抽取，可点"换一批"刷新）-->
+    <div class="hero-suggest">
+      <span class="hs-label">猜你想搜：</span>
+      <span class="hs-words" id="heroSuggestWords"><!-- JS 动态填充 --></span>
+      <button class="hs-shuffle" onclick="shuffleSuggest()" title="换一批">
+        <span class="hs-shuffle-icon">🔄</span>
+        <span>换一批</span>
+      </button>
+    </div>
+
+
+    <!-- Category Pills 已下线（2026-05-13）：与 Hero 搜索框下的「猜你想搜」一行功能重复，简化首页。
+         CSS .category-bar / .category-pill 仍保留备用。 -->
+
+    <!-- ===== 精品展示区 ===== -->
+    <div class="curated-section" id="curatedSection">
+      <div class="curated-header">
+        <h2>精品合集</h2>
+      </div>
+      <div class="curated-search-bar">
+        <input type="text" id="curatedSearchInput" placeholder="输入脑海中的灵感关键词，生成属于你的精品合集" />
+        <button class="curated-search-btn" onclick="createCustomCollection()">生成合集</button>
+      </div>
+      <div class="collections-grid" id="collectionsGrid">
+        <!-- Rendered by JS -->
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===== Collection Detail View (合集内页) ===== -->
+<div class="container">
+  <div class="collection-detail-view" id="collectionDetailView">
+    <div class="collection-banner" id="collectionBanner"></div>
+    <div class="toolbar" id="collToolbar">
+      <div class="toolbar-left" id="collResultCount"></div>
+      <div class="toolbar-right">
+        <div class="view-toggle">
+          <button class="view-btn active" onclick="setView('grid',this)" title="网格">▦</button>
+          <button class="view-btn" onclick="setView('large',this)" title="大图">▣</button>
+        </div>
+      </div>
+    </div>
+    <div class="results-grid" id="collResultsGrid"></div>
+    <div class="loading-area" id="collLoading" style="display:none;">
+      <div class="loader"></div>
+      <div class="loading-text">正在加载合集内容…</div>
+    </div>
+    <div class="empty-state" id="collEmpty" style="display:none;">
+      <div class="empty-icon">🔍</div>
+      <h3>暂无内容</h3>
+      <p>该合集正在持续更新中</p>
+    </div>
+    <div class="pagination" id="collPagination"></div>
+  </div>
+</div>
+
+<!-- ===== Main (Search) ===== -->
+<div class="container">
+  <div class="results-search-bar" id="resultsSearchBar" style="display:none;">
+    <input type="text" id="searchInputResults" placeholder="搜索文物、艺术品、纹样… 支持中英文" />
+    <button class="results-search-btn" onclick="performSearchFromResults()">🔍 搜索</button>
+  </div>
+  <div class="toolbar" id="toolbar" style="display:none;">
+    <div class="toolbar-left" id="resultCount"></div>
+    <div class="toolbar-right">
+      <div class="view-toggle">
+        <button class="view-btn active" onclick="setView('grid',this)" title="网格">▦</button>
+        <button class="view-btn" onclick="setView('large',this)" title="大图">▣</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="content-layout" id="contentLayout" style="display:none;">
+    <!-- Sidebar -->
+    <aside class="filter-sidebar" id="filterSidebar">
+      <div class="filter-group">
+        <h3>资产门类 <span class="filter-hint">三维分类 · 维度①</span></h3>
+        <!-- category 维度（4 类互斥多选）：产品宪法 v1.1 三维分类的第一维
+             - 现阶段博物馆数据全部为 artifact（文物）
+             - creative_work / cultural_tourism / document 在接入对应数据源后命中数自动 > 0
+             详见 ../文化资产库_统一字段schema.md §2 -->
+        <div class="filter-option"><input type="checkbox" data-filter="category" value="artifact" onchange="applyFilters()"> 🏛️ 文物</div>
+        <div class="filter-option"><input type="checkbox" data-filter="category" value="creative_work" onchange="applyFilters()"> 🎨 文创</div>
+        <div class="filter-option"><input type="checkbox" data-filter="category" value="cultural_tourism" onchange="applyFilters()"> 🏞️ 文旅</div>
+        <div class="filter-option"><input type="checkbox" data-filter="category" value="document" onchange="applyFilters()"> 📜 文献</div>
+      </div>
+      <div class="filter-group">
+        <h3>资产形式 <span class="filter-hint">三维分类 · 维度②</span></h3>
+        <!-- 资产形式（多选）：现阶段只有 image 有数据；其他标记为"即将上线"，让用户看到产品形态规划
+             详见 ../文化资产库_产品信息架构设计.md 第二章 -->
+        <div class="filter-option"><input type="checkbox" data-filter="assetType" value="image" onchange="applyFilters()"> 🖼️ 图片</div>
+        <div class="filter-option"><input type="checkbox" data-filter="assetType" value="3d_model" onchange="applyFilters()"> 🧊 3D 模型</div>
+        <div class="filter-option"><input type="checkbox" data-filter="assetType" value="text" onchange="applyFilters()"> 📄 文本</div>
+        <div class="filter-option"><input type="checkbox" data-filter="assetType" value="audio_video" onchange="applyFilters()"> ▶️ 音视频</div>
+        <div class="filter-option"><input type="checkbox" data-filter="assetType" value="dataset" onchange="applyFilters()"> 📊 数据集</div>
+        <div class="filter-option"><input type="checkbox" data-filter="assetType" value="expert" onchange="applyFilters()"> 🧑‍🏫 专业人士</div>
+      </div>
+      <div class="filter-group">
+        <h3>文化主题 <span class="filter-hint">三维分类 · 维度③ · 多选</span></h3>
+        <!-- 文化主题（多选）：默认不勾选 = 不过滤；勾选即收窄 -->
+        <!-- 标签与定义详见 ../文化资产库_产品信息架构设计.md 第二章 -->
+        <div class="filter-option"><input type="checkbox" data-filter="theme" value="landmark" onchange="applyFilters()"> 地标建筑</div>
+        <div class="filter-option"><input type="checkbox" data-filter="theme" value="landscape" onchange="applyFilters()"> 风景地貌</div>
+        <div class="filter-option"><input type="checkbox" data-filter="theme" value="mythology_religion" onchange="applyFilters()"> 神话与信仰</div>
+        <div class="filter-option"><input type="checkbox" data-filter="theme" value="historical_figure" onchange="applyFilters()"> 历史/文学人物</div>
+        <div class="filter-option"><input type="checkbox" data-filter="theme" value="folk_custom" onchange="applyFilters()"> 民俗节庆</div>
+        <div class="filter-option"><input type="checkbox" data-filter="theme" value="regional_culture" onchange="applyFilters()"> 文化圈</div>
+        <div class="filter-option"><input type="checkbox" data-filter="theme" value="craft_heritage" onchange="applyFilters()"> 工艺与非遗</div>
+        <div class="filter-option"><input type="checkbox" data-filter="theme" value="expert_resource" onchange="applyFilters()"> 专家与口述</div>
+        <div class="filter-option">
+          <input type="checkbox" data-filter="theme" value="others" onchange="applyFilters()"> 其他
+          <span class="lic-hint">未特化</span>
+        </div>
+      </div>
+      <div class="filter-group">
+        <h3>数据来源</h3>
+        <div class="filter-option"><input type="checkbox" checked data-filter="source" value="met" onchange="applyFilters()"> 🇺🇸 The Met</div>
+        <div class="filter-option"><input type="checkbox" checked data-filter="source" value="aic" onchange="applyFilters()"> 🇺🇸 AIC Chicago</div>
+        <div class="filter-option"><input type="checkbox" checked data-filter="source" value="cma" onchange="applyFilters()"> 🇺🇸 Cleveland</div>
+        <div class="filter-option"><input type="checkbox" checked data-filter="source" value="mia" onchange="applyFilters()"> 🇺🇸 MIA Minneapolis</div>
+        <div class="filter-option"><input type="checkbox" checked data-filter="source" value="vam" onchange="applyFilters()"> 🇬🇧 V&A Museum</div>
+        <div class="filter-option"><input type="checkbox" checked data-filter="source" value="bm" onchange="applyFilters()"> 🇬🇧 大英博物馆</div>
+        <div class="filter-option"><input type="checkbox" checked data-filter="source" value="npm" onchange="applyFilters()"> 🇹🇼 台北故宫</div>
+        <div class="filter-option"><input type="checkbox" checked data-filter="source" value="doc" onchange="applyFilters()"> 📜 敦煌文献</div>
+      </div>
+      <div class="filter-group">
+        <h3>时期</h3>
+        <!-- value 格式：「起始年,结束年」（BCE 用负号）。匹配逻辑：区间重叠即命中。
+             详见 设计规则说明.md「时期匹配规则」章节 -->
+        <div class="filter-option"><input type="checkbox" onchange="applyFilters()" data-filter="period" value="-10000,-3000"> 新石器时代</div>
+        <div class="filter-option"><input type="checkbox" onchange="applyFilters()" data-filter="period" value="-3000,-500"> 上古 (前3000–前500)</div>
+        <div class="filter-option"><input type="checkbox" onchange="applyFilters()" data-filter="period" value="-500,500"> 古典 (前500–500)</div>
+        <div class="filter-option"><input type="checkbox" onchange="applyFilters()" data-filter="period" value="500,1400"> 中世纪 (500–1400)</div>
+        <div class="filter-option"><input type="checkbox" onchange="applyFilters()" data-filter="period" value="1400,1600"> 文艺复兴 (1400–1600)</div>
+        <div class="filter-option"><input type="checkbox" onchange="applyFilters()" data-filter="period" value="1600,1800"> 近世 (1600–1800)</div>
+        <div class="filter-option"><input type="checkbox" onchange="applyFilters()" data-filter="period" value="1800,2100"> 近现代 (1800–今)</div>
+        <div style="margin-top:8px;font-size:11px;color:var(--text-tertiary);">中国朝代</div>
+        <div class="filter-option"><input type="checkbox" onchange="applyFilters()" data-filter="period" value="-1600,-256"> 商周</div>
+        <div class="filter-option"><input type="checkbox" onchange="applyFilters()" data-filter="period" value="-206,220"> 汉代</div>
+        <div class="filter-option"><input type="checkbox" onchange="applyFilters()" data-filter="period" value="618,907"> 唐代</div>
+        <div class="filter-option"><input type="checkbox" onchange="applyFilters()" data-filter="period" value="960,1279"> 宋代</div>
+        <div class="filter-option"><input type="checkbox" onchange="applyFilters()" data-filter="period" value="1271,1368"> 元代</div>
+        <div class="filter-option"><input type="checkbox" onchange="applyFilters()" data-filter="period" value="1368,1644"> 明代</div>
+        <div class="filter-option"><input type="checkbox" onchange="applyFilters()" data-filter="period" value="1644,1912"> 清代</div>
+      </div>
+      <div class="filter-group">
+        <h3>文化地域</h3>
+        <div class="filter-option"><input type="checkbox" onchange="applyFilters()" data-filter="geo" value="China"> 中国</div>
+        <div class="filter-option"><input type="checkbox" onchange="applyFilters()" data-filter="geo" value="Japan"> 日本</div>
+        <div class="filter-option"><input type="checkbox" onchange="applyFilters()" data-filter="geo" value="Egypt"> 埃及</div>
+        <div class="filter-option"><input type="checkbox" onchange="applyFilters()" data-filter="geo" value="France"> 法国</div>
+        <div class="filter-option"><input type="checkbox" onchange="applyFilters()" data-filter="geo" value="Italy"> 意大利</div>
+        <div class="filter-option"><input type="checkbox" onchange="applyFilters()" data-filter="geo" value="Greece"> 希腊</div>
+        <div class="filter-option"><input type="checkbox" onchange="applyFilters()" data-filter="geo" value="Iran"> 伊朗</div>
+        <div class="filter-option"><input type="checkbox" onchange="applyFilters()" data-filter="geo" value="India"> 印度</div>
+      </div>
+      <div class="filter-group">
+        <h3>年代范围</h3>
+        <div class="date-range-row">
+          <input type="number" class="date-input" id="dateBegin" placeholder="起始" value="-3000">
+          <span>—</span>
+          <input type="number" class="date-input" id="dateEnd" placeholder="结束" value="2000">
+        </div>
+      </div>
+      <div class="filter-group">
+        <h3>授权</h3>
+        <!-- 三态授权筛选（与卡片右下角徽章颜色一一对应） -->
+        <div class="filter-option">
+          <input type="checkbox" data-filter="license" value="com" checked onchange="applyFilters()">
+          <span class="lic-dot" style="background:var(--success)"></span>
+          可商用 <span class="lic-hint">CC0 / CC BY</span>
+        </div>
+        <div class="filter-option">
+          <input type="checkbox" data-filter="license" value="copyright" checked onchange="applyFilters()">
+          <span class="lic-dot" style="background:#d97706"></span>
+          受版权保护
+        </div>
+        <div class="filter-option">
+          <input type="checkbox" data-filter="license" value="restricted" checked onchange="applyFilters()">
+          <span class="lic-dot" style="background:#9aa0a6"></span>
+          来源馆限制
+        </div>
+      </div>
+    </aside>
+
+    <!-- Results -->
+    <main class="main-content">
+      <div class="results-grid" id="resultsGrid"></div>
+      <div class="loading-area" id="loadingSpinner" style="display:none;">
+        <div class="loader"></div>
+        <div class="loading-text">正在从博物馆获取藏品数据…</div>
+      </div>
+      <div class="empty-state" id="emptyState" style="display:none;">
+        <div class="empty-icon">🔍</div>
+        <h3>未找到相关藏品</h3>
+        <p>换个关键词试试，或调整筛选条件</p>
+      </div>
+      <div class="pagination" id="pagination"></div>
+    </main>
+  </div>
+</div>
+
+<!-- ===== Detail Modal ===== -->
+<div class="modal-overlay" id="detailModal">
+  <div class="modal-box">
+    <div class="modal-top">
+      <h2 id="modalTitle">加载中…</h2>
+      <button class="modal-close-btn" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-grid">
+      <div class="modal-photo" id="modalImageArea">
+        <div class="loading-area"><div class="loader"></div></div>
+      </div>
+      <div class="modal-details" id="modalInfo">
+        <div class="loading-area"><div class="loader"></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== Footer ===== -->
+<footer class="footer">
+  <div class="container">
+    内容力专区 Demo · 数据来源：The Met · AIC · Cleveland · MIA · V&A · British Museum · 台北故宫 · 仅供内部评估使用
+  </div>
+</footer>
+
+<!-- ===== Inspiration Explorer (Subpage via link) ===== -->
+<!-- 直接链接到 inspiration-page，由 inspiration-page 自己处理返回按钮 -->
+
+<!-- ===== JavaScript: Multi-Source Adapter Architecture ===== -->
+<script>
+const state = {
+  query: '', source: 'all', currentPage: 1, pageSize: 40,
+  totalResults: 0, objectIDs: [], loadedItems: [], departments: [],
+  favorites: JSON.parse(localStorage.getItem('contentHub_favorites') || '[]'),
+  view: 'grid',
+  filters: {
+    licenseStatuses: ['com','copyright','restricted'],
+    hasImagesOnly: true,
+    geoLocations: [],
+    periods: [],
+    sources: ['met','aic','cma','mia','vam','bm','npm','doc'], // 左侧栏数据来源筛选（默认全选）
+    categories: [],                                        // 资产门类筛选（空数组 = 不过滤，三维分类维度①）
+    themes: [],                                            // 文化主题筛选（空数组 = 不过滤）
+    assetTypes: [],                                        // 资产形式筛选（空数组 = 不过滤）
+    departmentId: null,
+    dateBegin: -3000,
+    dateEnd: 2000
+  },
+  // Multi-source state
+  allSourceItems: [], // Merged results from all sources
+  sourceFilter: 'all' // Current source filter: 'all','met','aic','cma','vam','bm','npm'
+};
+
+// ===== Source Registry =====
+// license 字段是该数据源的"主要授权类型"，用于顶部展示与 footer 概览。
+// 三家美国馆（Met/AIC/CMA）实际是混合授权：
+//   - 公共领域作品 → CC0（卡片绿色徽章）
+//   - 仍在版权期作品 → Reference 仅供参考（卡片紫色徽章）
+// 卡片维度的精确许可证由 normXxx 中根据 isPublicDomain / share_license_status 字段动态判断。
+const SOURCES = {
+  met:  { name: 'The Met',         flag: '🇺🇸', license: 'CC0 + 版权混合', color: '#e44c32', active: true },
+  aic:  { name: 'AIC Chicago',     flag: '🇺🇸', license: 'CC0 + 版权混合', color: '#0075c9', active: true },
+  bm:   { name: 'British Museum',  flag: '🇬🇧', license: 'CC-BY-NC-SA',    color: '#002147', active: true },
+  npm:  { name: '台北故宫',         flag: '🇹🇼', license: 'CC BY 4.0',      color: '#8b0000', active: true },
+  vam:  { name: 'V&A Museum',      flag: '🇬🇧', license: '非商用',          color: '#2d5f2d', active: true },
+  cma:  { name: 'Cleveland',       flag: '🇺🇸', license: 'CC0 + 版权混合', color: '#1a1a1a', active: true },
+  mia:  { name: 'MIA Minneapolis', flag: '🇺🇸', license: 'CC0 + 版权混合', color: '#a52a2a', active: true },
+  doc:  { name: '敦煌文献',         flag: '📜', license: 'PD / CC-BY',     color: '#8b4513', active: true }
+};
+
+// License badge helpers
+//
+// 三态分类（先看版权，再看商用）：
+//   'com'        → 绿色 · 可商用（作品已进入公共领域 或 来源馆 CC BY 授权）
+//                  包含：CC0、CC BY 4.0
+//   'copyright'  → 黄色 · 受版权保护（作品本身仍在版权期，无法绕过；商用必须联系版权方）
+//                  包含：Met/AIC/CMA 的 Reference、MIA 的 Copyright/In Copyright
+//   'restricted' → 灰色 · 来源馆限制（作品多为公共领域但博物馆主张机构权利或状态未明，
+//                                     商用可联系来源馆付费授权）
+//                  包含：V&A Non-Commercial、BM CC-BY-NC-SA、MIA Public Domain (Not Evaluated)、
+//                        MIA Rights Not Evaluated 等
+//
+// 设计原则：
+//   - 外显（卡片徽章）三态，便于用户区分"未来路径"
+//   - 内部（license.type）保留 9 种细粒度值，详情弹窗精确说明
+//   - 灵感参考浏览：三类全可用；商用决策时按颜色判断
+//
+// 判定规则（统一函数）：
+function licenseStatusOf(license, source) {
+  if (!license) return 'restricted';
+  // 1) com=true 一律绿色
+  if (license.com === true) return 'com';
+  const t = license.type;
+  // 2) Met/AIC/CMA/MIA 中"作品本身受版权保护"的类型 → 黄色
+  if (t === 'Reference' || t === 'Copyright' || t === 'In Copyright') return 'copyright';
+  // 3) 其余非商用情况 → 灰色（V&A NC、BM NC-SA、MIA Not Evaluated 系列）
+  return 'restricted';
+}
+
+// 卡片徽章上的简短中文文案（与三态颜色一一对应）
+//
+// 重构（2026-05-15）：原实现按 license.type 字符串硬匹配（白名单），新增任何 PD/CC 变体
+// 都会落入"来源馆限制"兜底，造成卡片显示「来源馆限制」+ 详情页显示「Public Domain · 可商用」
+// 的错位（如敦煌文献 license.type='Public Domain' 时）。
+//
+// 改为：先复用 licenseStatusOf 推导三态（com/copyright/restricted），再根据三态 + 原始 type
+// 给出更精确的文案——保证 label 与卡片色块、详情卡片色块永远一致。
+function licenseBadgeLabel(type, source) {
+  // 注：旧调用点都只传 type；为兼容传 license 对象的新调用形式，做一次自适应
+  const lic = (typeof type === 'object' && type !== null) ? type : { type };
+  const status = licenseStatusOf(lic, source);
+  if (status === 'com') {
+    if (lic.type === 'CC0' || lic.type === 'Public Domain') return 'CC0 可商用';
+    if (lic.type === 'CC BY 4.0') return '署名可商用';
+    if (lic.type === 'CC BY-SA 4.0') return '署名相同共享';
+    return '可商用';
+  }
+  if (status === 'copyright') return '受版权保护';
+  return '来源馆限制';
+}
+
+// 详情弹窗版权卡片标题用：按原始 type 给出更精确的中文标签
+function licenseDetailLabel(type) {
+  if (type === 'CC0') return 'CC0 可商用';
+  if (type === 'CC BY 4.0') return '署名可商用';
+  if (type === 'Reference') return '受版权保护';
+  if (type === 'Copyright' || type === 'In Copyright') return '受版权保护';
+  if (type === 'Non-Commercial') return 'V&A 网站使用条款';
+  if (type === 'CC-BY-NC-SA') return 'CC-BY-NC-SA 4.0';
+  if (type === 'Public Domain (Not Evaluated)') return '未评估的公共领域';
+  if (type === 'Rights Not Evaluated') return '版权未评估';
+  return type;
+}
+
+// =====================================================================
+// =================== 文化主题词典 + 打标器（v2） ======================
+// =====================================================================
+// 设计原则：开放集合 + 词典驱动 + 兜底 + 观测
+// - 未命中任何特殊 theme 的资产挂 others 兜底（不报错、不丢数据）
+// - 词典与代码分离（数据结构集中在 THEME_DICT，增改 theme 只动数据）
+// - gaps 字段显式承认"当前未覆盖"，未来维护者看到可主动补充
+// - 详细规则见 设计规则说明.md 第三·A章
+//
+// 命中 theme 的方式：对 item 多字段拼接小写后，逐个 keyword 包含匹配
+//
+// 2026-05-13 下午 9 扩词典：基于本地 NPM 340 件扫描（青铜器/漆器/珐琅器/玉石器 为主）
+// + 全球文化常识细分，系统性扩充每个 theme 的中英文关键词。预期命中率 33% → 85%+
+const THEME_DICT = {
+  landmark: {
+    label: '地标建筑',
+    keywords: {
+      en: [
+        // 通用建筑
+        'architecture', 'building', 'monument', 'ruin', 'citadel', 'fortress',
+        'castle', 'tower', 'gate', 'bridge', 'wall',
+        // 宗教/纪念建筑
+        'temple', 'pagoda', 'shrine', 'stupa', 'monastery', 'cathedral',
+        'church', 'chapel', 'basilica', 'mosque', 'synagogue',
+        // 墓葬/纪念
+        'tomb', 'mausoleum', 'pyramid', 'obelisk', 'sarcophagus',
+        // 宫殿/居所
+        'palace', 'villa', 'manor', 'pavilion',
+        // 遗址/洞窟
+        'grotto', 'cave temple', 'rock-cut', 'archaeological site'
+      ],
+      zh: [
+        // 中国
+        '石窟', '寺', '塔', '宫殿', '陵', '墓', '遗址', '神庙', '祠', '庙',
+        '樓', '楼', '閣', '阁', '亭', '橋', '桥', '牌坊', '城墻', '城墙',
+        '宫', '殿', '府邸', '園林', '园林',
+        // 日本
+        '神社', '鳥居', '鸟居',
+        // 南亚
+        '佛塔', '窣堵坡'
+      ]
+    },
+    gaps: ['伊斯兰细分（伊玛目陵/萨法维）', '玛雅金字塔细分', '非洲土堡', '东南亚高棉建筑']
+  },
+
+  landscape: {
+    label: '风景地貌',
+    keywords: {
+      en: [
+        // 山水/风景绘画术语
+        'landscape', 'scenery', 'seascape', 'riverscape', 'vista', 'panorama',
+        // 地貌
+        'mountain', 'river', 'lake', 'waterfall', 'valley', 'forest',
+        'garden scene', 'countryside',
+        // 地图
+        'map', 'topographic', 'cartograph'
+      ],
+      zh: [
+        // 中国山水画术语
+        '山水', '江山', '溪山', '山图', '山居', '山景', '雲山', '云山',
+        '煙江', '烟江', '江景', '溪景', '湖景', '水景',
+        '風景', '风景', '地圖', '地图', '輿圖', '舆图',
+        // 日本
+        '富嶽', '富岳', '名所', '景色',
+        // 具体名山
+        '富士山', '泰山', '黃山', '黄山', '廬山', '庐山'
+      ]
+    },
+    gaps: ['花鸟图与山水的边界', '星图/天象图', '海洋生物主题海图']
+  },
+
+  mythology_religion: {
+    label: '神话与信仰',
+    keywords: {
+      en: [
+        // 佛教
+        'buddha', 'bodhisattva', 'buddhist', 'buddhism', 'guanyin', 'avalokiteshvara',
+        'amitabha', 'maitreya', 'arhat', 'lohan', 'sutra', 'mandala',
+        'thangka', 'pagoda', 'dharma', 'tara',
+        // 印度教
+        'hindu', 'hinduism', 'vishnu', 'shiva', 'krishna', 'ganesha',
+        'brahma', 'devi', 'nataraja', 'avatar',
+        // 基督教
+        'christ', 'christian', 'christianity', 'jesus', 'virgin mary', 'madonna',
+        'saint', 'angel', 'apostle', 'crucifix', 'cross ', 'passion',
+        'annunciation', 'nativity', 'resurrection', 'icon',
+        // 伊斯兰
+        'islamic', 'islam', 'muslim', 'quran', 'koran', 'calligraphy arabic',
+        // 犹太
+        'jewish', 'judaic', 'menorah', 'torah',
+        // 希腊罗马神话
+        'zeus', 'athena', 'apollo', 'venus', 'aphrodite', 'hera', 'hercules',
+        'dionysus', 'bacchus', 'mars', 'mercury', 'jupiter', 'medusa',
+        'centaur', 'satyr', 'nymph', 'muse',
+        // 埃及神话
+        'osiris', 'isis', 'horus', 'anubis', 'ra-horakhty', 'sphinx', 'scarab', 'ankh',
+        // 北欧/凯尔特神话
+        'thor', 'odin', 'valkyrie', 'rune', 'druid',
+        // 通用
+        'deity', 'god ', 'goddess', 'myth', 'mythology', 'sacred', 'ritual',
+        'ceremonial', 'votive', 'religious', 'devotional', 'prayer',
+        // 神兽（东西方通用符号）
+        'dragon', 'phoenix', 'qilin', 'kirin', 'griffin', 'chimera', 'unicorn'
+      ],
+      zh: [
+        // 佛教
+        '釋迦', '释迦', '觀音', '观音', '菩薩', '菩萨', '羅漢', '罗汉',
+        '佛', '佛像', '佛陀', '如來', '如来', '彌勒', '弥勒', '文殊', '普賢', '普贤',
+        '經卷', '经卷', '唐卡', '曼陀', '舍利', '袈裟', '蓮座', '莲座',
+        // 道教
+        '道教', '太上', '三清', '真人', '仙', '神仙', '八仙',
+        // 儒家/圣贤
+        '孔廟', '孔庙', '聖人', '圣人',
+        // 基督教
+        '十字架', '聖母', '圣母', '基督', '天使',
+        // 神话/神兽
+        '神像', '神話', '神话', '祭祀',
+        '龍紋', '龙纹', '龍', '龙', '鳳', '凤', '鳳凰', '凤凰', '麒麟',
+        '饕餮', '夔龍', '夔龙', '夔', '雲龍', '云龙', '蟠龍', '蟠龙',
+        '瑞獸', '瑞兽', '辟邪', '貔貅', '朱雀', '玄武', '青龍', '青龙', '白虎'
+      ]
+    },
+    gaps: ['道教细分神祇', '印度教细分化身', '萨满', '拜火教', '神道教细分']
+  },
+
+  historical_figure: {
+    label: '历史/文学人物',
+    keywords: {
+      en: [
+        // 中国
+        'confucius', 'laozi', 'lao tzu', 'mencius', 'zhuangzi', 'sun tzu',
+        'li bai', 'du fu', 'su shi', 'qu yuan',
+        // 日本
+        'genji', 'murasaki', 'basho',
+        // 埃及/近东
+        'pharaoh', 'tutankhamun', 'nefertiti', 'cleopatra', 'ramses', 'akhenaten',
+        'hammurabi',
+        // 希腊罗马
+        'alexander', 'caesar', 'augustus', 'nero', 'hadrian', 'cicero',
+        'aristotle', 'plato', 'socrates', 'homer',
+        // 欧洲/近代
+        'napoleon', 'louis xiv', 'charlemagne', 'richard', 'elizabeth',
+        'shakespeare', 'dante',
+        // 宗教/灵性人物
+        'buddha', 'lao-tzu',
+        // 肖像画通用
+        'portrait of'
+      ],
+      zh: [
+        // ⚠️ 中国帝王年号在博物馆上下文中 90%+ 是年号用法（"乾隆時"、"康熙款"、
+        // "雍正年製"），而非人物指代。故词典里**不包含裸年号**，避免误杀。
+        // 真要查帝王作为人物（如"乾隆御製"、"康熙帝肖像"）请用全文搜索。
+        // 保留那些不作为年号使用的武将文学形象：
+        '關羽', '关羽', '張飛', '张飞', '諸葛亮', '诸葛亮', '曹操',
+        // 中国文人/圣贤（皆为个人名字，无年号歧义）
+        '孔子', '老子', '孟子', '莊子', '庄子', '孫子', '孙子',
+        '李白', '杜甫', '蘇軾', '苏轼', '屈原', '王羲之', '陶淵明', '陶渊明',
+        // 文学形象
+        '寶玉', '宝玉', '黛玉', '西遊', '西游', '悟空', '紅樓', '红楼',
+        // 日本
+        '光源氏', '芭蕉'
+      ]
+    },
+    gaps: ['欧洲艺术史人物', '文学角色细化（红楼人物、西游人物）', '现代文化偶像']
+  },
+
+  folk_custom: {
+    label: '民俗节庆',
+    keywords: {
+      en: [
+        // 节日
+        'festival', 'new year', 'lunar new year', 'mid-autumn', 'lantern festival',
+        'dragon boat', 'carnival', 'mardi gras',
+        // 仪式
+        'wedding', 'funeral', 'rite of passage', 'ceremonial procession',
+        // 物件/活动
+        'lantern', 'firework', 'puppet', 'shadow play',
+        // 面具/戏剧
+        'mask', 'kabuki', 'noh', 'opera costume', 'theatrical',
+        // 民俗总称
+        'folk', 'folklore', 'folk art', 'folk custom'
+      ],
+      zh: [
+        // 节庆
+        '節慶', '节庆', '節日', '节日', '春節', '春节', '元宵', '中秋',
+        '端午', '清明', '重陽', '重阳', '廟會', '庙会',
+        // 仪式/风俗
+        '婚俗', '婚禮', '婚礼', '祭祀', '祭禮', '祭礼',
+        // 民俗物件
+        '龍舟', '龙舟', '燈籠', '灯笼', '皮影', '木偶', '年畫', '年画',
+        '剪紙', '剪纸', '面具',
+        // 戏剧
+        '戲曲', '戏曲', '京劇', '京剧', '儺戲', '傩戏', '儺', '傩',
+        '秦腔', '昆曲', '崑曲',
+        // 总称
+        '民俗', '風俗', '风俗', '民間', '民间'
+      ]
+    },
+    gaps: ['具体地域节庆（藏历新年/泼水节/那达慕）', '西方节庆（圣诞/复活节主题）']
+  },
+
+  regional_culture: {
+    label: '文化圈',
+    keywords: {
+      en: [
+        // 欧洲文化圈
+        'viking', 'norse', 'scandinavian', 'celtic', 'gaelic',
+        'gothic', 'romanesque', 'baroque', 'rococo', 'art nouveau', 'art deco',
+        // 美洲古文明
+        'maya', 'mayan', 'aztec', 'inca', 'olmec', 'zapotec', 'toltec',
+        'pre-columbian', 'mesoamerican',
+        // 中亚/南亚/丝路
+        'gandhara', 'sogdian', 'kushan', 'tibetan', 'bhutanese', 'nepali',
+        'silk road', 'silk-road', 'silk route', 'central asian',
+        // 东亚特色文化圈
+        'samurai', 'shogunate', 'bushido',
+        // 地中海/近东
+        'minoan', 'mycenaean', 'etruscan', 'phoenician', 'carthaginian',
+        'persian', 'achaemenid', 'sassanian', 'parthian',
+        'byzantine', 'ottoman', 'mamluk', 'seljuk', 'safavid', 'qajar',
+        'mughal', 'timurid',
+        // 非洲
+        'benin', 'ife', 'nok', 'yoruba', 'ashanti', 'ethiopian', 'coptic',
+        // 大洋洲/东南亚
+        'maori', 'polynesian', 'khmer', 'champa', 'javanese', 'balinese',
+        'srivijaya', 'majapahit',
+        // 美洲原住民（北美）
+        'native american', 'navajo', 'hopi', 'inuit'
+      ],
+      zh: [
+        // 中国特色文化圈（非国别）
+        '武士', '絲路', '丝路', '胡人', '胡風', '胡风',
+        '吐蕃', '藏傳', '藏传',
+        '楚文化', '巴蜀', '古蜀', '古越', '古羌',
+        '閩南', '闽南', '嶺南', '岭南', '敦煌', '西域',
+        // 日本审美
+        '和風', '和风', '和式',
+        // 中国古代民族
+        '匈奴', '契丹', '女真', '党項', '党项', '鮮卑', '鲜卑',
+        '粟特'
+      ]
+    },
+    gaps: ['更细致的伊斯兰文化圈（阿拉伯/波斯/突厥分支）',
+           '中国古蜀三星堆（已进但词典薄）',
+           '北美原住民（部分已进）',
+           '未接入非洲馆藏时 Benin/Yoruba 命中仍少']
+  },
+
+  craft_heritage: {
+    label: '工艺与非遗',
+    keywords: {
+      en: [
+        // 陶瓷
+        'porcelain', 'ceramic', 'stoneware', 'earthenware', 'pottery',
+        'celadon', 'blanc-de-chine', 'blue and white', 'famille',
+        // 金工/青铜
+        'bronze', 'bronze vessel', 'gold', 'silver', 'gilt', 'gilded',
+        'metalwork', 'repoussé', 'niello',
+        // 玉石/宝石
+        'jade', 'jadeite', 'nephrite', 'agate', 'turquoise', 'lapis lazuli',
+        'cinnabar', 'ivory', 'horn',
+        // 漆器/木工
+        'lacquer', 'lacquerware', 'wood carving', 'bamboo carving',
+        'inlay', 'mother-of-pearl',
+        // 珐琅
+        'cloisonne', 'cloisonné', 'enamel', 'champlevé', 'plique-à-jour',
+        // 织绣
+        'textile', 'silk', 'embroidery', 'brocade', 'tapestry', 'weaving',
+        'kesi', 'damask',
+        // 金银细工
+        'filigree', 'granulation',
+        // 玻璃
+        'glass', 'glassware',
+        // 书画/文房
+        'calligraphy', 'painting', 'ink painting', 'scroll', 'handscroll',
+        'hanging scroll', 'album', 'fan', 'seal',
+        'ink ', 'brush ', 'inkstone',
+        // 版画/印刷
+        'woodblock', 'woodcut', 'engraving', 'etching', 'print',
+        'ukiyo-e',
+        // 家具
+        'furniture', 'cabinet', 'chair'
+      ],
+      zh: [
+        // 陶瓷
+        '陶', '瓷', '陶瓷', '青瓷', '白瓷', '青花', '釉', '窯', '窑',
+        '汝窯', '汝窑', '官窯', '官窑', '哥窯', '哥窑', '定窯', '定窑',
+        '鈞窯', '钧窑', '龍泉', '龙泉', '景德鎮', '景德镇',
+        // 金属/青铜
+        '青銅', '青铜', '銅器', '铜器', '銅', '铜', '鐵器', '铁器',
+        '金器', '銀器', '银器', '金銀', '金银', '鎏金', '镏金', '鍍金', '镀金',
+        '鼎', '簋', '觚', '觶', '觯', '尊', '爵', '壺', '壶', '鈁', '钫',
+        // 玉石
+        '玉', '玉器', '玉石', '白玉', '翡翠', '瑪瑙', '玛瑙', '玉佩',
+        '璧', '琮', '璜', '珮', '珩',
+        // 漆器/木石
+        '漆', '漆器', '剔紅', '剔红', '雕漆', '蒔繪', '莳绘',
+        '象牙', '犀角', '牙雕', '竹刻', '竹雕', '木雕', '石雕',
+        '螺鈿', '螺钿',
+        // 珐琅
+        '琺瑯', '珐琅', '景泰藍', '景泰蓝', '掐絲', '掐丝',
+        // 织绣
+        '絲', '丝', '絲綢', '丝绸', '織錦', '织锦', '緙絲', '缂丝',
+        '刺繡', '刺绣', '蘇繡', '苏绣', '湘繡', '湘绣', '蜀錦', '蜀锦',
+        '雲錦', '云锦', '宋錦', '宋锦',
+        // 金银细工
+        '花絲', '花丝',
+        // 玻璃
+        '玻璃',
+        // 书画/文房
+        '書畫', '书画', '書法', '书法', '繪畫', '绘画', '水墨', '工筆', '工笔',
+        '卷軸', '卷轴', '手卷', '冊頁', '册页', '掛軸', '挂轴',
+        '扇面', '摺扇', '折扇',
+        '文房', '筆', '笔', '墨', '紙', '纸', '硯', '砚',
+        // 印章/玺印
+        '璽印', '玺印', '印章', '銅印', '铜印',
+        // 家具/器具
+        '紫檀', '黃花梨', '黄花梨', '家具',
+        // 杂项小件
+        '鼻煙壺', '鼻烟壶', '手鐲', '手镯', '珠寶', '珠宝',
+        // 牙骨角蚌皮小件
+        '骨器', '骨雕', '骨', '牙器', '牙雕', '貝', '贝', '蚌', '角', '扳指',
+        '錦', '锦'
+      ]
+    },
+    gaps: ['非洲金工/雕刻工艺', '南美原住民工艺', '伊斯兰细密画工艺',
+           '欧洲现代设计工艺']
+  },
+
+  expert_resource: {
+    label: '专家与口述',
+    keywords: {
+      // 现阶段博物馆静态藏品无对应；待接入传承人访谈/学术论文/口述史时启用
+      en: ['interview', 'oral history', 'documentary', 'testimony',
+           'lecture', 'research paper', 'dissertation'],
+      zh: ['訪談', '访谈', '口述', '傳承人', '传承人', '紀錄片', '纪录片',
+           '論文', '论文', '研究']
+    },
+    gaps: ['现阶段博物馆数据无覆盖；接入非遗传承人访谈 / 学术资源时启用']
+  }
+};
+
+// 打标器：纯遍历词典，代码稳定不随词典增改
+// 方案 C（2026-05-13）：移除默认 museum_collection 兜底（museum_collection 不再作为
+// 筛选 theme 出现）；改为 others 兜底——任何资产至少挂一个 theme，UI 加总更对齐总数
+function enrichThemes(item) {
+  const themes = [];
+  const hay = [
+    item.classification, item.title, item.desc, item.description,
+    item.culture, item.period, item.medium, item.dynasty
+  ].filter(Boolean).join(' ').toLowerCase();
+  for (const [theme, def] of Object.entries(THEME_DICT)) {
+    const allKw = [...(def.keywords.en || []), ...(def.keywords.zh || [])];
+    if (allKw.some(kw => kw && hay.includes(kw.toLowerCase()))) {
+      themes.push(theme);
+    }
+  }
+  // 没有命中任何特殊 theme → 挂 others 兜底（保证每件至少一个 theme）
+  if (themes.length === 0) themes.push('others');
+  return [...new Set(themes)];
+}
+
+// 文化主题筛选中 UI 的展示顺序（others 作为兜底放末尾）
+const THEME_ORDER = [
+  'landmark', 'landscape', 'mythology_religion', 'historical_figure',
+  'folk_custom', 'regional_culture', 'craft_heritage', 'expert_resource',
+  'others'
+];
+
+// =====================================================================
+// =================== 统一 Schema v1.1 注入器（产品宪法层） =============
+// =====================================================================
+// 所有数据源（博物馆 API / 本地 JSON / 未来视频/古籍/专家）的 norm 结果
+// 都会流经这里，被打上 v1.1 schema 必备的三个分类维度：
+//   - themes（词典打标，多选 + others 兜底）
+//   - assetType（image / 3d_model / text / audio_video / dataset / expert，单选）
+//   - category（artifact / creative_work / cultural_tourism / document，单选）
+//   - license.license_status（com / copyright / restricted 三态，单选）
+//
+// 所有现有博物馆素材在 v1.1 默认值：assetType=image, category=artifact。
+// 未来新数据源（视频/3D/古籍/专家）应在 norm 阶段就显式设置 assetType / category，
+// 此处仅做"未设值时"的兜底，不会覆盖 adapter 显式赋值。
+//
+// 配套文档：../文化资产库_统一字段schema.md（产品宪法 v1.1）
+function enrichSchemaV11(items) {
+  if (!items || !items.length) return items;
+  items.forEach(it => {
+    // 1) themes：词典自动打标 + 合并 adapter 预设值
+    //    - 词典打标永远跑（反映最新词典）
+    //    - 如果 adapter 已经手工标了（如 dunhuang-docs.json），取两者并集；
+    //      只有当词典打标只剩 'others' 兜底时，优先用 adapter 预设值
+    const dictThemes = enrichThemes(it);
+    const presetThemes = Array.isArray(it.themes) && it.themes.length > 0 ? it.themes : [];
+    if (presetThemes.length > 0) {
+      // 合并去重；如果词典只命中 others 而 adapter 有具体值，丢掉 others
+      const merged = [...new Set([...presetThemes, ...dictThemes])];
+      it.themes = merged.length > 1 ? merged.filter(t => t !== 'others') : merged;
+    } else {
+      it.themes = dictThemes;
+    }
+    // 2) assetType：兜底 image（adapter 已设则保留）
+    if (!it.assetType) it.assetType = 'image';
+    // 3) category：兜底 artifact（adapter 已设则保留）
+    if (!it.category)  it.category  = 'artifact';
+    // 4) license.license_status：把运行时三态固化到 schema 字段
+    if (it.license && !it.license.license_status) {
+      it.license.license_status = licenseStatusOf(it.license, it.source);
+    }
+  });
+  return items;
+}
+
+// =====================================================================
+// =================== 时期匹配：区间重叠 + 文本兜底 =====================
+// =====================================================================
+// 设计：每个时期 checkbox 的 value = "起始年,结束年"（BCE 用负号）
+// 匹配三级回退：
+//   ① 优先：item.dateRange.begin/end 与 checkbox 区间重叠
+//   ② 回退：从 dateDisplay 抽年份数字（识别 BCE/BC/公元前/前）
+//   ③ 文本兜底：匹配该时期对应的学术语词（如 "medieval" / "tang" / "唐"）
+//      用于既没有 dateRange 也没有年份数字、但 culture/period 字段有时代
+//      关键词的藏品（如 culture="Tang Dynasty"）
+// 
+// 详见 设计规则说明.md 第五章「时期匹配规则」
+
+const PERIOD_TEXT_KEYWORDS = {
+  // 世界通用时期
+  '-10000,-3000': ['neolithic', '新石器'],
+  '-3000,-500':   ['ancient', 'bronze age', 'iron age', 'dynastic egypt',
+                    'shang', 'zhou', 'warring states', 'spring and autumn'],
+  '-500,500':     ['classical', 'hellenistic', 'roman empire', 'roman period',
+                    'han dynasty', 'qin dynasty'],
+  '500,1400':     ['medieval', 'gothic', 'romanesque', 'byzantine',
+                    'tang dynasty', 'song dynasty', 'yuan dynasty',
+                    'heian', 'kamakura'],
+  '1400,1600':    ['renaissance', 'mannerism', 'ming dynasty', 'muromachi'],
+  '1600,1800':    ['baroque', 'rococo', 'enlightenment', 'qing dynasty',
+                    'edo period', 'colonial'],
+  '1800,2100':    ['modern', 'contemporary', '19th century', '20th century',
+                    '21st century', 'meiji', 'taisho', 'showa'],
+  // 中国朝代（与世界通用的同区间共存，文本词独立）
+  '-1600,-256':   ['shang', 'zhou', '商', '周', 'western zhou', 'eastern zhou',
+                    'warring states'],
+  '-206,220':     ['han dynasty', '汉', 'western han', 'eastern han'],
+  '618,907':      ['tang dynasty', '唐', 'tang'],
+  '960,1279':     ['song dynasty', '宋', 'northern song', 'southern song'],
+  '1271,1368':    ['yuan dynasty', '元', 'mongol'],
+  '1368,1644':    ['ming dynasty', '明'],
+  '1644,1912':    ['qing dynasty', '清', 'qing']
+};
+
+function extractYearFromText(s) {
+  if (!s) return null;
+  const str = String(s);
+  // 识别 BCE 标记（英文 BC/BCE、中文"公元前"/"前"开头）
+  const isBC = /\b(BCE|BC|B\.C\.)\b/i.test(str)
+            || /(公元前|^前|西元前)/.test(str);
+  // 抽 3-4 位数字（优先负号形式，如 -500）
+  const negMatch = str.match(/-\d{1,4}/);
+  const posMatch = str.match(/\d{1,4}/);
+  let y = null;
+  if (negMatch) y = parseInt(negMatch[0], 10);
+  else if (posMatch) y = parseInt(posMatch[0], 10);
+  if (y == null) return null;
+  if (isBC && y > 0) y = -y;
+  return y;
+}
+
+// 判断一个 item 是否命中某个 period 区间
+// periodValue 形如 "500,1400"
+function matchPeriod(item, periodValue) {
+  const [pStart, pEnd] = periodValue.split(',').map(Number);
+  if (isNaN(pStart) || isNaN(pEnd)) return false;
+
+  // ① 优先：item.dateRange 做区间重叠
+  const ib = item.dateRange?.begin, ie = item.dateRange?.end;
+  if (typeof ib === 'number' && typeof ie === 'number') {
+    // 区间重叠判定：两段有交集
+    return ie >= pStart && ib <= pEnd;
+  }
+
+  // ② 回退：从 dateDisplay / dateEn / period 抽单年份
+  const dateSrc = item.dateDisplay || item.dateEn || item.period || '';
+  const yr = extractYearFromText(dateSrc);
+  if (yr != null) {
+    return yr >= pStart && yr <= pEnd;
+  }
+
+  // ③ 文本兜底：匹配该区间的学术语词
+  const kws = PERIOD_TEXT_KEYWORDS[periodValue] || [];
+  if (!kws.length) return false;
+  const hay = `${item.period || ''} ${item.culture || ''} ${item.dynasty || ''} ${item.dateDisplay || ''} ${item.title || ''}`.toLowerCase();
+  return kws.some(k => hay.includes(k.toLowerCase()));
+}
+
+
+
+
+
+// 兼容旧调用：根据 type 字符串推断徽章 class（不严谨，仅作 fallback）
+function licenseBadgeClass(type) {
+  if (['CC0', 'CC BY 4.0'].includes(type)) return 'license-com';
+  if (['Reference', 'Copyright', 'In Copyright'].includes(type)) return 'license-copyright';
+  return 'license-restricted';
+}
+
+// 卡片徽章用的完整 CSS 类名（与 .badge-license-xxx 配对）
+// 接收 license 对象和 source（用于判定三态）
+function licenseBadgeFullClass(license, source) {
+  const status = licenseStatusOf(license, source);
+  return 'badge-license-' + status;
+}
+
+// =====================================================================
+// =================== ADAPTER: The Met ================================
+// =====================================================================
+const MET = 'https://collectionapi.metmuseum.org/public/collection/v1';
+
+async function metSearch(q, f = {}) {
+  const p = new URLSearchParams(); p.set('q', q);
+  if (f.hasImagesOnly) p.set('hasImages', 'true');
+  // Met 接口仅支持 isPublicDomain=true（PD-only）；当用户只勾"可商用"时下推该参数提升相关性，
+  // 其它组合都让 Met 返回全量结果，由客户端 filterItems 按三态过滤。
+  const lic = f.licenseStatuses || [];
+  if (lic.length === 1 && lic[0] === 'com') p.set('isPublicDomain', 'true');
+  if (f.departmentId) p.set('departmentId', f.departmentId);
+  if (f.geoLocations?.length) p.set('geoLocation', f.geoLocations.join('|'));
+  if (f.dateBegin != null && f.dateEnd != null) { p.set('dateBegin', f.dateBegin); p.set('dateEnd', f.dateEnd); }
+  const r = await fetch(`${MET}/search?${p}`); return r.json();
+}
+async function metObj(id) { return (await fetch(`${MET}/objects/${id}`)).json(); }
+async function metDepts() { try { const d = await (await fetch(`${MET}/departments`)).json(); return d.departments || []; } catch { return []; } }
+
+function normMet(o) {
+  const thumb = o.primaryImageSmall || o.primaryImage || '';
+  const full = o.primaryImage || o.primaryImageSmall || '';
+  return {
+    id: `met:${o.objectID}`, source: 'met', sourceName: 'The Met', sourceUrl: o.objectURL || '',
+    title: o.title || 'Untitled', desc: [o.objectName, o.medium].filter(Boolean).join(' · '),
+    img: { thumb, full, extra: o.additionalImages || [] },
+    culture: o.culture || '', period: o.period || '', dynasty: o.dynasty || '',
+    dateDisplay: o.objectDate || '',
+    dateRange: { begin: o.objectBeginDate || 0, end: o.objectEndDate || 0 },
+    medium: o.medium || '', classification: o.classification || '', department: o.department || '',
+    geo: { country: o.country || '', region: o.region || '', city: o.city || '' },
+    artist: { name: o.artistDisplayName || '', bio: o.artistDisplayBio || '' },
+    license: { type: o.isPublicDomain ? 'CC0' : 'Reference', pd: o.isPublicDomain || false, com: o.isPublicDomain || false },
+    tags: (o.tags || []).map(t => t.term), dimensions: o.dimensions || '',
+    accessionNumber: o.accessionNumber || '', raw: o
+  };
+}
+
+// Met adapter: search → return array of normalized items (paginated)
+async function metAdapterSearch(q, maxItems = 40) {
+  try {
+    const f = { ...state.filters, dateBegin: parseInt(document.getElementById('dateBegin')?.value) || -3000, dateEnd: parseInt(document.getElementById('dateEnd')?.value) || 2000 };
+    const res = await metSearch(q, f);
+    // Request more to compensate for relevance filtering
+    const ids = (res.objectIDs || []).slice(0, Math.min(maxItems * 3, 120));
+    const items = [];
+    const keywords = q.toLowerCase().split(/\s+/).filter(k => k.length > 2);
+    for (let i = 0; i < ids.length; i += 10) {
+      const batch = ids.slice(i, i + 10);
+      const results = await Promise.allSettled(batch.map(id => metObj(id)));
+      results.forEach(r => {
+        if (r.status === 'fulfilled' && r.value) {
+          const n = normMet(r.value);
+          if (!(n.img.thumb || n.img.full)) return;
+          // Client-side relevance: check if key fields match at least one keyword
+          const text = `${n.title} ${n.culture} ${n.classification} ${n.medium} ${n.period} ${n.department}`.toLowerCase();
+          const relevant = keywords.length === 0 || keywords.some(k => text.includes(k));
+          if (relevant) items.push(n);
+        }
+      });
+      if (items.length >= maxItems) break;
+    }
+    return items.slice(0, maxItems);
+  } catch (e) { console.error('[Met]', e); return []; }
+}
+
+// =====================================================================
+// =================== ADAPTER: AIC (Art Institute of Chicago) =========
+// =====================================================================
+const AIC_API = 'https://api.artic.edu/api/v1';
+const AIC_IIIF = 'https://www.artic.edu/iiif/2';
+
+function normAIC(o) {
+  const imgId = o.image_id;
+  const thumb = imgId ? `${AIC_IIIF}/${imgId}/full/400,/0/default.jpg` : '';
+  const full = imgId ? `${AIC_IIIF}/${imgId}/full/843,/0/default.jpg` : '';
+  return {
+    id: `aic:${o.id}`, source: 'aic', sourceName: 'AIC Chicago',
+    sourceUrl: `https://www.artic.edu/artworks/${o.id}`,
+    title: o.title || 'Untitled',
+    desc: [o.artwork_type_title, o.medium_display].filter(Boolean).join(' · '),
+    img: { thumb, full, extra: (o.alt_image_ids || []).map(aid => `${AIC_IIIF}/${aid}/full/400,/0/default.jpg`) },
+    culture: o.style_title || '', period: o.date_display || '', dynasty: '',
+    dateDisplay: o.date_display || '',
+    dateRange: { begin: o.date_start || 0, end: o.date_end || 0 },
+    medium: o.medium_display || '', classification: o.artwork_type_title || '',
+    department: o.department_title || '',
+    geo: { country: o.place_of_origin || '', region: '', city: '' },
+    artist: { name: o.artist_display || '', bio: '' },
+    license: { type: o.is_public_domain ? 'CC0' : 'Reference', pd: o.is_public_domain || false, com: o.is_public_domain || false },
+    tags: (o.term_titles || []), dimensions: o.dimensions || '',
+    accessionNumber: o.main_reference_number || '', raw: o
+  };
+}
+
+async function aicAdapterSearch(q, maxItems = 20) {
+  try {
+    // 不再强制 is_public_domain=true 过滤，让混合结果（CC0 + 仍在版权期作品）都进来；
+    // 由 normAIC 根据 is_public_domain 字段动态打三态 license 标签
+    const url = `${AIC_API}/artworks/search?q=${encodeURIComponent(q)}&fields=id,title,image_id,alt_image_ids,date_display,date_start,date_end,place_of_origin,artist_display,medium_display,dimensions,artwork_type_title,style_title,classification_title,department_title,is_public_domain,main_reference_number,term_titles&limit=${maxItems}`;
+    const res = await fetch(url).then(r => r.json());
+    return (res.data || []).map(normAIC).filter(item => item.img.thumb);
+  } catch (e) { console.error('[AIC]', e); return []; }
+}
+
+// =====================================================================
+// =================== ADAPTER: Cleveland Museum of Art ================
+// =====================================================================
+const CMA_API = 'https://openaccess-api.clevelandart.org/api/artworks/';
+
+function normCMA(o) {
+  const images = o.images || {};
+  const web = images.web || {};
+  const print = images.print || {};
+  // CMA 用 share_license_status 字段标识许可证（"CC0" / "Copyrighted"）
+  const isCC0 = o.share_license_status === 'CC0';
+  return {
+    id: `cma:${o.id}`, source: 'cma', sourceName: 'Cleveland',
+    sourceUrl: o.url || `https://www.clevelandart.org/art/${o.accession_number}`,
+    title: o.title || 'Untitled',
+    desc: [o.type, o.technique].filter(Boolean).join(' · '),
+    img: { thumb: web.url || '', full: print.url || web.url || '', extra: [] },
+    culture: o.culture?.[0] || '', period: o.creation_date || '', dynasty: '',
+    dateDisplay: o.creation_date || '',
+    dateRange: { begin: o.creation_date_earliest || 0, end: o.creation_date_latest || 0 },
+    medium: o.technique || '', classification: o.type || '', department: o.department || '',
+    geo: { country: o.culture?.[0] || '', region: '', city: '' },
+    artist: {
+      name: o.creators?.map(c => c.description).join(', ') || '',
+      bio: o.creators?.[0]?.biography || ''
+    },
+    license: { type: isCC0 ? 'CC0' : 'Reference', pd: isCC0, com: isCC0 },
+    tags: [], dimensions: o.dimensions?.framed || o.dimensions?.unframed || '',
+    accessionNumber: o.accession_number || '', raw: o
+  };
+}
+
+async function cmaAdapterSearch(q, maxItems = 20) {
+  try {
+    // 不再强制 cc0=1 过滤，让混合结果都进来；由 normCMA 根据 share_license_status 动态打 license 标签
+    const url = `${CMA_API}?q=${encodeURIComponent(q)}&has_image=1&limit=${maxItems}`;
+    const res = await fetch(url).then(r => r.json());
+    return (res.data || []).map(normCMA).filter(item => item.img.thumb);
+  } catch (e) { console.error('[CMA]', e); return []; }
+}
+
+// =====================================================================
+// =================== ADAPTER: V&A Museum =============================
+// =====================================================================
+const VAM_API = 'https://api.vam.ac.uk/v2';
+
+function normVAM(o) {
+  const meta = o._primaryImageId || '';
+  const imgBase = o._images?._iiif_image_base_url || '';
+  const thumb = imgBase ? `${imgBase}/full/400,/0/default.jpg` : '';
+  const full = imgBase ? `${imgBase}/full/843,/0/default.jpg` : '';
+  return {
+    id: `vam:${o.systemNumber}`, source: 'vam', sourceName: 'V&A Museum',
+    sourceUrl: `https://collections.vam.ac.uk/item/${o.systemNumber}`,
+    title: o._primaryTitle || 'Untitled',
+    desc: [o.objectType, o._primaryMaker?.name].filter(Boolean).join(' · '),
+    img: { thumb, full, extra: [] },
+    culture: o._primaryPlace || '', period: o._primaryDate || '', dynasty: '',
+    dateDisplay: o._primaryDate || '',
+    dateRange: { begin: 0, end: 0 },
+    medium: o.materialsAndTechniques || '', classification: o.objectType || '',
+    department: '',
+    geo: { country: o._primaryPlace || '', region: '', city: '' },
+    artist: { name: o._primaryMaker?.name || '', bio: '' },
+    // V&A API search 接口不返回任何授权字段（实测 records 仅含 systemNumber/_primaryTitle/_images 等，无 license/rights）。
+    // 依据 V&A 网站条款（https://www.vam.ac.uk/info/va-websites-terms-conditions Section 9）：
+    // 内容可用于非商业用途；商业使用必须通过 vandaimages.com 申请付费授权。
+    // 因此统一标 Non-Commercial，com=false。
+    license: { type: 'Non-Commercial', pd: false, com: false },
+    tags: [], dimensions: '',
+    accessionNumber: o.accessionNumber || '', raw: o
+  };
+}
+
+async function vamAdapterSearch(q, maxItems = 20) {
+  try {
+    const url = `${VAM_API}/objects/search?q=${encodeURIComponent(q)}&page_size=${maxItems}&images_exist=true&order_sort=relevance`;
+    const res = await fetch(url).then(r => r.json());
+    return (res.records || []).map(normVAM).filter(item => item.img.thumb);
+  } catch (e) { console.error('[V&A]', e); return []; }
+}
+
+// =====================================================================
+// =================== ADAPTER: MIA (Minneapolis Institute of Art) =====
+// =====================================================================
+// 2026-05 重要修复：
+//   ① 旧端点 ?q=xxx&size=N 已停用，新 API 是路径参数式 /{q}?size=N
+//   ② 旧图床 iiif.dx.artsmia.org 域名已下线（DNS 无 A 记录）
+//      新图床为 https://{0|1}.api.artsmia.org/{宽度}/{id}.jpg
+//      实测公网可访问，无 Cloudflare 拦截
+const MIA_API = 'https://search.artsmia.org';
+// MIA 图床允许的尺寸：400 / 800 / full（其它如 1200 会返回 403）
+const MIA_IMG_THUMB = 'https://0.api.artsmia.org/400';   // 缩略图 400px 宽
+const MIA_IMG_FULL  = 'https://1.api.artsmia.org/full';  // 高清原图（约 1500-3000px）
+
+function normMIA(o) {
+  const id = o.id;
+  const thumb = id ? `${MIA_IMG_THUMB}/${id}.jpg` : '';
+  const full  = id ? `${MIA_IMG_FULL}/${id}.jpg`  : '';
+  // 公共领域判定：仅当 rights_type 严格等于 "Public Domain" 时才视为 CC0
+  // "Public Domain (Not Evaluated)" 等推测但未确认的，不当 CC0，直传原值（保守标灰）
+  const isPD = o.rights_type === 'Public Domain';
+  // license.type：PD → CC0；其余直接用 rights_type 原值（如 "Public Domain (Not Evaluated)"、"Copyright"），未提供则 fallback 到 Reference
+  const licenseType = isPD ? 'CC0' : (o.rights_type || 'Reference');
+  return {
+    id: `mia:${id}`, source: 'mia', sourceName: 'MIA Minneapolis',
+    sourceUrl: `https://collections.artsmia.org/art/${id}`,
+    title: o.title || 'Untitled',
+    desc: [o.object_name, o.medium].filter(Boolean).join(' · '),
+    img: { thumb, full, extra: [] },
+    culture: o.culture || o.country || '', period: o.style || o.dated || '', dynasty: '',
+    dateDisplay: o.dated || '',
+    dateRange: { begin: 0, end: 0 },
+    medium: o.medium || '', classification: o.classification || o.object_name || '',
+    department: o.department || '',
+    geo: { country: o.country || '', region: o.region || '', city: '' },
+    artist: { name: o.artist || '', bio: '' },
+    license: { type: licenseType, pd: isPD, com: isPD },
+    tags: [], dimensions: o.dimension || '',
+    accessionNumber: o.accession_number || '', raw: o
+  };
+}
+
+async function miaAdapterSearch(q, maxItems = 100) {
+  try {
+    // 新 API 端点格式：/{query}?size=N（路径参数式，非 query string）
+    const url = `${MIA_API}/${encodeURIComponent(q)}?size=${maxItems}`;
+    const res = await fetch(url).then(r => r.json());
+    const hits = res?.hits?.hits || [];
+    return hits
+      .map(h => normMIA(h._source))
+      .filter(item => item.img.thumb && item.raw.image === 'valid');
+  } catch (e) { console.error('[MIA]', e); return []; }
+}
+
+// =====================================================================
+// =================== ADAPTER: British Museum (本地数据集) ==============
+// =====================================================================
+// 大英博物馆未提供公开 API（前 SPARQL 端点已下线，官网有 Cloudflare 反爬保护）。
+// 当前使用本地预构建数据集 bm-local.json：
+//   - 来源：第三方爬取的开放数据（hayeah/british-museum-dataset）
+//   - 抽样：约 2600 件（基础文化均衡 1800 + 埃及加权 500 + 敦煌丝路 100 + 中国神兽 200）
+//   - 图片：大英官方 CDN media.britishmuseum.org（无 Cloudflare 拦截，可加载）
+//   - 由 build-bm-local.js（在 _bm-explore/）生成
+// 授权：大英博物馆数据整体为 CC-BY-NC-SA 4.0，不可商用，仅供参考浏览。
+let BM_LOCAL = [];
+let BM_LOAD_PROMISE = null;
+
+function loadBMLocal() {
+  if (BM_LOAD_PROMISE) return BM_LOAD_PROMISE;
+  BM_LOAD_PROMISE = fetch('bm-local.json')
+    .then(r => r.ok ? r.json() : [])
+    .then(data => { BM_LOCAL = data || []; return BM_LOCAL; })
+    .catch(() => { BM_LOCAL = []; return BM_LOCAL; });
+  return BM_LOAD_PROMISE;
+}
+// 页面初始化即异步加载
+loadBMLocal();
+
+function normBM(o) {
+  const fullImg = o.imgFull || o.img;
+  return {
+    id: o.id, source: 'bm', sourceName: 'British Museum',
+    sourceUrl: `https://www.britishmuseum.org/collection`,
+    title: o.title, desc: o.desc || '',
+    img: { thumb: fullImg, full: fullImg, extra: [] },
+    culture: o.culture || '', period: o.period || '', dynasty: '',
+    dateDisplay: o.dateDisplay || '',
+    dateRange: { begin: 0, end: 0 },
+    medium: o.medium || '', classification: o.classification || '', department: '',
+    geo: { country: o.country || '', region: '', city: '' },
+    artist: { name: '', bio: '' },
+    license: { type: 'CC-BY-NC-SA', pd: false, com: false },
+    tags: [], dimensions: '',
+    accessionNumber: o.accessionNumber || '', raw: o
+  };
+}
+
+async function bmAdapterSearch(q, maxItems = 100) {
+  await loadBMLocal();
+  if (!BM_LOCAL.length) return [];
+  const ql = (q || '').toLowerCase().trim();
+  // 空查询：返回全量（或最多 maxItems）
+  if (!ql) return BM_LOCAL.slice(0, maxItems).map(normBM);
+  const keywords = ql.split(/\s+/).filter(k => k.length >= 2);
+  return BM_LOCAL
+    .filter(o => {
+      const text = `${o.title} ${o.culture} ${o.classification} ${o.medium} ${o.country} ${o.period} ${o.desc}`.toLowerCase();
+      return keywords.some(k => text.includes(k));
+    })
+    .slice(0, maxItems)
+    .map(normBM);
+}
+
+// =====================================================================
+// =================== ADAPTER: 敦煌文献（DOC - 本地 JSON） ==============
+// =====================================================================
+// 第一批"非图片素材"接入：8 篇敦煌相关公版文献（斯坦因 Serindia / Ruins、伯希和敦煌石窟、
+// 王重民敦煌曲子词集、IDP 国际敦煌项目、数字敦煌、敦煌变文、敦煌外国访客论文）。
+// 所有资源指向真实可访问的 archive.org / 维基文库 / 数字敦煌等公网链接。
+// 用于验证 v1.1 schema 在 asset_type='text' + category='document' 形态下的完整链路。
+// 详见 ../文化资产库_统一字段schema.md §2 + 实例 3。
+let DOC_LOCAL = [];
+let DOC_LOAD_PROMISE = null;
+
+function loadDocLocal() {
+  if (DOC_LOAD_PROMISE) return DOC_LOAD_PROMISE;
+  DOC_LOAD_PROMISE = fetch('dunhuang-docs.json')
+    .then(r => r.ok ? r.json() : [])
+    .then(arr => { DOC_LOCAL = Array.isArray(arr) ? arr : []; console.log('[DOC] 加载敦煌文献', DOC_LOCAL.length, '篇'); return DOC_LOCAL; })
+    .catch(e => { console.warn('[DOC] 敦煌文献加载失败：', e); DOC_LOCAL = []; return []; });
+  return DOC_LOAD_PROMISE;
+}
+// 页面初始化即异步加载
+loadDocLocal();
+
+// 把 dunhuang-docs.json 一条记录映射成统一 item（参照 normBM/normNPM 字段集）
+// 关键点：
+//   - assetType='text'、category='document'（在这里就显式打上，enrichSchemaV11 不会覆盖）
+//   - img.thumb/full 留空 → 卡片渲染层用 text-thumb 占位（📜 + 标题）
+//   - externalUrl → 详情弹窗"阅读全文"按钮
+function normDoc(o) {
+  return {
+    id: o.id, source: 'doc', sourceName: 'Archive.org · 敦煌文献',
+    sourceUrl: o.externalUrl || '',
+    title: o.title,
+    titleEn: o.titleEn || '',
+    desc: o.classification ? `${o.classification} · ${o.author || ''}` : (o.author || ''),
+    description: o.summary || '',
+    summary: o.summary || '',
+    img: { thumb: '', full: '', extra: [] },  // text 类型无图，渲染层兜底
+    culture: '', period: o.period || '', dynasty: '',
+    dateDisplay: o.dateDisplay || '',
+    dateRange: { begin: o.dateBegin || 0, end: o.dateEnd || 0 },
+    medium: o.medium || '', classification: o.classification || '', department: '',
+    geo: { country: o.country || '', region: o.region || '', city: o.city || '', locality: o.locality || '' },
+    artist: { name: o.author || '', bio: '' },
+    license: o.license || { type: 'Public Domain', com: true, pd: true },
+    tags: o.themes || [],
+    dimensions: '',
+    accessionNumber: '',
+    // ⭐ 三维分类显式打标（enrichSchemaV11 不会覆盖）
+    assetType: 'text',
+    category: 'document',
+    themes: o.themes || [],
+    // 文献专属：外部阅读链接 + 完整摘要 + 本地全文/目录 txt
+    externalUrl: o.externalUrl || '',
+    contentFile: o.contentFile || '',   // 本地 txt 文件路径（左侧阅读器内容来源）
+    contentMode: o.contentMode || '',   // 'full_text' | 'outline'（控制阅读器样式）
+    publishYear: o.publishYear || null,
+    raw: o
+  };
+}
+
+async function docAdapterSearch(q, maxItems = 100) {
+  await loadDocLocal();
+  if (!DOC_LOCAL.length) return [];
+  const ql = (q || '').toLowerCase().trim();
+  // 空查询：返回全量（仅 8 篇，全返回）
+  if (!ql) return DOC_LOCAL.slice(0, maxItems).map(normDoc);
+  const keywords = ql.split(/\s+/).filter(k => k.length >= 2);
+  return DOC_LOCAL
+    .filter(o => {
+      const text = `${o.title} ${o.titleEn || ''} ${o.author || ''} ${o.summary || ''} ${o.locality || ''} ${o.period || ''} ${(o.themes || []).join(' ')}`.toLowerCase();
+      return keywords.some(k => text.includes(k));
+    })
+    .slice(0, maxItems)
+    .map(normDoc);
+}
+
+// =====================================================================
+// =================== ADAPTER: 台北故宫 (NPM - 本地数据集) ==============
+// =====================================================================
+// 数据集：从「故宫资料3万余件」抽样 65 件，本地图片 + 完整中英文元数据。
+// 由 build-npm-local.js 生成 → npm-local.json + assets/npm/<id>.jpg。
+// 解决问题：原方案使用 wikimedia 远程图，被公司网络拦截。
+let NPM_LOCAL = [];
+let NPM_LOAD_PROMISE = null;
+
+function loadNPMLocal() {
+  if (NPM_LOAD_PROMISE) return NPM_LOAD_PROMISE;
+  NPM_LOAD_PROMISE = fetch('npm-local.json')
+    .then(r => r.ok ? r.json() : [])
+    .then(arr => { NPM_LOCAL = Array.isArray(arr) ? arr : []; console.log('[NPM] 加载本地数据集', NPM_LOCAL.length, '条'); return NPM_LOCAL; })
+    .catch(e => { console.warn('[NPM] 本地数据集加载失败：', e); NPM_LOCAL = []; return []; });
+  return NPM_LOAD_PROMISE;
+}
+// 页面初始化即异步加载
+loadNPMLocal();
+
+function normNPM(o) {
+  // 标题：中文 + 英文（若有英文）；若仅中文（含繁体）也直接展示
+  const title = o.titleEn ? `${o.titleZh} · ${o.titleEn}` : o.titleZh;
+  // 时代显示：中文朝代 + 西元年份说明（如 "商 · 西元前16-前11世紀"）
+  const dateDisplay = [o.dateZh, o.dateEn].filter(Boolean).join(' · ');
+  // 描述：把 类别/质材/尺寸/说明 拼成一段
+  const descParts = [];
+  if (o.medium) descParts.push(`【质材】${o.medium}`);
+  if (o.size) descParts.push(`【尺寸】${o.size}`);
+  if (o.desc) descParts.push(o.desc);
+  const desc = descParts.join(' ');
+
+  return {
+    id: o.id,
+    source: 'npm',
+    sourceName: '台北故宫',
+    sourceUrl: o.sourceUrl || 'https://www.npm.gov.tw/',
+    title,
+    desc,
+    img: { thumb: o.img, full: o.img, extra: [] },
+    culture: 'Chinese',
+    period: o.period || '',
+    dynasty: o.period || '',
+    dateDisplay,
+    dateRange: { begin: 0, end: 0 },
+    medium: o.medium || '',
+    classification: o.classification || 'Object',
+    department: '',
+    geo: { country: 'China', region: '', city: '' },
+    artist: { name: '', bio: '' },
+    // 台北故宫 OpenData 整体采用「政府资料开放授权 1.0」(OGDL-1.0)，等价于 CC BY 4.0：
+    // 可商用、可衍生，但必须署名来源。卡片层面统一标 CC BY 4.0（保守严格者）。
+    license: { type: 'CC BY 4.0', pd: false, com: true },
+    tags: o.tagZh ? [o.tagZh] : [],
+    dimensions: o.size || '',
+    accessionNumber: o.accession || '',
+    raw: o
+  };
+}
+
+async function npmAdapterSearch(q, maxItems = 100) {
+  await loadNPMLocal();
+  if (!NPM_LOCAL.length) return [];
+  const ql = (q || '').toLowerCase().trim();
+  // 空查询：返回全量（或最多 maxItems）
+  if (!ql) return NPM_LOCAL.slice(0, maxItems).map(normNPM);
+
+  const keywords = ql.split(/\s+/).filter(Boolean);
+  return NPM_LOCAL
+    .filter(o => {
+      // 把所有可搜文本拼起来（含中英文）
+      const text = [
+        o.titleZh, o.titleEn, o.dateZh, o.dateEn, o.period,
+        o.category, o.medium, o.func, o.desc, o.tagZh, o.classification
+      ].filter(Boolean).join(' ').toLowerCase();
+      return keywords.some(k => text.includes(k));
+    })
+    .slice(0, maxItems)
+    .map(normNPM);
+}
+
+// =====================================================================
+// =================== Chinese → English Keyword Mapping ===============
+// =====================================================================
+const ZH_EN_MAP = {
+  // 分类
+  '瓷器':'ceramics porcelain', '陶瓷':'ceramics porcelain', '陶器':'pottery',
+  '绘画':'painting', '油画':'oil painting', '水墨':'ink painting', '山水画':'landscape painting',
+  '雕塑':'sculpture', '雕刻':'carving', '浮雕':'relief',
+  '版画':'print woodblock', '书法':'calligraphy',
+  '青铜':'bronze', '青铜器':'bronze vessel', '金属':'metalwork',
+  '玉器':'jade', '玉':'jade', '翡翠':'jadeite',
+  '纺织':'textile', '丝绸':'silk', '刺绣':'embroidery', '挂毯':'tapestry',
+  '盔甲':'armor armour', '甲胄':'armor armour', '武器':'weapon arms', '刀剑':'sword',
+  '珠宝':'jewelry', '首饰':'jewelry ornament',
+  '家具':'furniture', '漆器':'lacquer lacquerware',
+  '面具':'mask', '木雕':'wood carving',
+  // 文化/地域
+  '中国':'Chinese China', '日本':'Japanese Japan', '韩国':'Korean Korea',
+  '埃及':'Egyptian Egypt', '希腊':'Greek Greece', '罗马':'Roman Rome',
+  '印度':'Indian India', '波斯':'Persian Iran', '伊斯兰':'Islamic',
+  '法国':'French France', '意大利':'Italian Italy', '英国':'British England',
+  '非洲':'African Africa', '美洲':'American Americas',
+  // 朝代/时期
+  '宋代':'Song dynasty', '宋朝':'Song dynasty', '唐代':'Tang dynasty', '唐朝':'Tang dynasty',
+  '明代':'Ming dynasty', '明朝':'Ming dynasty', '清代':'Qing dynasty', '清朝':'Qing dynasty',
+  '汉代':'Han dynasty', '汉朝':'Han dynasty', '元代':'Yuan dynasty', '元朝':'Yuan dynasty',
+  '商代':'Shang dynasty', '商朝':'Shang dynasty', '周代':'Zhou dynasty',
+  '战国':'Warring States', '春秋':'Spring Autumn',
+  '文艺复兴':'Renaissance', '中世纪':'Medieval', '巴洛克':'Baroque',
+  '古典':'Classical', '新石器':'Neolithic', '石器时代':'Stone Age',
+  // 材质
+  '大理石':'marble', '石灰石':'limestone', '花岗岩':'granite',
+  '象牙':'ivory', '琥珀':'amber', '玻璃':'glass',
+  '金':'gold', '银':'silver', '铜':'copper',
+  // 主题
+  '花卉':'floral flower', '动物':'animal', '龙':'dragon', '凤凰':'phoenix',
+  '佛':'Buddha Buddhist', '菩萨':'Bodhisattva', '神话':'mythology',
+  '肖像':'portrait', '风景':'landscape', '静物':'still life',
+  '纹样':'pattern ornament', '几何':'geometric', '花瓶':'vase',
+};
+
+function translateQuery(q) {
+  // Fast path: no Chinese characters → return as-is
+  if (!/[\u4e00-\u9fff]/.test(q)) return q;
+
+  let translated = q;
+  const parts = [];
+  let remaining = q;
+  // Try to match longer terms first (sort by key length descending)
+  const sortedKeys = Object.keys(ZH_EN_MAP).sort((a, b) => b.length - a.length);
+  for (const zh of sortedKeys) {
+    if (remaining.includes(zh)) {
+      parts.push(ZH_EN_MAP[zh]);
+      remaining = remaining.replace(zh, '');
+    }
+  }
+  if (parts.length > 0) {
+    translated = parts.join(' ') + (remaining.trim() ? ' ' + remaining.trim() : '');
+  }
+  return translated;
+}
+
+// Async translation via Google Translate free endpoint (fallback for unmapped terms)
+async function autoTranslate(q) {
+  // If no Chinese characters, return as-is
+  if (!/[\u4e00-\u9fff]/.test(q)) return q;
+
+  // First try local mapping (instant)
+  const localResult = translateQuery(q);
+  // If local mapping resolved all Chinese characters, use it
+  if (!/[\u4e00-\u9fff]/.test(localResult)) return localResult;
+
+  // Otherwise, call Google Translate free endpoint for remaining Chinese
+  try {
+    const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=zh-CN&tl=en&dt=t&q=${encodeURIComponent(q)}`;
+    const res = await fetch(url);
+    const data = await res.json();
+    // data[0] is array of [translated_segment, original_segment, ...]
+    const translated = data[0].map(seg => seg[0]).join('');
+    if (translated && translated !== q) {
+      // Combine: original Chinese (for local sources) + translated English (for API sources)
+      return translated;
+    }
+  } catch (e) {
+    console.warn('[Translate] Google Translate failed, using local mapping:', e.message);
+  }
+  return localResult;
+}
+
+// =====================================================================
+// =================== Unified Multi-Source Search =====================
+// =====================================================================
+async function multiSourceSearch(q, maxPerSource = 100) {
+  // Auto-translate Chinese keywords to English for API sources
+  const engQ = await autoTranslate(q);
+  const adapters = [];
+  const sf = state.sourceFilter;
+  // Each source returns up to 100 items (API hard limits or practical maximum)
+  if (sf === 'all' || sf === 'met') adapters.push(metAdapterSearch(engQ, 100));
+  if (sf === 'all' || sf === 'aic') adapters.push(aicAdapterSearch(engQ, 100));
+  if (sf === 'all' || sf === 'cma') adapters.push(cmaAdapterSearch(engQ, 100));
+  if (sf === 'all' || sf === 'vam') adapters.push(vamAdapterSearch(engQ, 100));
+  if (sf === 'all' || sf === 'mia') adapters.push(miaAdapterSearch(engQ, 100));
+  // Local sources: search with both original Chinese + translated English
+  const localQ = q + ' ' + engQ;
+  if (sf === 'all' || sf === 'bm')  adapters.push(bmAdapterSearch(localQ, 100));
+  if (sf === 'all' || sf === 'npm') adapters.push(npmAdapterSearch(localQ, 100));
+  if (sf === 'all' || sf === 'doc') adapters.push(docAdapterSearch(localQ, 100));
+
+  const results = await Promise.allSettled(adapters);
+  const merged = [];
+  results.forEach(r => { if (r.status === 'fulfilled') merged.push(...r.value); });
+
+  // Relevance-first interleave:
+  // Each source returns results in relevance order (index 0 = most relevant).
+  // We take rank 1 from all sources, then rank 2, etc.
+  // Sources with no more results are skipped — no padding, no bias.
+  if (sf === 'all' && merged.length > 0) {
+    const bySource = {};
+    merged.forEach(item => { (bySource[item.source] = bySource[item.source] || []).push(item); });
+    const sources = Object.keys(bySource);
+    const interleaved = [];
+    let rank = 0, done = false;
+    while (!done) {
+      done = true;
+      for (const s of sources) {
+        if (rank < bySource[s].length) {
+          interleaved.push(bySource[s][rank]);
+          done = false;
+        }
+      }
+      rank++;
+    }
+    return interleaved;
+  }
+  return merged;
+}
+
+// ===== Search (Multi-Source) =====
+async function performSearch(reset = true) {
+  // Sync values between Hero and Results search inputs
+  const heroInput = document.getElementById('searchInput');
+  const resultsInput = document.getElementById('searchInputResults');
+  const q = (heroInput.value || resultsInput?.value || '').trim();
+  if (!q) return;
+  if (heroInput) heroInput.value = q;
+  if (resultsInput) resultsInput.value = q;
+
+  if (reset) state.currentPage = 1;
+  state.query = q;
+  document.getElementById('heroSection').style.display = 'none';
+  document.getElementById('collectionDetailView').classList.remove('active');
+  document.getElementById('projectPage')?.classList.remove('active');
+  document.getElementById('resultsSearchBar').style.display = 'flex';
+  document.getElementById('toolbar').style.display = 'flex';
+  document.getElementById('contentLayout').style.display = 'flex';
+  showLoad(true); clearGrid();
+  try {
+    // Build enriched query: base query + period/geo keywords（period 走文本兜底关键词，
+    // 不直接拼区间字符串）
+    const periodKeywords = (state.filters.periods || [])
+      .flatMap(p => PERIOD_TEXT_KEYWORDS[p] || [])
+      .filter(k => /^[a-z\s\-]+$/i.test(k))   // API 只接英文/拉丁字母，过滤中文 fallback
+      .join(' ');
+    const geoKeywords = (state.filters.geoLocations || []).join(' ');
+    const enrichedQ = [q, periodKeywords, geoKeywords].filter(Boolean).join(' ');
+
+    const items = await multiSourceSearch(enrichedQ, 100);
+
+    // 统一 schema v1.1 注入（所有 7 馆素材流经此处）
+    // ─ themes：词典驱动打标（未命中挂 others 兜底）
+    // ─ assetType：博物馆古代藏品全部为 image；未来接入 3D/text/video/expert 时由 adapter 显式设
+    // ─ category：博物馆古代藏品全部归 'artifact'；未来 cultural_tourism / creative_work / document
+    //              由对应 adapter 在 norm 阶段显式覆盖
+    // ─ license.license_status：把运行时推导的三态（com/copyright/restricted）固化到字段，
+    //              避免每次渲染重复推导，且让 schema 一等公民显式化
+    enrichSchemaV11(items);
+
+    // Client-side filter to ensure results actually match the selected filters
+    const filtered = filterItems(items);
+
+    state.allSourceItems = items;
+    state.loadedItems = filtered;
+    state.totalResults = filtered.length;
+
+    // 顶部只保留"找到 X 件藏品"，各馆分布吸收到左侧「数据来源」筛选项命中数
+    document.getElementById('resultCount').innerHTML = `找到 <strong>${state.totalResults}</strong> 件藏品`;
+
+    // 刷新左侧筛选栏所有 checkbox 旁的命中数（B 方案：联动其他筛选后的数字）
+    updateFilterCounts();
+
+    if (!filtered.length) { showEmpty(true); showLoad(false); return; }
+    renderCards(filtered);
+    showLoad(false);
+  } catch (e) { console.error(e); showLoad(false); showEmpty(true); }
+}
+
+// Legacy alias for Met-only functions used by collections
+const norm = normMet;
+
+function renderCards(items) {
+  const g = document.getElementById('resultsGrid'); g.innerHTML = '';
+  items.forEach(item => {
+    const fav = state.favorites.includes(item.id);
+    const srcInfo = SOURCES[item.source] || {};
+    const licenseClass = licenseBadgeFullClass(item.license, item.source);
+    const imgSrc = item.img.thumb || item.img.full;
+    // 文献类资产（asset_type='text'）：用文字缩略图代替图片
+    const isTextAsset = item.assetType === 'text';
+    const thumbHtml = isTextAsset
+      ? `<div class="card-text-thumb">
+           <div class="doc-icon">📜</div>
+           <div>
+             <div class="doc-title">${esc(item.title)}</div>
+             ${item.artist?.name ? `<div class="doc-author">${esc(item.artist.name)}</div>` : ''}
+           </div>
+         </div>`
+      : (imgSrc
+          ? `<img class="card-img" src="${imgSrc}" alt="${esc(item.title)}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+             <div class="card-img-placeholder" style="display:none">🖼️</div>`
+          : '<div class="card-img-placeholder">🖼️</div>');
+    const c = document.createElement('div'); c.className = 'card';
+    c.onclick = () => openDetail(item);
+    c.innerHTML = `
+      <div class="card-img-wrap">
+        ${thumbHtml}
+        <div class="badge-source" style="background:${srcInfo.color || '#333'};color:#fff;">${srcInfo.flag || ''} ${srcInfo.name || item.source}</div>
+        <button class="card-heart ${fav ? 'active' : ''}" onclick="event.stopPropagation(); toggleFav('${item.id}',this)" style="top:auto;bottom:var(--sp-3);">
+          ${fav ? '❤️' : '♡'}
+        </button>
+      </div>
+      <div class="card-info">
+        <div class="card-info-top"><div class="card-title-text">${esc(item.title)}</div></div>
+        ${item.culture ? `<div class="card-culture">${esc(item.culture)}</div>` : ''}
+        ${item.dateDisplay ? `<div class="card-date">${esc(item.dateDisplay)}</div>` : ''}
+        <div class="card-tag-row">
+          <span class="badge-license ${licenseClass}" title="${esc(item.license.type)}">${esc(licenseBadgeLabel(item.license, item.source))}</span>
+          ${item.period ? `<span class="mini-tag">${esc(item.period)}</span>` : ''}
+        </div>
+      </div>`;
+    g.appendChild(c);
+  });
+}
+
+function renderPagination() {
+  // Multi-source: no server-side pagination, results already loaded
+  document.getElementById('pagination').innerHTML = '';
+}
+
+function goPage(p) {
+  // No-op in multi-source mode
+}
+
+var lastDetailItem = null;
+async function openDetail(item) {
+  lastDetailItem = item;
+  const m = document.getElementById('detailModal');
+  m.classList.add('active'); document.body.style.overflow = 'hidden';
+  document.getElementById('modalTitle').textContent = item.title;
+  const ia = document.getElementById('modalImageArea');
+  const src = item.img.full || item.img.thumb;
+  // 文献资产（asset_type='text'）：左侧改为本地 txt 阅读器（全文 or 目录大纲）
+  // 渲染流程：先放 loading 占位 → fetch txt → 渲染古典阅读器
+  if (item.assetType === 'text') {
+    const ext = item.externalUrl || item.sourceUrl || '';
+    const summary = item.summary || item.description || '';
+    const ctaLabel = item.contentMode === 'full_text'
+      ? '🔗 完整原文 · 跳转出处'
+      : '📖 阅读完整原文';
+    // 先放占位（loading + 标题 + 摘要兜底）
+    const placeholder = `
+      <div class="doc-reader mode-${esc(item.contentMode || 'outline')}">
+        <div class="doc-reader-header">
+          <div class="doc-reader-icon">📜</div>
+          <div class="doc-reader-title">${esc(item.title)}</div>
+          ${item.artist?.name ? `<div class="doc-reader-meta">${esc(item.artist.name)}${item.publishYear ? ` · ${item.publishYear} 年` : ''}</div>` : ''}
+        </div>
+        <div class="doc-reader-body" id="docReaderBody">${esc(summary)}\n\n（加载文献内容中…）</div>
+        ${ext ? `<div class="doc-reader-footer">
+          <div class="doc-reader-source-tip">本电子文本采自原始出处，仅供检索与初判使用</div>
+          <a class="doc-reader-cta" href="${ext}" target="_blank" rel="noopener">${ctaLabel} ↗</a>
+        </div>` : ''}
+      </div>`;
+    ia.innerHTML = placeholder;
+    // 异步拉本地 txt
+    if (item.contentFile) {
+      fetch(item.contentFile)
+        .then(r => r.ok ? r.text() : Promise.reject(new Error('HTTP ' + r.status)))
+        .then(text => {
+          const body = document.getElementById('docReaderBody');
+          if (body) body.textContent = text;  // textContent 保留 \n 换行，由 CSS pre-wrap 渲染
+        })
+        .catch(err => {
+          console.warn('[DOC] 文献本地内容加载失败：', item.contentFile, err);
+          const body = document.getElementById('docReaderBody');
+          if (body) body.textContent = summary + '\n\n（注：完整内容请通过"跳转出处"按钮访问。）';
+        });
+    }
+  } else {
+    ia.innerHTML = src ? `<img src="${src}" alt="${esc(item.title)}" onclick="window.open('${src}','_blank')">` : '<div class="card-img-placeholder" style="font-size:72px">🖼️</div>';
+  }
+  const info = document.getElementById('modalInfo');
+  const fav = state.favorites.includes(item.id);
+  const srcInfo = SOURCES[item.source] || {};
+  // 详情卡片版权区：三态配色（绿/黄/灰）+ 严格按官方原文的细分说明
+  const licType = item.license.type;
+  const licStatus = licenseStatusOf(item.license, item.source);  // 'com' | 'copyright' | 'restricted'
+  const licCardClass = licStatus;  // 与 .license-card.com / .copyright / .restricted 对应
+  const licColor =
+    licStatus === 'com' ? 'var(--success)' :
+    licStatus === 'copyright' ? '#d97706' : '#9aa0a6';
+
+  // 灵感参考使用建议（弱化展示，放在馆方原文说明下方）
+  // 三态对应不同建议文案，让用户在看完官方说法后获得"路径感知"
+  const usageTipMap = {
+    com:        '可放心用于商业项目，也可作为内部灵感参考与浏览。',
+    copyright:  '可作为内部灵感参考与浏览。',
+    restricted: '可作为内部灵感参考与浏览。',
+  };
+  const usageTip = usageTipMap[licStatus] || usageTipMap.restricted;
+
+  // 详细版权说明（细粒度，按 license.type 对应官方条款）
+  const licNoteMap = {
+    // ===== 可商用 =====
+    'CC0':
+      '公共领域贡献（CC0 1.0 Universal Public Domain Dedication）。' +
+      '可自由复制、修改、分发、表演，包括商业用途，无需获得许可，无需署名。' +
+      '<br><a href="https://creativecommons.org/publicdomain/zero/1.0/deed.zh" target="_blank" rel="noopener">查看 CC0 条款原文</a>',
+    'CC BY 4.0':
+      (item.source === 'npm'
+        ? '台北故宫 OpenData 采用「政府资料开放授权 1.0」(OGDL-1.0)，等价于 CC BY 4.0。' +
+          '可自由使用、修改、再传播，包括商业用途；必须保留来源说明（建议标注：来源 国立故宫博物院）。'
+        : '知识共享 署名 4.0 国际许可（CC BY 4.0）。' +
+          '可自由复制、修改、分发，包括商业用途；必须署名原作者及来源、提供许可证链接、说明是否做了修改。') +
+      '<br><a href="https://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="noopener">查看 CC BY 4.0 条款原文</a>',
+
+    // ===== 受版权保护（黄色：作品本身在版权期）=====
+    'Reference':
+      '该作品仍在版权保护期内（如现当代艺术家作品、版权图像授权使用等）。' +
+      '来源馆开放其元数据用于学术研究、教育与个人欣赏。' +
+      '<br>商业使用、再分发、衍生创作需联系<b>版权方</b>单独申请授权。',
+    'Copyright':
+      '受版权保护（来源馆字段：Copyright）。' +
+      '商业使用、复制、分发、改编需联系版权方授权。',
+    'In Copyright':
+      '受版权保护（来源馆字段：In Copyright）。' +
+      '商业使用、复制、分发、改编需联系版权方授权。',
+
+    // ===== 来源馆限制（灰色：作品可能 PD 但馆方限制）=====
+    'Non-Commercial':
+      'V&A 网站使用条款（参见 ' +
+      '<a href="https://www.vam.ac.uk/info/va-websites-terms-conditions" target="_blank" rel="noopener">vam.ac.uk Section 9</a>）：' +
+      '内容可用于非商业目的（个人、学术、研究、教育）。' +
+      '<br>商业使用必须通过 <a href="https://www.vandaimages.com/" target="_blank" rel="noopener">vandaimages.com</a> 申请付费授权。',
+    'CC-BY-NC-SA':
+      '知识共享 署名-非商业性使用-相同方式共享 4.0 国际许可（CC BY-NC-SA 4.0）。' +
+      '可分享、改编，但仅限非商业用途；必须署名；衍生作品须以相同许可发布。' +
+      '<br><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" rel="noopener">查看 CC BY-NC-SA 4.0 条款原文</a>',
+    'Public Domain (Not Evaluated)':
+      '来源馆字段：Public Domain (Not Evaluated)。' +
+      '该作品推测属于公共领域但尚未经版权专员正式确认，' +
+      '版权未评估，建议联系来源馆确认后再做商业使用。',
+    'Rights Not Evaluated':
+      '来源馆字段：Rights Not Evaluated。' +
+      '该作品的版权状态尚未评估。建议联系来源馆确认后再做商业使用。',
+  };
+  const licNote = licNoteMap[licType] ||
+    (item.license.com
+      ? '可商用'
+      : '版权未评估 · 来源馆原始版权字段：' + esc(licType) + '。建议联系来源馆确认。');
+
+  // ===== 三维分类展示数据准备 =====
+  const catDef = CATEGORY_LABEL[item.category] || null;
+  const atDef  = ASSET_TYPE_LABEL[item.assetType] || null;
+  const themesArr = (item.themes || []).filter(t => t !== 'others');  // others 不在详情区显示
+  // 「文物号 / ID」字段标题随 category 变化（文献叫"标识号"更合适）
+  const idLabel = item.category === 'document' ? '标识号'
+                : item.category === 'cultural_tourism' ? '编号'
+                : '文物号';
+  // 「作者/艺术家」分组标题：博物馆→艺术家，文献→作者/编者
+  const peopleLabel = item.category === 'document' ? '作者 / 编者'
+                    : item.category === 'creative_work' ? '创作者'
+                    : '艺术家';
+  // 「时间」字段：合并 dateDisplay + dateRange，去重
+  const timeText = item.dateDisplay ||
+    (item.dateRange?.begin && item.dateRange?.end
+      ? `${item.dateRange.begin}–${item.dateRange.end}`
+      : '');
+
+  info.innerHTML = `
+    <div class="detail-section">
+      <h4>数据来源</h4>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px;">
+        <span style="font-size:24px;">${srcInfo.flag || '🏛️'}</span>
+        <span style="font-size:16px;font-weight:700;">${srcInfo.name || item.source}</span>
+      </div>
+    </div>
+    ${drGroup('三维分类',
+      (catDef ? `<div class="detail-row"><span class="dl">门类</span><span class="dv">${catDef.icon} ${catDef.label}</span></div>` : '') +
+      (atDef  ? `<div class="detail-row"><span class="dl">资产形式</span><span class="dv">${atDef.icon} ${atDef.label}</span></div>` : '') +
+      (themesArr.length
+        ? `<div class="detail-row"><span class="dl">文化主题</span><span class="dv"><div class="detail-tags" style="margin:0;">${themesArr.map(t => `<span class="mini-tag">${esc(THEME_LABEL[t] || t)}</span>`).join('')}</div></span></div>`
+        : '')
+    )}
+    <div class="detail-section">
+      <h4>版权信息</h4>
+      <div class="license-card ${licCardClass}">
+        <div class="license-type" style="color:${licColor}">${licenseDetailLabel(licType)}（${esc(licType)}）</div>
+        <div class="license-note">${licNote}</div>
+        <div class="usage-tip">
+          <span class="ut-icon">💡</span>
+          <span>${usageTip}</span>
+        </div>
+      </div>
+    </div>
+    ${drGroup('基本信息',
+      dr('标题', item.title) +
+      dr('时间', timeText) +
+      dr('时期', item.period) +
+      dr('文化', item.culture) +
+      dr('分类', item.classification) +
+      dr('材质 / 体裁', item.medium) +
+      dr('尺寸 / 篇幅', item.dimensions) +
+      dr('部门', item.department) +
+      dr(idLabel, item.accessionNumber)
+    )}
+    ${drGroup(peopleLabel,
+      dr('姓名', item.artist?.name) +
+      dr('简介', item.artist?.bio)
+    )}
+    ${drGroup('地理信息',
+      dr('国家', item.geo?.country) +
+      dr('地区', item.geo?.region) +
+      dr('城市', item.geo?.city) +
+      dr('地点', item.geo?.locality)
+    )}
+    ${item.img.extra?.length ? `<div class="detail-section"><h4>更多图片 (${item.img.extra.length})</h4><div class="detail-thumbs">${item.img.extra.slice(0,6).map(u=>`<img src="${u}" onclick="document.querySelector('.modal-photo img').src='${u}'">`).join('')}</div></div>` : ''}
+    <div class="action-row">
+      ${item.assetType === 'text'
+        ? (item.externalUrl ? `<a class="btn-primary" href="${item.externalUrl}" target="_blank" onclick="event.stopPropagation()">🔗 跳转原始出处</a>` : '')
+        : (src ? `<a class="btn-primary" href="${src}" target="_blank" onclick="event.stopPropagation()">⬇ 下载原图</a>` : '')}
+      <button class="btn-outline" onclick="toggleFav('${item.id}');this.textContent=state.favorites.includes('${item.id}')?'❤️ 已收藏':'♡ 收藏'">
+        ${fav ? '❤️ 已收藏' : '♡ 收藏'}
+      </button>
+    </div>
+    ${item.assetType === 'text'
+      ? ''
+      : `<button class="btn-primary" style="width:100%;margin-top:var(--sp-3);background:linear-gradient(135deg,#6c5ce7,#a29bfe);" onclick="closeModal();openAIGenerate(lastDetailItem)">✨ 以此为参考 · AI 生成</button>`}
+    ${item.sourceUrl ? `<a class="btn-link" href="${item.sourceUrl}" target="_blank">在 ${srcInfo.name || '博物馆'} 官网查看 →</a>` : ''}
+  `;
+}
+function closeModal() { document.getElementById('detailModal').classList.remove('active'); document.body.style.overflow = ''; }
+document.getElementById('detailModal').addEventListener('click', function(e) { if (e.target === this) closeModal(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+function toggleFav(id, btn) {
+  const i = state.favorites.indexOf(id);
+  i >= 0 ? state.favorites.splice(i, 1) : state.favorites.push(id);
+  localStorage.setItem('contentHub_favorites', JSON.stringify(state.favorites));
+  if (btn) { const f = state.favorites.includes(id); btn.className = `card-heart ${f?'active':''}`; btn.textContent = f ? '❤️' : '♡'; }
+}
+function applyFilters() {
+  state.filters.geoLocations = Array.from(document.querySelectorAll('[data-filter="geo"]:checked')).map(c => c.value);
+  state.filters.periods = Array.from(document.querySelectorAll('[data-filter="period"]:checked')).map(c => c.value);
+  state.filters.licenseStatuses = Array.from(document.querySelectorAll('[data-filter="license"]:checked')).map(c => c.value);
+  state.filters.sources = Array.from(document.querySelectorAll('[data-filter="source"]:checked')).map(c => c.value);
+  state.filters.categories = Array.from(document.querySelectorAll('[data-filter="category"]:checked')).map(c => c.value);
+  state.filters.themes = Array.from(document.querySelectorAll('[data-filter="theme"]:checked')).map(c => c.value);
+  state.filters.assetTypes = Array.from(document.querySelectorAll('[data-filter="assetType"]:checked')).map(c => c.value);
+  // 'hasImagesOnly' 已不再有 UI 勾选项（被"资产形式=图片"替代）；保留 state 默认值 true
+  // 以便 Met API 调用时仍下推 hasImages=true，提升结果质量
+  // 如果已有搜索结果：只做客户端重新筛选 + 重绘；不再重跑 API（性能 & 体验更顺）
+  if (state.allSourceItems && state.allSourceItems.length) {
+    rerenderFromCache();
+  } else if (state.query) {
+    performSearch(true);
+  }
+}
+
+// 基于 state.allSourceItems（不重跑 API）按当前 filters 重新过滤 + 渲染 + 更新命中数
+function rerenderFromCache() {
+  const filtered = filterItems(state.allSourceItems);
+  state.loadedItems = filtered;
+  state.totalResults = filtered.length;
+  document.getElementById('resultCount').innerHTML = `找到 <strong>${state.totalResults}</strong> 件藏品`;
+  updateFilterCounts();
+  if (!filtered.length) { showEmpty(true); document.getElementById('resultsGrid').innerHTML = ''; return; }
+  showEmpty(false);
+  renderCards(filtered);
+}
+
+// Client-side filter: source + category + assetType + period + geo + license + theme
+// skipDim 参数：计算命中数时排除"自身维度"，用于 B 方案联动命中数
+function filterItems(items, skipDim = null) {
+  const periods = state.filters.periods || [];
+  const geos = state.filters.geoLocations || [];
+  const sources = state.filters.sources || [];
+  const categories = state.filters.categories || [];
+  const themes = state.filters.themes || [];
+  const assetTypes = state.filters.assetTypes || [];
+  const licStatuses = state.filters.licenseStatuses || [];
+  const useLicFilter = licStatuses.length > 0 && licStatuses.length < 3;
+
+  return items.filter(item => {
+    // Source filter（左侧栏"数据来源"勾选）
+    if (skipDim !== 'source' && sources.length > 0 && sources.length < 8) {
+      if (!sources.includes(item.source)) return false;
+    }
+    // Category filter（资产门类，三维分类维度①）
+    if (skipDim !== 'category' && categories.length > 0) {
+      const c = item.category || 'artifact';
+      if (!categories.includes(c)) return false;
+    }
+    // Asset type filter（资产形式）
+    if (skipDim !== 'assetType' && assetTypes.length > 0) {
+      const it = item.assetType || 'image';
+      if (!assetTypes.includes(it)) return false;
+    }
+    // Period filter（区间重叠匹配，详见 matchPeriod 注释）
+    if (skipDim !== 'period' && periods.length > 0) {
+      const matchesPeriod = periods.some(p => matchPeriod(item, p));
+      if (!matchesPeriod) return false;
+    }
+    // Geo filter
+    if (skipDim !== 'geo' && geos.length > 0) {
+      const itemGeo = `${item.geo?.country || ''} ${item.culture || ''}`.toLowerCase();
+      const matchesGeo = geos.some(g => itemGeo.includes(g.toLowerCase()));
+      if (!matchesGeo) return false;
+    }
+    // License 三态过滤
+    if (skipDim !== 'license' && useLicFilter) {
+      const status = licenseStatusOf(item.license, item.source);
+      if (!licStatuses.includes(status)) return false;
+    }
+    // Theme 过滤（themes 为空 = 不过滤；非空 = 必须命中至少一个已勾选 theme）
+    if (skipDim !== 'theme' && themes.length > 0) {
+      const itemThemes = item.themes || ['museum_collection'];
+      if (!themes.some(t => itemThemes.includes(t))) return false;
+    }
+    return true;
+  });
+}
+function switchSource(s, btn) { state.sourceFilter = s; document.querySelectorAll('.nav-tab[data-source]').forEach(t => t.classList.remove('active')); btn.classList.add('active'); if (state.query) performSearch(true); }
+function quickSearch(q) { document.getElementById('searchInput').value = q; performSearch(true); }
+
+// =====================================================================
+// ============ 筛选项命中数（B 方案：联动其他维度）=====================
+// =====================================================================
+// 原则：每个 checkbox 旁的数字 = 在"当前其他维度筛选都应用"前提下，
+//       如果勾选/独占该选项，还能返回多少条结果
+// 实现：对每一维度，基于 allSourceItems 用 filterItems(items, skipDim=该维度)
+//       先得到"除此维度外都过滤过"的候选集，再针对每个选项做单项匹配计数
+
+function updateFilterCounts() {
+  const all = state.allSourceItems || [];
+  if (!all.length) return;
+
+  // --- 数据来源（source） ---
+  const srcPool = filterItems(all, 'source');
+  const srcCounts = {};
+  srcPool.forEach(i => { srcCounts[i.source] = (srcCounts[i.source] || 0) + 1; });
+  document.querySelectorAll('[data-filter="source"]').forEach(cb => {
+    _setCount(cb, srcCounts[cb.value] || 0);
+  });
+
+  // --- 资产门类（category，三维分类维度①） ---
+  const catPool = filterItems(all, 'category');
+  const catCounts = {};
+  catPool.forEach(i => {
+    const c = i.category || 'artifact';
+    catCounts[c] = (catCounts[c] || 0) + 1;
+  });
+  document.querySelectorAll('[data-filter="category"]').forEach(cb => {
+    _setCount(cb, catCounts[cb.value] || 0);
+  });
+
+  // --- 资产形式（assetType） ---
+  const atPool = filterItems(all, 'assetType');
+  const atCounts = {};
+  atPool.forEach(i => {
+    const t = i.assetType || 'image';
+    atCounts[t] = (atCounts[t] || 0) + 1;
+  });
+  document.querySelectorAll('[data-filter="assetType"]').forEach(cb => {
+    _setCount(cb, atCounts[cb.value] || 0);
+  });
+
+  // --- 时期（period） ---
+  const periodPool = filterItems(all, 'period');
+  document.querySelectorAll('[data-filter="period"]').forEach(cb => {
+    const n = periodPool.filter(i => matchPeriod(i, cb.value)).length;
+    _setCount(cb, n);
+  });
+
+  // --- 文化地域（geo） ---
+  const geoPool = filterItems(all, 'geo');
+  document.querySelectorAll('[data-filter="geo"]').forEach(cb => {
+    const v = cb.value.toLowerCase();
+    const n = geoPool.filter(i =>
+      `${i.geo?.country || ''} ${i.culture || ''}`.toLowerCase().includes(v)
+    ).length;
+    _setCount(cb, n);
+  });
+
+  // --- 授权三态（license） ---
+  const licPool = filterItems(all, 'license');
+  const licCounts = { com: 0, copyright: 0, restricted: 0 };
+  licPool.forEach(i => {
+    const s = licenseStatusOf(i.license, i.source);
+    if (licCounts[s] !== undefined) licCounts[s]++;
+  });
+  document.querySelectorAll('[data-filter="license"]').forEach(cb => {
+    _setCount(cb, licCounts[cb.value] || 0);
+  });
+
+  // --- 文化主题（theme） ---
+  const themePool = filterItems(all, 'theme');
+  const themeCounts = {};
+  themePool.forEach(i => {
+    (i.themes || []).forEach(t => { themeCounts[t] = (themeCounts[t] || 0) + 1; });
+  });
+  document.querySelectorAll('[data-filter="theme"]').forEach(cb => {
+    _setCount(cb, themeCounts[cb.value] || 0);
+  });
+}
+
+// 把命中数写到 checkbox 所在 .filter-option 行末的 .filter-count 里
+function _setCount(cb, n) {
+  const row = cb.closest('.filter-option');
+  if (!row) return;
+  let span = row.querySelector('.filter-count');
+  if (!span) {
+    span = document.createElement('span');
+    span.className = 'filter-count';
+    row.appendChild(span);
+  }
+  span.textContent = n;
+  // 命中数为 0 时灰化整行（不禁用，因为可能是用户想调试的信号）
+  row.classList.toggle('is-zero', n === 0);
+}
+
+// =====================================================================
+// =================== "猜你想搜" 关键词池 + 换一批 ====================
+// =====================================================================
+// 关键词池：覆盖东方文物 / 西方艺术 / 古文明 / 专题题材 四大类，约 50 个
+// [中文显示文案, 英文搜索关键词]
+// 英文关键词写得稍宽泛，与多家 API 的命中率更高
+const SUGGEST_POOL = [
+  // ===== 东方文物 =====
+  ['中国陶瓷',     'Chinese ceramics'],
+  ['唐三彩',       'Tang sancai pottery'],
+  ['宋代绘画',     'Song dynasty painting'],
+  ['明代青花',     'Ming blue and white porcelain'],
+  ['清代珐琅',     'Qing enamel'],
+  ['日本甲胄',     'Japanese armor samurai'],
+  ['浮世绘',       'ukiyo-e woodblock print'],
+  ['日本武士刀',   'Japanese katana sword'],
+  ['高丽青瓷',     'Korean celadon'],
+  ['印度细密画',   'Indian miniature painting'],
+  ['波斯地毯',     'Persian carpet'],
+  ['佛教造像',     'Buddhist sculpture'],
+
+  // ===== 西方艺术 =====
+  ['文艺复兴',     'Renaissance portrait'],
+  ['巴洛克绘画',   'Baroque painting'],
+  ['印象派',       'Impressionist painting'],
+  ['古希腊雕塑',   'ancient Greek sculpture'],
+  ['希腊花瓶',     'Greek vase'],
+  ['罗马马赛克',   'Roman mosaic'],
+  ['哥特式',       'Gothic art'],
+  ['中世纪手抄本', 'medieval manuscript illumination'],
+  ['维多利亚瓷器', 'Victorian porcelain'],
+  ['新艺术运动',   'Art Nouveau'],
+  ['装饰艺术',     'Art Deco'],
+  ['洛可可',       'Rococo painting'],
+
+  // ===== 古文明 =====
+  ['埃及雕塑',     'Egyptian sculpture'],
+  ['美索不达米亚', 'Mesopotamian art'],
+  ['玛雅纹样',     'Mayan pattern'],
+  ['维京饰品',     'Viking ornament'],
+  ['凯尔特纹饰',   'Celtic pattern'],
+  ['拜占庭马赛克', 'Byzantine mosaic'],
+  ['伊特鲁里亚',   'Etruscan art'],
+  ['印加织物',     'Inca textile'],
+  ['阿兹特克',     'Aztec art'],
+  ['法老黄金',     'Egyptian gold pharaoh'],
+  ['苏美尔楔形',   'Sumerian cuneiform'],
+
+  // ===== 专题题材 =====
+  ['中世纪挂毯',   'medieval European tapestry'],
+  ['伊斯兰纹样',   'Islamic pattern tile'],
+  ['龙纹',         'dragon pattern Chinese'],
+  ['凤鸟纹',       'phoenix bird pattern'],
+  ['莲花纹',       'lotus pattern'],
+  ['花鸟图',       'flower and bird painting'],
+  ['山水画',       'Chinese landscape painting'],
+  ['动物雕刻',     'animal sculpture'],
+  ['神话场景',     'mythology scene'],
+  ['武士肖像',     'warrior portrait'],
+  ['帝王肖像',     'royal portrait emperor'],
+  ['宗教题材',     'religious art icon'],
+  ['星空神话',     'celestial mythology'],
+  ['花卉静物',     'flower still life'],
+  ['书法',         'calligraphy'],
+];
+
+// 已展示过的关键词索引（避免与上一批重复）
+let _suggestLastBatch = [];
+
+function _pickSuggestBatch(count = 8) {
+  const pool = SUGGEST_POOL;
+  // 候选池：排除上一批用过的项；如果排除后不够，则从全池抽
+  const lastSet = new Set(_suggestLastBatch);
+  let candidates = pool.filter((_, i) => !lastSet.has(i));
+  if (candidates.length < count) candidates = pool.slice();
+
+  // 洗牌取前 N 个
+  const shuffled = candidates
+    .map(item => ({ item, r: Math.random() }))
+    .sort((a, b) => a.r - b.r)
+    .slice(0, count)
+    .map(x => x.item);
+
+  // 记录本批索引，下次刷新时排除
+  _suggestLastBatch = shuffled.map(it => pool.indexOf(it));
+  return shuffled;
+}
+
+function renderSuggestBatch() {
+  const wrap = document.getElementById('heroSuggestWords');
+  if (!wrap) return;
+  const batch = _pickSuggestBatch(8);
+  // 用 data-q 承载英文搜索关键词，避免双引号嵌套 onclick 导致点击失效
+  wrap.innerHTML = batch
+    .map(([zh, en]) => `<button class="hs-link" type="button" data-q="${esc(en)}">${esc(zh)}</button>`)
+    .join('');
+  // 事件委托（仅绑一次）：点击任意 .hs-link 即跳转搜索
+  if (!wrap._delegated) {
+    wrap.addEventListener('click', (e) => {
+      const btn = e.target.closest('.hs-link');
+      if (!btn) return;
+      const q = btn.getAttribute('data-q');
+      if (q) quickSearch(q);
+    });
+    wrap._delegated = true;
+  }
+  // 容器是 overflow:hidden + nowrap，scrollWidth > clientWidth 即代表溢出
+  // 逐个删除最后一项，直到放得下，保证视觉单行
+  requestAnimationFrame(() => {
+    let safety = 16;  // 防死循环
+    while (wrap.scrollWidth > wrap.clientWidth && wrap.children.length > 1 && safety-- > 0) {
+      wrap.removeChild(wrap.lastElementChild);
+    }
+  });
+}
+
+// 暴露给 onclick="shuffleSuggest()"
+function shuffleSuggest() {
+  renderSuggestBatch();
+}
+function setView(v, btn) {
+  state.view = v; document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active');
+  document.getElementById('resultsGrid').style.gridTemplateColumns = v === 'large' ? 'repeat(auto-fill, minmax(380px, 1fr))' : 'repeat(auto-fill, minmax(280px, 1fr))';
+}
+
+function showLoad(s) { document.getElementById('loadingSpinner').style.display = s ? 'flex' : 'none'; }
+function showEmpty(s) { document.getElementById('emptyState').style.display = s ? 'block' : 'none'; }
+function clearGrid() { document.getElementById('resultsGrid').innerHTML = ''; document.getElementById('pagination').innerHTML = ''; document.getElementById('emptyState').style.display = 'none'; }
+function esc(s) { const d = document.createElement('div'); d.textContent = s || ''; return d.innerHTML; }
+function dr(l, v) { return v ? `<div class="detail-row"><span class="dl">${l}</span><span class="dv">${esc(v)}</span></div>` : ''; }
+
+// 渲染一整个 detail-section 分组；若内部所有行都是空（即 rows 拼出的字符串去除空白后为空），
+// 整个分组（含标题）都不输出。用于"无信息维度自动隐藏"。
+function drGroup(title, rowsHtml) {
+  const content = (rowsHtml || '').trim();
+  if (!content) return '';
+  return `<div class="detail-section"><h4>${esc(title)}</h4>${content}</div>`;
+}
+
+// 三维分类的可读化映射（用于详情面板「三维分类」分组展示）
+const CATEGORY_LABEL  = {
+  artifact:         { icon: '🏛️', label: '文物' },
+  creative_work:    { icon: '🎨', label: '文创' },
+  cultural_tourism: { icon: '🏞️', label: '文旅' },
+  document:         { icon: '📜', label: '文献' }
+};
+const ASSET_TYPE_LABEL = {
+  image:       { icon: '🖼️', label: '图片' },
+  '3d_model':  { icon: '🧊', label: '3D 模型' },
+  text:        { icon: '📄', label: '文本' },
+  audio_video: { icon: '▶️', label: '音视频' },
+  dataset:     { icon: '📊', label: '数据集' },
+  expert:      { icon: '🧑‍🏫', label: '专业人士' }
+};
+const THEME_LABEL = {
+  landmark:           '地标建筑',
+  landscape:          '风景地貌',
+  mythology_religion: '神话与信仰',
+  historical_figure:  '历史/文学人物',
+  folk_custom:        '民俗节庆',
+  regional_culture:   '文化圈',
+  craft_heritage:     '工艺与非遗',
+  expert_resource:    '专家与口述',
+  others:             '其他'
+};
+
+// ===================================================================
+// =================== 精品合集 (Curated Collections) =================
+// ===================================================================
+
+const COLLECTIONS = [
+  {
+    id: 'lingnan',
+    title: '岭南烟火',
+    subtitle: '广东 · 广西 · 海南',
+    description: '岭南文化跨越千年，从青铜器到广彩瓷、从石湾陶到广绣，汇聚中国南方沿海地区独特的艺术风情。',
+    coverObjectId: 202228,
+    searchQueries: ['Canton enamel', 'Chinese export', 'Guangdong', 'Canton porcelain', 'Chinese ivory fan', 'Cantonese'],
+    geoHint: 'China',
+    tags: ['岭南文化', '广东', '外销瓷', '广彩'],
+    color: '#d35400'
+  },
+  {
+    id: 'sanxingdui',
+    title: '千年三星堆',
+    subtitle: '四川广汉 · 古蜀文明',
+    description: '三星堆遗址出土的青铜面具、黄金权杖与神树，揭示了3000年前古蜀王国神秘而辉煌的青铜文明。',
+    cover: 'sanxingdui-cover.png',
+    searchQueries: ['Sanxingdui', 'Shu kingdom', 'bronze mask'],
+    geoHint: 'China',
+    tags: ['三星堆', '古蜀文明', '青铜面具', '黄金面具'],
+    color: '#c8860a',
+    externalUrl: 'https://fluffyfu0323.github.io/sanxingdui-showcase/'
+  },
+  {
+    id: 'edo-ukiyo',
+    title: '浮世绘卷',
+    subtitle: '江户 · 明治时代',
+    description: '从葛饰北斋的《富岳三十六景》到歌川广重的雨中风景，浮世绘以极致的线条与色彩诠释日本美学。',
+    coverObjectId: 45434,
+    searchQueries: ['ukiyo-e', 'Hokusai', 'Hiroshige', 'Japanese woodblock print', 'Japanese print Edo', 'Kuniyoshi'],
+    geoHint: 'Japan',
+    tags: ['浮世绘', '江户时代', '版画', '日本'],
+    color: '#c0392b'
+  },
+  {
+    id: 'medieval-armor',
+    title: '铁甲铮鸣',
+    subtitle: '欧洲 · 中世纪至文艺复兴',
+    description: '从十字军锁子甲到马克西米利安全身板甲，中世纪欧洲的武器与盔甲是力量与工艺的极致结合。',
+    coverObjectId: 23936,
+    searchQueries: ['armor plate', 'medieval sword', 'helmet knight', 'arms armor', 'jousting', 'shield heraldic'],
+    geoHint: '',
+    tags: ['中世纪', '盔甲', '骑士', '冷兵器'],
+    color: '#2c3e50'
+  },
+  {
+    id: 'egypt-afterlife',
+    title: '尼罗永生',
+    subtitle: '古埃及 · 法老时代',
+    description: '从图坦卡蒙的黄金面具到亡灵书的神秘符文，古埃及人以惊人的工艺追求永恒。',
+    coverObjectId: 544,
+    searchQueries: ['Egyptian coffin', 'Egyptian gold', 'scarab amulet', 'Egyptian sculpture', 'mummy', 'pharaoh'],
+    geoHint: '',
+    tags: ['古埃及', '法老', '木乃伊', '象形文字'],
+    color: '#d4a017'
+  },
+  {
+    id: 'song-aesthetics',
+    title: '宋韵清雅',
+    subtitle: '两宋 · 960–1279',
+    description: '宋代是中国审美的巅峰——汝窑天青、龙泉青瓷、山水长卷，极简中见无穷意境。',
+    coverObjectId: 39918,
+    searchQueries: ['Song dynasty', 'celadon', 'Chinese painting landscape', 'Jun ware', 'Ding ware', 'Longquan'],
+    geoHint: '',
+    tags: ['宋代', '瓷器', '山水画', '极简美学'],
+    color: '#27ae60'
+  },
+  {
+    id: 'islamic-geometry',
+    title: '天方几何',
+    subtitle: '伊斯兰世界 · 8–16世纪',
+    description: '从阿尔罕布拉宫的几何拼贴到伊朗清真寺的穹顶，伊斯兰艺术以数学之美创造了无尽的纹样宇宙。',
+    coverObjectId: 449533,
+    searchQueries: ['Islamic tile', 'mosque lamp', 'Iznik', 'Islamic calligraphy', 'arabesque', 'Persian carpet'],
+    geoHint: '',
+    tags: ['伊斯兰', '几何纹样', '瓷砖', '书法'],
+    color: '#16a085'
+  },
+  {
+    id: 'renaissance-masters',
+    title: '文艺复兴光影',
+    subtitle: '意大利 · 15–16世纪',
+    description: '从波提切利的线条到拉斐尔的构图，文艺复兴大师们重新定义了人类对美的理解。',
+    coverObjectId: 435848,
+    searchQueries: ['Renaissance painting', 'Italian sculpture', 'Raphael', 'Botticelli', 'Venetian painting', 'Florentine'],
+    geoHint: '',
+    tags: ['文艺复兴', '油画', '雕塑', '意大利'],
+    color: '#6c3483'
+  }
+];
+
+// Collection state
+const collState = {
+  current: null,
+  objectIDs: [],
+  loadedItems: [],
+  currentPage: 1,
+  pageSize: 24
+};
+
+// Dynamically load cover image from Met API for each collection
+async function loadCollectionCovers() {
+  for (const col of COLLECTIONS) {
+    if (col.coverObjectId && !col.cover) {
+      try {
+        const obj = await metObj(col.coverObjectId);
+        col.cover = obj.primaryImageSmall || obj.primaryImage || '';
+      } catch(e) { col.cover = ''; }
+    }
+  }
+  renderCollections();
+}
+
+// Render collection cards on homepage
+function renderCollections() {
+  const grid = document.getElementById('collectionsGrid');
+  grid.innerHTML = COLLECTIONS.map(col => `
+    <div class="collection-card" onclick="openCollection('${col.id}')" style="${!col.cover ? 'background:linear-gradient(135deg,'+col.color+','+col.color+'88);' : ''}">
+      ${col.cover ? `<img class="cover-img" src="${col.cover}" alt="${esc(col.title)}" loading="lazy" onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg,${col.color},${col.color}88)';">` : ''}
+      <div class="cover-overlay"></div>
+      <div class="cover-content">
+        <div class="cover-tag">${esc(col.subtitle)}</div>
+        <div class="cover-title">${esc(col.title)}</div>
+        <div class="cover-sub">${esc(col.description)}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// Open a collection → search all 3 sources → show detail view
+async function openCollection(id) {
+  const col = COLLECTIONS.find(c => c.id === id);
+  if (!col) return;
+  // 如果合集配置了外部链接，直接跳转
+  if (col.externalUrl) {
+    window.open(col.externalUrl, '_blank');
+    return;
+  }
+  collState.current = col;
+  collState.currentPage = 1;
+  collState.objectIDs = [];
+  collState.loadedItems = [];
+
+  // Hide homepage, show collection detail view
+  document.getElementById('heroSection').style.display = 'none';
+  document.getElementById('toolbar').style.display = 'none';
+  document.getElementById('contentLayout').style.display = 'none';
+  document.getElementById('projectPage')?.classList.remove('active');
+  const detailView = document.getElementById('collectionDetailView');
+  detailView.classList.add('active');
+
+  // Render banner (use cover or gradient)
+  const bannerBg = col.cover
+    ? `<img src="${col.cover}" alt="${esc(col.title)}" onerror="this.style.display='none'">`
+    : '';
+  document.getElementById('collectionBanner').innerHTML = `
+    ${bannerBg}
+    <div class="banner-overlay" style="${!col.cover ? 'background:linear-gradient(135deg,'+col.color+','+col.color+'88);' : ''}"></div>
+    <div class="banner-content">
+      <div class="banner-back" onclick="closeCollection()">← 返回精品合集</div>
+      <div class="banner-title">${esc(col.title)}</div>
+      <div class="banner-desc">${esc(col.description)}</div>
+      <div class="banner-meta">
+        ${col.tags.map(t => `<span>${esc(t)}</span>`).join(' · ')}
+      </div>
+    </div>
+  `;
+
+  document.getElementById('collLoading').style.display = 'flex';
+  document.getElementById('collResultsGrid').innerHTML = '';
+  document.getElementById('collPagination').innerHTML = '';
+  document.getElementById('collEmpty').style.display = 'none';
+
+  try {
+    // Use the same search logic as the top search bar, for each query
+    const allItems = [];
+    const seen = new Set();
+    // Search all queries in parallel via multiSourceSearch
+    const queryResults = await Promise.allSettled(
+      col.searchQueries.map(q => multiSourceSearch(q, 15))
+    );
+    queryResults.forEach(r => {
+      if (r.status === 'fulfilled') {
+        r.value.forEach(item => {
+          if (!seen.has(item.id)) { seen.add(item.id); allItems.push(item); }
+        });
+      }
+    });
+
+    // 统一 schema v1.1 注入（合集聚合页同样要打标）
+    enrichSchemaV11(allItems);
+
+    collState.loadedItems = allItems;
+    const total = allItems.length;
+
+    document.getElementById('collResultCount').innerHTML =
+      `<strong>${esc(col.title)}</strong> · 共 <strong>${total.toLocaleString()}</strong> 件藏品（多馆聚合）`;
+
+    if (total === 0) {
+      document.getElementById('collLoading').style.display = 'none';
+      document.getElementById('collEmpty').style.display = 'block';
+      return;
+    }
+    renderCollectionCards(allItems);
+    document.getElementById('collLoading').style.display = 'none';
+  } catch(e) {
+    console.error('Collection load failed:', e);
+    document.getElementById('collLoading').style.display = 'none';
+    document.getElementById('collEmpty').style.display = 'block';
+  }
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+async function loadCollectionPage() {
+  document.getElementById('collLoading').style.display = 'flex';
+  const s = (collState.currentPage - 1) * collState.pageSize;
+  const ids = collState.objectIDs.slice(s, s + collState.pageSize);
+  const metItems = [];
+  for (let i = 0; i < ids.length; i += 8) {
+    const batch = ids.slice(i, i + 8);
+    const results = await Promise.allSettled(batch.map(id => metObj(id)));
+    results.forEach(r => {
+      if (r.status === 'fulfilled' && r.value) {
+        const n = norm(r.value);
+        if (n.img.thumb || n.img.full) metItems.push(n);
+      }
+    });
+  }
+  // Merge Met + other sources evenly (1:1 alternating)
+  const otherItems = collState.otherSourceItems || [];
+  const mixed = [];
+  let mi = 0, oi = 0;
+  while (mi < metItems.length || oi < otherItems.length) {
+    if (mi < metItems.length) mixed.push(metItems[mi++]);
+    if (oi < otherItems.length) mixed.push(otherItems[oi++]);
+  }
+  collState.loadedItems = mixed;
+  renderCollectionCards(mixed);
+  document.getElementById('collLoading').style.display = 'none';
+  if (!mixed.length) document.getElementById('collEmpty').style.display = 'block';
+  renderCollectionPagination();
+}
+
+function renderCollectionCards(items) {
+  const g = document.getElementById('collResultsGrid'); g.innerHTML = '';
+  items.forEach(item => {
+    const fav = state.favorites.includes(item.id);
+    const srcInfo = SOURCES[item.source] || {};
+    const licenseClass = licenseBadgeFullClass(item.license, item.source);
+    const imgSrc = item.img.thumb || item.img.full;
+    const c = document.createElement('div'); c.className = 'card';
+    c.onclick = () => openDetail(item);
+    c.innerHTML = `
+      <div class="card-img-wrap">
+        ${imgSrc
+          ? `<img class="card-img" src="${imgSrc}" alt="${esc(item.title)}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';">
+             <div class="card-img-placeholder" style="display:none">🖼️</div>`
+          : '<div class="card-img-placeholder">🖼️</div>'}
+        <div class="badge-source" style="background:${srcInfo.color || '#333'};color:#fff;">${srcInfo.flag || ''} ${srcInfo.name || item.source}</div>
+        <button class="card-heart ${fav ? 'active' : ''}" onclick="event.stopPropagation(); toggleFav('${item.id}',this)" style="top:auto;bottom:var(--sp-3);">
+          ${fav ? '❤️' : '♡'}
+        </button>
+      </div>
+      <div class="card-info">
+        <div class="card-info-top"><div class="card-title-text">${esc(item.title)}</div></div>
+        ${item.culture ? `<div class="card-culture">${esc(item.culture)}</div>` : ''}
+        ${item.dateDisplay ? `<div class="card-date">${esc(item.dateDisplay)}</div>` : ''}
+        <div class="card-tag-row">
+          <span class="badge-license ${licenseClass}" title="${esc(item.license.type)}">${esc(licenseBadgeLabel(item.license, item.source))}</span>
+          ${item.period ? `<span class="mini-tag">${esc(item.period)}</span>` : ''}
+        </div>
+      </div>`;
+    g.appendChild(c);
+  });
+}
+
+function renderCollectionPagination() {
+  const pg = document.getElementById('collPagination');
+  const tp = Math.ceil(collState.objectIDs.length / collState.pageSize);
+  if (tp <= 1) { pg.innerHTML = ''; return; }
+  let h = `<button class="pg-btn" onclick="goCollPage(${collState.currentPage-1})" ${collState.currentPage<=1?'disabled':''}>‹</button>`;
+  let s = Math.max(1, collState.currentPage - 3), e = Math.min(tp, s + 6);
+  if (e - s < 6) s = Math.max(1, e - 6);
+  if (s > 1) { h += `<button class="pg-btn" onclick="goCollPage(1)">1</button>`; if (s > 2) h += '<span style="color:var(--text-tertiary);padding:0 4px">…</span>'; }
+  for (let i = s; i <= e; i++) h += `<button class="pg-btn ${i===collState.currentPage?'active':''}" onclick="goCollPage(${i})">${i}</button>`;
+  if (e < tp) { if (e < tp - 1) h += '<span style="color:var(--text-tertiary);padding:0 4px">…</span>'; h += `<button class="pg-btn" onclick="goCollPage(${tp})">${tp}</button>`; }
+  h += `<button class="pg-btn" onclick="goCollPage(${collState.currentPage+1})" ${collState.currentPage>=tp?'disabled':''}>›</button>`;
+  pg.innerHTML = h;
+}
+
+function goCollPage(p) {
+  const tp = Math.ceil(collState.objectIDs.length / collState.pageSize);
+  if (p < 1 || p > tp) return;
+  collState.currentPage = p;
+  document.getElementById('collResultsGrid').innerHTML = '';
+  document.getElementById('collPagination').innerHTML = '';
+  loadCollectionPage();
+  window.scrollTo({ top: 340, behavior: 'smooth' });
+}
+
+function closeCollection() {
+  document.getElementById('collectionDetailView').classList.remove('active');
+  document.getElementById('heroSection').style.display = '';
+  collState.current = null;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function shuffleArray(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+// Create custom collection from user's keyword
+async function createCustomCollection() {
+  const input = document.getElementById('curatedSearchInput');
+  const keyword = input.value.trim();
+  if (!keyword) { input.focus(); return; }
+
+  // Create a temporary collection object
+  const colors = ['#e74c3c','#8e44ad','#2980b9','#27ae60','#d35400','#16a085','#c0392b','#2c3e50'];
+  const tempCol = {
+    id: 'custom_' + Date.now(),
+    title: keyword,
+    subtitle: '自定义合集',
+    description: `基于关键词「${keyword}」从 6 大博物馆藏品中生成的精品合集`,
+    cover: '',
+    coverObjectId: null,
+    searchQueries: [keyword],
+    geoHint: '',
+    tags: [keyword],
+    color: colors[Math.floor(Math.random() * colors.length)]
+  };
+
+  // Temporarily add to COLLECTIONS and open it
+  collState.current = tempCol;
+  collState.currentPage = 1;
+  collState.objectIDs = [];
+  collState.loadedItems = [];
+
+  document.getElementById('heroSection').style.display = 'none';
+  document.getElementById('toolbar').style.display = 'none';
+  document.getElementById('contentLayout').style.display = 'none';
+  document.getElementById('projectPage')?.classList.remove('active');
+  const detailView = document.getElementById('collectionDetailView');
+  detailView.classList.add('active');
+
+  document.getElementById('collectionBanner').innerHTML = `
+    <div class="banner-overlay" style="background:linear-gradient(135deg,${tempCol.color},${tempCol.color}88);"></div>
+    <div class="banner-content">
+      <div class="banner-back" onclick="closeCollection()">← 返回精品合集</div>
+      <div class="banner-title">${esc(tempCol.title)}</div>
+      <div class="banner-desc">${esc(tempCol.description)}</div>
+    </div>
+  `;
+
+  document.getElementById('collLoading').style.display = 'flex';
+  document.getElementById('collResultsGrid').innerHTML = '';
+  document.getElementById('collPagination').innerHTML = '';
+  document.getElementById('collEmpty').style.display = 'none';
+
+  try {
+    // Use the same search logic as the top search bar
+    const items = await multiSourceSearch(keyword, 20);
+    // 统一 schema v1.1 注入（热门关键词集合页同样要打标）
+    enrichSchemaV11(items);
+    collState.loadedItems = items;
+    const total = items.length;
+
+    document.getElementById('collResultCount').innerHTML =
+      `<strong>${esc(keyword)}</strong> · 共 <strong>${total.toLocaleString()}</strong> 件藏品（多馆聚合）`;
+
+    if (total === 0) {
+      document.getElementById('collLoading').style.display = 'none';
+      document.getElementById('collEmpty').style.display = 'block';
+      return;
+    }
+    renderCollectionCards(items);
+    document.getElementById('collLoading').style.display = 'none';
+  } catch(e) {
+    console.error(e);
+    document.getElementById('collLoading').style.display = 'none';
+    document.getElementById('collEmpty').style.display = 'block';
+  }
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function goHome() {
+  document.getElementById('heroSection').style.display = '';
+  document.getElementById('collectionDetailView').classList.remove('active');
+  document.getElementById('resultsSearchBar').style.display = 'none';
+  document.getElementById('toolbar').style.display = 'none';
+  document.getElementById('contentLayout').style.display = 'none';
+  document.getElementById('searchInput').value = '';
+  const ri = document.getElementById('searchInputResults');
+  if (ri) ri.value = '';
+  state.query = '';
+  collState.current = null;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Triggered by the search bar shown above the results grid
+function performSearchFromResults() {
+  const v = document.getElementById('searchInputResults').value.trim();
+  if (!v) return;
+  document.getElementById('searchInput').value = v;
+  performSearch(true);
+}
+
+// ===================================================================
+
+// ===================================================================
+// =================== 我的项目 (My Projects) ========================
+// ===================================================================
+
+// Project data structure (persisted in localStorage)
+const projectStore = {
+  projects: JSON.parse(localStorage.getItem('contentHub_projects') || 'null') || [
+    { id: 'default', name: '默认项目', emoji: '📂', favIds: [], generations: [] }
+  ],
+  activeProjectId: 'default',
+  save() {
+    localStorage.setItem('contentHub_projects', JSON.stringify(this.projects));
+  },
+  getActive() { return this.projects.find(p => p.id === this.activeProjectId) || this.projects[0]; },
+  getFavItems() {
+    // Return cached fav item data
+    return JSON.parse(localStorage.getItem('contentHub_favItemsCache') || '[]');
+  },
+  cacheFavItem(item) {
+    const cache = this.getFavItems();
+    if (!cache.find(c => c.id === item.id)) {
+      cache.push({ id: item.id, title: item.title, img: item.img.thumb || item.img.full, culture: item.culture, dateDisplay: item.dateDisplay });
+      localStorage.setItem('contentHub_favItemsCache', JSON.stringify(cache));
+    }
+  }
+};
+
+// Migrate old favorites into default project
+(function migrateFavs() {
+  const oldFavs = state.favorites;
+  const proj = projectStore.getActive();
+  if (oldFavs.length && !proj.favIds.length) {
+    proj.favIds = [...oldFavs];
+    projectStore.save();
+  }
+})();
+
+// Sidebar toggle
+function toggleSidebar() {
+  const rail = document.getElementById('sidebarRail');
+  rail.classList.toggle('expanded');
+  document.body.classList.toggle('sidebar-open', rail.classList.contains('expanded'));
+  if (rail.classList.contains('expanded')) renderSidebarContent();
+}
+
+function showSidebarTab(tab) {
+  // Just ensure sidebar is open and scroll to section
+  const rail = document.getElementById('sidebarRail');
+  if (!rail.classList.contains('expanded')) toggleSidebar();
+}
+
+function renderSidebarContent() {
+  // Render projects list
+  const listEl = document.getElementById('sidebarProjectsList');
+  listEl.innerHTML = projectStore.projects.map(p => `
+    <div class="sidebar-project-item" onclick="openProjectPage('${p.id}')">
+      <span class="proj-emoji">${p.emoji}</span>
+      <span class="proj-name">${esc(p.name)}</span>
+      <span class="proj-count">${p.favIds.length + p.generations.length}</span>
+    </div>
+  `).join('');
+
+  // Render fav thumbnails
+  const favsStrip = document.getElementById('sidebarFavsStrip');
+  const proj = projectStore.getActive();
+  const favCache = projectStore.getFavItems();
+  const recentFavs = proj.favIds.slice(-8).reverse();
+  if (recentFavs.length) {
+    favsStrip.innerHTML = recentFavs.map(fid => {
+      const cached = favCache.find(c => c.id === fid);
+      if (cached && cached.img) {
+        return `<img class="sidebar-fav-thumb" src="${cached.img}" title="${esc(cached.title)}" onclick="event.stopPropagation();">`;
+      }
+      return '';
+    }).join('') || '<div style="font-size:13px;color:var(--text-tertiary);">暂无收藏</div>';
+  } else {
+    favsStrip.innerHTML = '<div style="font-size:13px;color:var(--text-tertiary);">暂无收藏</div>';
+  }
+
+  // Render gen thumbnails
+  const gensStrip = document.getElementById('sidebarGensStrip');
+  const recentGens = proj.generations.slice(-8).reverse();
+  if (recentGens.length) {
+    gensStrip.innerHTML = recentGens.map(g =>
+      `<img class="sidebar-fav-thumb" src="${g.resultImg}" title="${esc(g.prompt)}" onclick="event.stopPropagation();">`
+    ).join('');
+  } else {
+    gensStrip.innerHTML = '<div style="font-size:13px;color:var(--text-tertiary);">暂无生成记录</div>';
+  }
+
+  // Update fav badge
+  document.getElementById('favBadge').style.display = proj.favIds.length > 0 ? 'block' : 'none';
+}
+
+function createNewProject() {
+  const name = prompt('项目名称：', '新项目 ' + (projectStore.projects.length + 1));
+  if (!name) return;
+  const emojis = ['🎮', '🎨', '⚔️', '🏰', '🐉', '🌸', '🔮', '🗡️'];
+  const p = {
+    id: 'proj_' + Date.now(),
+    name: name,
+    emoji: emojis[Math.floor(Math.random() * emojis.length)],
+    favIds: [],
+    generations: []
+  };
+  projectStore.projects.push(p);
+  projectStore.save();
+  renderSidebarContent();
+}
+
+// Override toggleFav to also update project + cache item
+const _origToggleFav = toggleFav;
+toggleFav = function(id, btn) {
+  _origToggleFav(id, btn);
+  // Sync to active project
+  const proj = projectStore.getActive();
+  const idx = proj.favIds.indexOf(id);
+  if (state.favorites.includes(id) && idx < 0) {
+    proj.favIds.push(id);
+  } else if (!state.favorites.includes(id) && idx >= 0) {
+    proj.favIds.splice(idx, 1);
+  }
+  projectStore.save();
+
+  // Cache the item data if we have it
+  const allItems = [...state.loadedItems, ...collState.loadedItems];
+  const item = allItems.find(i => i.id === id);
+  if (item) projectStore.cacheFavItem(item);
+
+  // Update sidebar if open
+  if (document.getElementById('sidebarRail').classList.contains('expanded')) renderSidebarContent();
+};
+
+// ===== Project Detail Page =====
+function openProjectPage(projId) {
+  projectStore.activeProjectId = projId;
+  const proj = projectStore.getActive();
+
+  // Hide other views
+  document.getElementById('heroSection').style.display = 'none';
+  document.getElementById('collectionDetailView').classList.remove('active');
+  document.getElementById('toolbar').style.display = 'none';
+  document.getElementById('contentLayout').style.display = 'none';
+
+  // Show project page
+  const page = document.getElementById('projectPage');
+  page.classList.add('active');
+
+  document.getElementById('projPageTitle').textContent = proj.emoji + ' ' + proj.name;
+  document.getElementById('projPageMeta').textContent = `${proj.favIds.length} 件素材 · ${proj.generations.length} 个生成`;
+
+  // Render collected tab
+  renderProjFavs(proj);
+  renderProjGens(proj);
+  switchProjTab('collected', document.querySelector('.project-tab'));
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function closeProjectPage() {
+  document.getElementById('projectPage').classList.remove('active');
+  document.getElementById('heroSection').style.display = '';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function switchProjTab(tab, btn) {
+  document.querySelectorAll('.project-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('projTabCollected').classList.toggle('active', tab === 'collected');
+  document.getElementById('projTabGenerated').classList.toggle('active', tab === 'generated');
+}
+
+function renderProjFavs(proj) {
+  const grid = document.getElementById('projFavsGrid');
+  const cache = projectStore.getFavItems();
+  const items = proj.favIds.map(fid => cache.find(c => c.id === fid)).filter(Boolean);
+
+  if (!items.length) {
+    grid.innerHTML = '';
+    document.getElementById('projFavsEmpty').style.display = 'block';
+    return;
+  }
+  document.getElementById('projFavsEmpty').style.display = 'none';
+  grid.innerHTML = items.map(item => `
+    <div class="card" onclick="alert('素材详情功能：点击可跳转回搜索该素材')">
+      <div class="card-img-wrap">
+        ${item.img ? `<img class="card-img" src="${item.img}" alt="${esc(item.title)}" loading="lazy">` : '<div class="card-img-placeholder">🖼️</div>'}
+      </div>
+      <div class="card-info">
+        <div class="card-info-top"><div class="card-title-text">${esc(item.title)}</div></div>
+        ${item.culture ? `<div class="card-culture">${esc(item.culture)}</div>` : ''}
+        ${item.dateDisplay ? `<div class="card-date">${esc(item.dateDisplay)}</div>` : ''}
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderProjGens(proj) {
+  const grid = document.getElementById('projGensGrid');
+  if (!proj.generations.length) {
+    grid.innerHTML = '';
+    document.getElementById('projGensEmpty').style.display = 'block';
+    return;
+  }
+  document.getElementById('projGensEmpty').style.display = 'none';
+  grid.innerHTML = proj.generations.map(g => `
+    <div class="gen-card">
+      <img class="gen-card-img" src="${g.resultImg}" alt="Generated">
+      <div class="gen-card-body">
+        <div class="gen-card-prompt">${esc(g.prompt)}</div>
+        <div class="gen-card-meta">${g.style} · ${g.timestamp}</div>
+        ${g.refImg ? `<div class="gen-card-base"><img src="${g.refImg}"><span>参考自 ${esc(g.refTitle || '')}</span></div>` : ''}
+      </div>
+    </div>
+  `).join('');
+}
+
+// ===== AI Generate Modal =====
+var genRefItem = null;
+var genSelectedStyles = [];
+
+function openAIGenerate(item) {
+  genRefItem = item;
+  genSelectedStyles = [];
+  document.getElementById('genPromptInput').value = '';
+  document.getElementById('genResult').classList.remove('active');
+  document.getElementById('genSubmitBtn').disabled = false;
+  document.getElementById('genSubmitBtn').textContent = '🚀 开始生成';
+
+  // Style chips reset
+  document.querySelectorAll('.gen-style-chip').forEach(c => c.classList.remove('active'));
+
+  // Reference card
+  const refCard = document.getElementById('genRefCard');
+  if (item) {
+    refCard.style.display = 'flex';
+    document.getElementById('genRefImg').src = item.img.thumb || item.img.full;
+    document.getElementById('genRefTitle').textContent = item.title;
+    document.getElementById('genRefMeta').textContent = [item.culture, item.dateDisplay, item.medium].filter(Boolean).join(' · ');
+  } else {
+    refCard.style.display = 'none';
+  }
+
+  document.getElementById('genModal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeGenModal() {
+  document.getElementById('genModal').classList.remove('active');
+  document.body.style.overflow = '';
+}
+document.getElementById('genModal').addEventListener('click', function(e) { if (e.target === this) closeGenModal(); });
+
+function toggleGenStyle(btn) {
+  btn.classList.toggle('active');
+  const style = btn.dataset.style;
+  const idx = genSelectedStyles.indexOf(style);
+  idx >= 0 ? genSelectedStyles.splice(idx, 1) : genSelectedStyles.push(style);
+}
+
+// Simulated generation with placeholder images
+const MOCK_GEN_IMAGES = [
+  'https://images.metmuseum.org/CRDImages/as/original/DP251139.jpg',
+  'https://images.metmuseum.org/CRDImages/ep/original/DT1567.jpg',
+  'https://images.metmuseum.org/CRDImages/aa/original/DP-12881-025.jpg',
+  'https://images.metmuseum.org/CRDImages/is/original/DP231343.jpg',
+  'https://images.metmuseum.org/CRDImages/eg/original/DT531.jpg',
+  'https://images.metmuseum.org/CRDImages/as/original/DP141102.jpg',
+];
+
+async function simulateGenerate() {
+  const prompt = document.getElementById('genPromptInput').value.trim();
+  if (!prompt) { document.getElementById('genPromptInput').focus(); return; }
+
+  const btn = document.getElementById('genSubmitBtn');
+  btn.disabled = true;
+  btn.textContent = '⏳ 生成中…';
+  document.getElementById('genResult').classList.remove('active');
+
+  // Simulate 2-3 seconds delay
+  await new Promise(r => setTimeout(r, 2000 + Math.random() * 1000));
+
+  // Pick a random mock image
+  const mockImg = MOCK_GEN_IMAGES[Math.floor(Math.random() * MOCK_GEN_IMAGES.length)];
+
+  document.getElementById('genResultImg').src = mockImg;
+  document.getElementById('genResultPrompt').textContent =
+    `Prompt: "${prompt}" · 风格: ${genSelectedStyles.join(', ') || '默认'} · (模拟生成结果)`;
+  document.getElementById('genResult').classList.add('active');
+
+  btn.disabled = false;
+  btn.textContent = '🚀 开始生成';
+
+  // Store temp generation data
+  window._lastGen = {
+    prompt,
+    style: genSelectedStyles.join(', ') || '默认',
+    resultImg: mockImg,
+    refImg: genRefItem ? (genRefItem.img.thumb || genRefItem.img.full) : null,
+    refTitle: genRefItem ? genRefItem.title : null,
+    timestamp: new Date().toLocaleString('zh-CN', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' })
+  };
+}
+
+function saveGeneration() {
+  if (!window._lastGen) return;
+  const proj = projectStore.getActive();
+  proj.generations.push(window._lastGen);
+  projectStore.save();
+  window._lastGen = null;
+
+  closeGenModal();
+  alert('✅ 已保存到项目「' + proj.name + '」');
+
+  // Refresh sidebar
+  if (document.getElementById('sidebarRail').classList.contains('expanded')) renderSidebarContent();
+
+  // Refresh project page if open
+  if (document.getElementById('projectPage').classList.contains('active')) {
+    renderProjGens(proj);
+    document.getElementById('projPageMeta').textContent = `${proj.favIds.length} 件素材 · ${proj.generations.length} 个生成`;
+  }
+}
+
+// Also update goHome to close project page
+const _origGoHome = goHome;
+goHome = function() {
+  document.getElementById('projectPage').classList.remove('active');
+  _origGoHome();
+};
+
+// ===================================================================
+
+async function init() {
+  document.getElementById('searchInput').addEventListener('keydown', e => { if (e.key === 'Enter') performSearch(true); });
+  document.getElementById('searchInputResults').addEventListener('keydown', e => { if (e.key === 'Enter') performSearchFromResults(); });
+  document.getElementById('curatedSearchInput').addEventListener('keydown', e => { if (e.key === 'Enter') createCustomCollection(); });
+
+  // 渲染首批"猜你想搜"关键词
+  renderSuggestBatch();
+  // 窗口大小变化时重新计算单行可容纳的关键词数（防抖）
+  let _suggestResizeTimer = null;
+  window.addEventListener('resize', () => {
+    clearTimeout(_suggestResizeTimer);
+    _suggestResizeTimer = setTimeout(() => renderSuggestBatch(), 200);
+  });
+
+  // Render curated collections on homepage (with gradient fallback first)
+  renderCollections();
+  // Then async load covers from Met API
+  loadCollectionCovers();
+
+  // Init sidebar fav badge
+  renderSidebarContent();
+}
+init();
+</script>
+</body>
+</html>
