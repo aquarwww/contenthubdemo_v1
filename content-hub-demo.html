@@ -397,7 +397,7 @@ img { display: block; }
 .filter-sidebar::-webkit-scrollbar { width: 3px; }
 .filter-sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
 .filter-group {
-  padding: var(--sp-5) 0;
+  padding: var(--sp-4) 0;
   border-bottom: 1px solid var(--border-light);
 }
 .filter-group:first-child { padding-top: 0; }
@@ -406,7 +406,7 @@ img { display: block; }
   color: var(--text-tertiary);
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  margin-bottom: var(--sp-3);
+  margin-bottom: var(--sp-2);
 }
 /* 分组标题旁的小字说明（如"一件可挂多个"） */
 .filter-group h3 .filter-hint {
@@ -420,8 +420,9 @@ img { display: block; }
 }
 .filter-option {
   display: flex; align-items: center; gap: var(--sp-2);
-  padding: var(--sp-2) 0;
+  padding: 3px 0;
   cursor: pointer; font-size: 14px;
+  line-height: 1.35;
   color: var(--near-black);
   transition: color var(--duration);
 }
@@ -429,7 +430,7 @@ img { display: block; }
 .filter-option input[type="checkbox"],
 .filter-option input[type="radio"] {
   accent-color: var(--near-black);
-  width: 18px; height: 18px;
+  width: 16px; height: 16px;
   border-radius: 4px;
 }
 /* 三态授权复选框旁的色点（与卡片徽章颜色对应） */
@@ -1475,17 +1476,18 @@ body.sidebar-open { padding-left: 280px; }
     <!-- Sidebar -->
     <aside class="filter-sidebar" id="filterSidebar">
       <div class="filter-group">
-        <h3>数据来源</h3>
-        <div class="filter-option"><input type="checkbox" checked data-filter="source" value="met" onchange="applyFilters()"> 🇺🇸 The Met</div>
-        <div class="filter-option"><input type="checkbox" checked data-filter="source" value="aic" onchange="applyFilters()"> 🇺🇸 AIC Chicago</div>
-        <div class="filter-option"><input type="checkbox" checked data-filter="source" value="cma" onchange="applyFilters()"> 🇺🇸 Cleveland</div>
-        <div class="filter-option"><input type="checkbox" checked data-filter="source" value="mia" onchange="applyFilters()"> 🇺🇸 MIA Minneapolis</div>
-        <div class="filter-option"><input type="checkbox" checked data-filter="source" value="vam" onchange="applyFilters()"> 🇬🇧 V&A Museum</div>
-        <div class="filter-option"><input type="checkbox" checked data-filter="source" value="bm" onchange="applyFilters()"> 🇬🇧 大英博物馆</div>
-        <div class="filter-option"><input type="checkbox" checked data-filter="source" value="npm" onchange="applyFilters()"> 🇹🇼 台北故宫</div>
+        <h3>资产门类 <span class="filter-hint">三维分类 · 维度①</span></h3>
+        <!-- category 维度（4 类互斥多选）：产品宪法 v1.1 三维分类的第一维
+             - 现阶段博物馆数据全部为 artifact（文物）
+             - creative_work / cultural_tourism / document 在接入对应数据源后命中数自动 > 0
+             详见 ../文化资产库_统一字段schema.md §2 -->
+        <div class="filter-option"><input type="checkbox" data-filter="category" value="artifact" onchange="applyFilters()"> 🏛️ 文物</div>
+        <div class="filter-option"><input type="checkbox" data-filter="category" value="creative_work" onchange="applyFilters()"> 🎨 文创</div>
+        <div class="filter-option"><input type="checkbox" data-filter="category" value="cultural_tourism" onchange="applyFilters()"> 🏞️ 文旅</div>
+        <div class="filter-option"><input type="checkbox" data-filter="category" value="document" onchange="applyFilters()"> 📜 文献</div>
       </div>
       <div class="filter-group">
-        <h3>资产形式 <span class="filter-hint">多种形态</span></h3>
+        <h3>资产形式 <span class="filter-hint">三维分类 · 维度②</span></h3>
         <!-- 资产形式（多选）：现阶段只有 image 有数据；其他标记为"即将上线"，让用户看到产品形态规划
              详见 ../文化资产库_产品信息架构设计.md 第二章 -->
         <div class="filter-option"><input type="checkbox" data-filter="assetType" value="image" onchange="applyFilters()"> 🖼️ 图片</div>
@@ -1494,6 +1496,33 @@ body.sidebar-open { padding-left: 280px; }
         <div class="filter-option"><input type="checkbox" data-filter="assetType" value="audio_video" onchange="applyFilters()"> ▶️ 音视频</div>
         <div class="filter-option"><input type="checkbox" data-filter="assetType" value="dataset" onchange="applyFilters()"> 📊 数据集</div>
         <div class="filter-option"><input type="checkbox" data-filter="assetType" value="expert" onchange="applyFilters()"> 🧑‍🏫 专业人士</div>
+      </div>
+      <div class="filter-group">
+        <h3>文化主题 <span class="filter-hint">三维分类 · 维度③ · 多选</span></h3>
+        <!-- 文化主题（多选）：默认不勾选 = 不过滤；勾选即收窄 -->
+        <!-- 标签与定义详见 ../文化资产库_产品信息架构设计.md 第二章 -->
+        <div class="filter-option"><input type="checkbox" data-filter="theme" value="landmark" onchange="applyFilters()"> 地标建筑</div>
+        <div class="filter-option"><input type="checkbox" data-filter="theme" value="landscape" onchange="applyFilters()"> 风景地貌</div>
+        <div class="filter-option"><input type="checkbox" data-filter="theme" value="mythology_religion" onchange="applyFilters()"> 神话与信仰</div>
+        <div class="filter-option"><input type="checkbox" data-filter="theme" value="historical_figure" onchange="applyFilters()"> 历史/文学人物</div>
+        <div class="filter-option"><input type="checkbox" data-filter="theme" value="folk_custom" onchange="applyFilters()"> 民俗节庆</div>
+        <div class="filter-option"><input type="checkbox" data-filter="theme" value="regional_culture" onchange="applyFilters()"> 文化圈</div>
+        <div class="filter-option"><input type="checkbox" data-filter="theme" value="craft_heritage" onchange="applyFilters()"> 工艺与非遗</div>
+        <div class="filter-option"><input type="checkbox" data-filter="theme" value="expert_resource" onchange="applyFilters()"> 专家与口述</div>
+        <div class="filter-option">
+          <input type="checkbox" data-filter="theme" value="others" onchange="applyFilters()"> 其他
+          <span class="lic-hint">未特化</span>
+        </div>
+      </div>
+      <div class="filter-group">
+        <h3>数据来源</h3>
+        <div class="filter-option"><input type="checkbox" checked data-filter="source" value="met" onchange="applyFilters()"> 🇺🇸 The Met</div>
+        <div class="filter-option"><input type="checkbox" checked data-filter="source" value="aic" onchange="applyFilters()"> 🇺🇸 AIC Chicago</div>
+        <div class="filter-option"><input type="checkbox" checked data-filter="source" value="cma" onchange="applyFilters()"> 🇺🇸 Cleveland</div>
+        <div class="filter-option"><input type="checkbox" checked data-filter="source" value="mia" onchange="applyFilters()"> 🇺🇸 MIA Minneapolis</div>
+        <div class="filter-option"><input type="checkbox" checked data-filter="source" value="vam" onchange="applyFilters()"> 🇬🇧 V&A Museum</div>
+        <div class="filter-option"><input type="checkbox" checked data-filter="source" value="bm" onchange="applyFilters()"> 🇬🇧 大英博物馆</div>
+        <div class="filter-option"><input type="checkbox" checked data-filter="source" value="npm" onchange="applyFilters()"> 🇹🇼 台北故宫</div>
       </div>
       <div class="filter-group">
         <h3>时期</h3>
@@ -1535,23 +1564,6 @@ body.sidebar-open { padding-left: 280px; }
         </div>
       </div>
       <div class="filter-group">
-        <h3>文化主题 <span class="filter-hint">一件可挂多个</span></h3>
-        <!-- 文化主题（多选）：默认不勾选 = 不过滤；勾选即收窄 -->
-        <!-- 标签与定义详见 ../文化资产库_产品信息架构设计.md 第二章 -->
-        <div class="filter-option"><input type="checkbox" data-filter="theme" value="landmark" onchange="applyFilters()"> 地标建筑</div>
-        <div class="filter-option"><input type="checkbox" data-filter="theme" value="landscape" onchange="applyFilters()"> 风景地貌</div>
-        <div class="filter-option"><input type="checkbox" data-filter="theme" value="mythology_religion" onchange="applyFilters()"> 神话与信仰</div>
-        <div class="filter-option"><input type="checkbox" data-filter="theme" value="historical_figure" onchange="applyFilters()"> 历史/文学人物</div>
-        <div class="filter-option"><input type="checkbox" data-filter="theme" value="folk_custom" onchange="applyFilters()"> 民俗节庆</div>
-        <div class="filter-option"><input type="checkbox" data-filter="theme" value="regional_culture" onchange="applyFilters()"> 文化圈</div>
-        <div class="filter-option"><input type="checkbox" data-filter="theme" value="craft_heritage" onchange="applyFilters()"> 工艺与非遗</div>
-        <div class="filter-option"><input type="checkbox" data-filter="theme" value="expert_resource" onchange="applyFilters()"> 专家与口述</div>
-        <div class="filter-option" style="border-top:1px dashed var(--border);margin-top:var(--sp-2);padding-top:var(--sp-2);">
-          <input type="checkbox" data-filter="theme" value="others" onchange="applyFilters()"> 其他
-          <span class="lic-hint">未特化</span>
-        </div>
-      </div>
-      <div class="filter-group">
         <h3>授权</h3>
         <!-- 三态授权筛选（与卡片右下角徽章颜色一一对应） -->
         <div class="filter-option">
@@ -1568,9 +1580,6 @@ body.sidebar-open { padding-left: 280px; }
           <input type="checkbox" data-filter="license" value="restricted" checked onchange="applyFilters()">
           <span class="lic-dot" style="background:#9aa0a6"></span>
           来源馆限制
-        </div>
-        <div class="filter-option" style="margin-top:var(--sp-2);border-top:1px solid var(--border);padding-top:var(--sp-2);">
-          <input type="checkbox" id="hasImagesOnly" checked onchange="applyFilters()"> 仅含图片
         </div>
       </div>
     </aside>
@@ -1633,6 +1642,7 @@ const state = {
     geoLocations: [],
     periods: [],
     sources: ['met','aic','cma','mia','vam','bm','npm'], // 左侧栏数据来源筛选（默认全选）
+    categories: [],                                        // 资产门类筛选（空数组 = 不过滤，三维分类维度①）
     themes: [],                                            // 文化主题筛选（空数组 = 不过滤）
     assetTypes: [],                                        // 资产形式筛选（空数组 = 不过滤）
     departmentId: null,
@@ -2079,6 +2089,38 @@ const THEME_ORDER = [
   'folk_custom', 'regional_culture', 'craft_heritage', 'expert_resource',
   'others'
 ];
+
+// =====================================================================
+// =================== 统一 Schema v1.1 注入器（产品宪法层） =============
+// =====================================================================
+// 所有数据源（博物馆 API / 本地 JSON / 未来视频/古籍/专家）的 norm 结果
+// 都会流经这里，被打上 v1.1 schema 必备的三个分类维度：
+//   - themes（词典打标，多选 + others 兜底）
+//   - assetType（image / 3d_model / text / audio_video / dataset / expert，单选）
+//   - category（artifact / creative_work / cultural_tourism / document，单选）
+//   - license.license_status（com / copyright / restricted 三态，单选）
+//
+// 所有现有博物馆素材在 v1.1 默认值：assetType=image, category=artifact。
+// 未来新数据源（视频/3D/古籍/专家）应在 norm 阶段就显式设置 assetType / category，
+// 此处仅做"未设值时"的兜底，不会覆盖 adapter 显式赋值。
+//
+// 配套文档：../文化资产库_统一字段schema.md（产品宪法 v1.1）
+function enrichSchemaV11(items) {
+  if (!items || !items.length) return items;
+  items.forEach(it => {
+    // 1) themes：每次重打（词典在演化，重打才能反映最新词典）
+    it.themes = enrichThemes(it);
+    // 2) assetType：兜底 image（adapter 已设则保留）
+    if (!it.assetType) it.assetType = 'image';
+    // 3) category：兜底 artifact（adapter 已设则保留）
+    if (!it.category)  it.category  = 'artifact';
+    // 4) license.license_status：把运行时三态固化到 schema 字段
+    if (it.license && !it.license.license_status) {
+      it.license.license_status = licenseStatusOf(it.license, it.source);
+    }
+  });
+  return items;
+}
 
 // =====================================================================
 // =================== 时期匹配：区间重叠 + 文本兜底 =====================
@@ -2730,12 +2772,14 @@ async function performSearch(reset = true) {
 
     const items = await multiSourceSearch(enrichedQ, 100);
 
-    // 给所有 items 打上 themes 标签（词典驱动，未命中只挂 museum_collection）
-    // 同时默认 assetType='image'（现阶段所有博物馆数据都是图片；未来接入 3D/text/video 时在对应 adapter 里设置）
-    items.forEach(it => {
-      it.themes = enrichThemes(it);
-      if (!it.assetType) it.assetType = 'image';
-    });
+    // 统一 schema v1.1 注入（所有 7 馆素材流经此处）
+    // ─ themes：词典驱动打标（未命中挂 others 兜底）
+    // ─ assetType：博物馆古代藏品全部为 image；未来接入 3D/text/video/expert 时由 adapter 显式设
+    // ─ category：博物馆古代藏品全部归 'artifact'；未来 cultural_tourism / creative_work / document
+    //              由对应 adapter 在 norm 阶段显式覆盖
+    // ─ license.license_status：把运行时推导的三态（com/copyright/restricted）固化到字段，
+    //              避免每次渲染重复推导，且让 schema 一等公民显式化
+    enrichSchemaV11(items);
 
     // Client-side filter to ensure results actually match the selected filters
     const filtered = filterItems(items);
@@ -2934,9 +2978,11 @@ function applyFilters() {
   state.filters.periods = Array.from(document.querySelectorAll('[data-filter="period"]:checked')).map(c => c.value);
   state.filters.licenseStatuses = Array.from(document.querySelectorAll('[data-filter="license"]:checked')).map(c => c.value);
   state.filters.sources = Array.from(document.querySelectorAll('[data-filter="source"]:checked')).map(c => c.value);
+  state.filters.categories = Array.from(document.querySelectorAll('[data-filter="category"]:checked')).map(c => c.value);
   state.filters.themes = Array.from(document.querySelectorAll('[data-filter="theme"]:checked')).map(c => c.value);
   state.filters.assetTypes = Array.from(document.querySelectorAll('[data-filter="assetType"]:checked')).map(c => c.value);
-  state.filters.hasImagesOnly = document.getElementById('hasImagesOnly').checked;
+  // 'hasImagesOnly' 已不再有 UI 勾选项（被"资产形式=图片"替代）；保留 state 默认值 true
+  // 以便 Met API 调用时仍下推 hasImages=true，提升结果质量
   // 如果已有搜索结果：只做客户端重新筛选 + 重绘；不再重跑 API（性能 & 体验更顺）
   if (state.allSourceItems && state.allSourceItems.length) {
     rerenderFromCache();
@@ -2957,12 +3003,13 @@ function rerenderFromCache() {
   renderCards(filtered);
 }
 
-// Client-side filter: source + assetType + period + geo + license + theme
+// Client-side filter: source + category + assetType + period + geo + license + theme
 // skipDim 参数：计算命中数时排除"自身维度"，用于 B 方案联动命中数
 function filterItems(items, skipDim = null) {
   const periods = state.filters.periods || [];
   const geos = state.filters.geoLocations || [];
   const sources = state.filters.sources || [];
+  const categories = state.filters.categories || [];
   const themes = state.filters.themes || [];
   const assetTypes = state.filters.assetTypes || [];
   const licStatuses = state.filters.licenseStatuses || [];
@@ -2972,6 +3019,11 @@ function filterItems(items, skipDim = null) {
     // Source filter（左侧栏"数据来源"勾选）
     if (skipDim !== 'source' && sources.length > 0 && sources.length < 7) {
       if (!sources.includes(item.source)) return false;
+    }
+    // Category filter（资产门类，三维分类维度①）
+    if (skipDim !== 'category' && categories.length > 0) {
+      const c = item.category || 'artifact';
+      if (!categories.includes(c)) return false;
     }
     // Asset type filter（资产形式）
     if (skipDim !== 'assetType' && assetTypes.length > 0) {
@@ -3025,6 +3077,17 @@ function updateFilterCounts() {
     _setCount(cb, srcCounts[cb.value] || 0);
   });
 
+  // --- 资产门类（category，三维分类维度①） ---
+  const catPool = filterItems(all, 'category');
+  const catCounts = {};
+  catPool.forEach(i => {
+    const c = i.category || 'artifact';
+    catCounts[c] = (catCounts[c] || 0) + 1;
+  });
+  document.querySelectorAll('[data-filter="category"]').forEach(cb => {
+    _setCount(cb, catCounts[cb.value] || 0);
+  });
+
   // --- 资产形式（assetType） ---
   const atPool = filterItems(all, 'assetType');
   const atCounts = {};
@@ -3073,9 +3136,6 @@ function updateFilterCounts() {
   document.querySelectorAll('[data-filter="theme"]').forEach(cb => {
     _setCount(cb, themeCounts[cb.value] || 0);
   });
-
-  // --- 仅含图片（单独处理）---
-  // 不参与 B 方案，因为它不是多选枚举，始终显示"勾选后还能剩多少"即可
 }
 
 // 把命中数写到 checkbox 所在 .filter-option 行末的 .filter-count 里
@@ -3418,6 +3478,9 @@ async function openCollection(id) {
       }
     });
 
+    // 统一 schema v1.1 注入（合集聚合页同样要打标）
+    enrichSchemaV11(allItems);
+
     collState.loadedItems = allItems;
     const total = allItems.length;
 
@@ -3593,6 +3656,8 @@ async function createCustomCollection() {
   try {
     // Use the same search logic as the top search bar
     const items = await multiSourceSearch(keyword, 20);
+    // 统一 schema v1.1 注入（热门关键词集合页同样要打标）
+    enrichSchemaV11(items);
     collState.loadedItems = items;
     const total = items.length;
 
